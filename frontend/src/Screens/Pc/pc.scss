@@ -1,0 +1,10 @@
+#pc {
+    .image-gallery-thumbnail {
+        &.active,
+        &:focus,
+        &:hover {
+            outline: none;
+            border: 4px solid #ff0029;
+        }
+    }
+}

@@ -1,0 +1,10 @@
+#signin {
+    .link {
+        text-decoration: underline;
+        color: white;
+
+        &.light {
+            color: black;
+        }
+    }
+}

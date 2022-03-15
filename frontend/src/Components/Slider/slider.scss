@@ -1,0 +1,50 @@
+#slider {
+    .react-carousel {
+        padding-top: 100px;
+        padding-bottom: 100px;
+
+        .foncolor {
+            background-size: cover;
+            background-position: center right;
+            background-repeat: no-repeat;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            z-index: -1;
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                background-image: linear-gradient(#131313, #131313f3 11%);
+            }
+
+            &.light::before {
+                background-image: linear-gradient(#ffffff, #ffffffeb 11%);
+            }
+        }
+    }
+
+    .alice-carousel {
+        &__dots {
+            position: absolute;
+            bottom: 10%;
+            right: 30%;
+
+            &-item {
+                width: 25px;
+                height: 4px;
+                border-radius: 2px !important;
+            }
+        }
+    }
+    .alice-carousel__dots-item:not(.__custom):hover,
+    .alice-carousel__dots-item:not(.__custom).__active {
+        background-color: red;
+    }
+}

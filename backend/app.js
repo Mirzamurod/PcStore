@@ -1,14 +1,27 @@
-const app = require('express')()
-const dotenv = require('dotenv').config()
-const colors = require('colors')
+import express from 'express'
+import dotenv from 'dotenv'
+import colors from 'colors'
+import cors from 'cors'
+import cookieParser from 'cookie-parser'
+import connectDB from './config/db.js'
+import userRoutes from './routes/userRoutes.js'
+import pcRoutes from './routes/pcRoutes.js'
+
+const app = express()
+dotenv.config()
+connectDB()
+
+app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(cookieParser())
 
 app.get('/', (req, res) => {
-    res.send('This is Root page!!!')
+    res.send('Hello World')
 })
 
-app.get('/contact', (req, res) => {
-    res.send('This page is Contact')
-})
+app.use('/api/users', userRoutes)
+app.use('/api/pcs', pcRoutes)
 
 const port = process.env.PORT || 5000
 

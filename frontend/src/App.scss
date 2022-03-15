@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+// @import '~react-image-gallery/styles/css/image-gallery.css';
+
+$primary-color: #cf052d !important;
+$bg-color: #131313 !important;
+$c-101010: #101010 !important;
+$check-color: #008f19 !important;
+$grey-color: #b5b5c3 !important;
+$c-1b1b1b: rgba(225, 255, 255, 0.04) !important; // #fff 4%
+$c-e90021: #e90021 !important;
+$c-a4a4a4: #a4a4a4 !important;
+$c-ff6c48: #ff6c48 !important;
+$c-footer: rgba(200, 200, 200, 0.5) !important; // #c8c8c8 50%
+$c-686868: #686868 !important;
+$c-828282: #828282 !important;
+
+* {
+    font-family: 'Ubuntu', sans-serif !important;
+}
+
+body {
+    margin: 0 !important;
+}
+
+a {
+    text-decoration: none;
+}
+
+.c-footer {
+    color: $c-footer;
+}
+
+.c-828282 {
+    color: $c-828282;
+}
+
+.c-e90021 {
+    color: $c-e90021;
+}
+
+.fon {
+    padding: 32px;
+    border-radius: 4px;
+
+    &.dark {
+        background-color: #1b1b1b;
+    }
+
+    &.light {
+        background-color: #f1f1f1;
+    }
+}
+
+.MuiMenuItem-root:hover {
+    background-color: $primary-color;
+}

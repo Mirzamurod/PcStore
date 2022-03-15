@@ -1,12 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import 'react-alice-carousel/lib/alice-carousel.css'
+// import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+import { Provider } from 'react-redux'
+import store from './redux/store'
 
 ReactDOM.render(
-    <React.StrictMode>
+    // <React.StrictMode>
+    <Provider store={store}>
         <App />
-    </React.StrictMode>,
+    </Provider>,
+    // </React.StrictMode>,
     document.getElementById('root')
 )
 
