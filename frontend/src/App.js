@@ -20,6 +20,7 @@ import UserProfile from './Screens/UserProfile/UserProfile'
 import Pc from './Screens/Pc/Pc'
 import ShoppingCart from './Screens/ShoppingCart.js/ShoppingCart'
 import './App.scss'
+import Error from './Components/Error'
 
 function ScrollTop(props) {
     const { children, window } = props
@@ -86,6 +87,7 @@ function App(props) {
                         <Route path='/user/:keyword' element={<UserProfile />} />
                         <Route path='/pc/:id' element={<Pc />} />
                         <Route path='/shoppingcart' element={<ShoppingCart />} />
+                        <Route path='*' element={<Error />} />
                     </Routes>
                     <Footer />
                     <ScrollTop {...props}>

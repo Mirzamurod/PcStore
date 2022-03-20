@@ -1,21 +1,17 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-    Card,
-    CardActions,
-    CardContent,
-    CardMedia,
-    Button,
-    Typography,
-    Container,
-    Grid,
-} from '@mui/material'
+import { Card, CardActions, CardContent, Button, Typography, Container, Grid } from '@mui/material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { EffectCreative, Pagination } from 'swiper'
+import { encode } from 'js-base64'
 import { getPcs } from '../../redux/pcs/pcs'
 import { Loading } from '../Loading'
-import { encode } from 'js-base64'
+import 'swiper/css'
+import 'swiper/css/effect-creative'
+import 'swiper/css/pagination'
 import './pcs.scss'
 
 const Pcs = () => {
@@ -60,12 +56,33 @@ const Pcs = () => {
                                         </p>
                                     </>
                                 )}
-                                <CardMedia
-                                    component='img'
-                                    height='auto'
-                                    image={item?.image[0]}
-                                    alt='green'
-                                />
+                                <Swiper
+                                    loop={true}
+                                    pagination={true}
+                                    grabCursor={true}
+                                    effect={'creative'}
+                                    creativeEffect={{
+                                        prev: {
+                                            shadow: true,
+                                            origin: 'left center',
+                                            translate: ['-5%', 0, -200],
+                                            rotate: [0, 100, 0],
+                                        },
+                                        next: {
+                                            origin: 'right center',
+                                            translate: ['5%', 0, -200],
+                                            rotate: [0, -100, 0],
+                                        },
+                                    }}
+                                    modules={[EffectCreative, Pagination]}
+                                    className='mySwiper6'
+                                >
+                                    {item?.image.map((img, index) => (
+                                        <SwiperSlide key={index}>
+                                            <img src={img} alt='rasm' width='100%' />
+                                        </SwiperSlide>
+                                    ))}
+                                </Swiper>
                                 <CardContent>
                                     <Typography
                                         gutterBottom
