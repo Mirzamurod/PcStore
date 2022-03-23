@@ -8,7 +8,7 @@ const pc = {
     // @access  Public
     getPc: expressAsyncHandler(async (req, res) => {
         const pcs = await Pc.find({})
-        res.status(201).json({ data: pcs, message: { code: 0, message: 'success' } })
+        res.status(200).json({ data: pcs, message: { code: 0, message: 'success' } })
     }),
 
     // @desc    Fetch single pc
@@ -21,7 +21,7 @@ const pc = {
         reviewNum.forEach(num => (rating += num.rating))
 
         if (pc)
-            res.status(201).json({
+            res.status(200).json({
                 data: pc,
                 ratingNum: rating / reviewNum?.length,
                 reviewNum: reviewNum?.length,
@@ -48,7 +48,7 @@ const pc = {
                 pcId,
             })
 
-            res.status(200).json({ message: { code: 0, message: 'success' } })
+            res.status(201).json({ message: { code: 0, message: 'success' } })
         }
     }),
 

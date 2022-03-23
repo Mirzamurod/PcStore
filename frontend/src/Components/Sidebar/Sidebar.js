@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
     AppBar,
     Badge,
@@ -15,6 +15,7 @@ import {
     Toolbar,
     Typography,
 } from '@mui/material'
+import { Link } from 'react-scroll'
 import MenuIcon from '@mui/icons-material/Menu'
 import Logout from '@mui/icons-material/Logout'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
@@ -22,15 +23,16 @@ import Brightness4Icon from '@mui/icons-material/Brightness4'
 import BrightnessHighIcon from '@mui/icons-material/BrightnessHigh'
 import PermIdentityIcon from '@mui/icons-material/PermIdentity'
 import { changeMode, userProfile } from '../../redux/user/login'
-import logo from './../../svg/logo.svg'
+import { Others, UserSetting } from './Others'
 import './sidebar.scss'
 
 const pages = [
-    { name: 'Home', url: '/', id: 'home' },
-    { name: 'Products', url: '/nmadir', id: 'pcs' },
-    { name: 'Services', url: '/kimdir', id: 'pcs' },
-    { name: 'Contact', url: '/kimdir1', id: 'pcs' },
+    { name: 'Home', url: '/', id: 'home', offset: -128 },
+    { name: 'Products', url: '/nmadir', id: 'pcs', offset: -80 },
+    { name: 'Services', url: '/kimdir', id: 'pcs', offset: 100 },
+    { name: 'Contact', url: '/kimdir1', id: 'pcs', offset: 100 },
 ]
+
 const settings = [
     { name: 'Profile', url: '/user/account', icon: PermIdentityIcon },
     { name: 'Logout', url: '', icon: Logout },
@@ -51,9 +53,7 @@ const Sidebar = () => {
         navigate(url)
     }
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null)
-    }
+    const handleCloseUserMenu = () => setAnchorElUser(null)
 
     const token = localStorage.getItem('token')
 
@@ -67,27 +67,16 @@ const Sidebar = () => {
     }, [user, token])
 
     return (
-        <>
+        <Box>
             <CssBaseline />
             <AppBar
-                // position='static'
                 id='sidebar'
                 sx={{ boxShadow: 0 }}
-                // color='inherit'
-                className={`${dark_mode ? 'sidebarfon' : 'sidebar-fon'}`}
+                className={dark_mode ? 'sidebarfon' : 'sidebar-fon'}
             >
                 <Container maxWidth='xl'>
                     <Toolbar disableGutters>
-                        <Link to='/'>
-                            <Typography
-                                variant='h6'
-                                noWrap
-                                component='div'
-                                sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-                            >
-                                <img src={logo} alt='rasm' />
-                            </Typography>
-                        </Link>
+                        <Others sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }} />
                         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                             <IconButton
                                 size='large'
@@ -95,55 +84,48 @@ const Sidebar = () => {
                                 aria-controls='menu-appbar'
                                 aria-haspopup='true'
                                 onClick={event => setAnchorElNav(event.currentTarget)}
-                                // color='inherit'
                             >
                                 <MenuIcon />
                             </IconButton>
                             <Menu
                                 id='menu-appbar'
                                 anchorEl={anchorElNav}
-                                anchorOrigin={{
-                                    vertical: 'bottom',
-                                    horizontal: 'left',
-                                }}
+                                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
                                 keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'left',
-                                }}
+                                transformOrigin={{ vertical: 'top', horizontal: 'left' }}
                                 open={Boolean(anchorElNav)}
                                 onClose={handleCloseNavMenu}
-                                sx={{
-                                    display: { xs: 'block', md: 'none' },
-                                }}
+                                sx={{ display: { xs: 'block', md: 'none' } }}
                             >
                                 {/* small */}
                                 {pages.map(page => (
-                                    <MenuItem key={page.name}>
-                                        <Typography
-                                            onClick={() => handleCloseNavMenu(page.url)}
-                                            textAlign='center'
-                                            textTransform='capitalize'
-                                            sx={{
-                                                color: `${dark_mode ? 'white' : 'black'}`,
-                                            }}
-                                        >
-                                            {page.name}
-                                        </Typography>
-                                    </MenuItem>
+                                    // <MenuItem key={page.name}>
+                                    //     <Link to={page.url}>
+                                    //         <Typography
+                                    //             onClick={handleCloseNavMenu}
+                                    //             textAlign='center'
+                                    //             textTransform='capitalize'
+                                    //             sx={{ color: dark_mode ? 'white' : 'black' }}
+                                    //         >
+                                    //             {page.name}
+                                    //         </Typography>
+                                    //     </Link>
+                                    // </MenuItem>
+                                    <Link
+                                        key={page.name}
+                                        to={page.id}
+                                        spy={true}
+                                        smooth={true}
+                                        offset={page.offset}
+                                        duration={500}
+                                        style={{ color: dark_mode ? 'white' : 'black' }}
+                                    >
+                                        {page.name}
+                                    </Link>
                                 ))}
                             </Menu>
                         </Box>
-                        <Typography
-                            variant='h6'
-                            noWrap
-                            component='div'
-                            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-                        >
-                            <Link to='/'>
-                                <img src={logo} alt='rasm' />
-                            </Link>
-                        </Typography>
+                        <Others sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }} />
                         <Box
                             sx={{
                                 flexGrow: 1,
@@ -153,34 +135,36 @@ const Sidebar = () => {
                         >
                             {/* big */}
                             {pages.map(page => (
-                                <Button
-                                    id={page.id}
-                                    color={location.pathname === page.url ? 'error' : 'inherit'}
+                                <Link
                                     key={page.name}
-                                    onClick={() => handleCloseNavMenu(page.url)}
-                                    className={`${location.pathname === page.url && 'navbar'}`}
-                                    sx={{
-                                        my: 2,
-                                        color: `${
-                                            location.pathname !== page.url && !dark_mode && 'black'
-                                        }`,
-                                        textTransform: 'capitalize',
-                                        position: 'relative',
-                                    }}
+                                    to={page.id}
+                                    spy={true}
+                                    smooth={true}
+                                    offset={page.offset}
+                                    duration={500}
+                                    style={{ color: dark_mode ? 'white' : 'black' }}
                                 >
                                     {page.name}
-                                </Button>
+                                </Link>
                             ))}
                         </Box>
                         <IconButton
                             onClick={() => dispatch(changeMode())}
-                            sx={{ color: `${!dark_mode && 'black'}` }}
+                            sx={{ color: !dark_mode && 'black' }}
                         >
                             {dark_mode ? <BrightnessHighIcon /> : <Brightness4Icon />}
                         </IconButton>
                         <IconButton
                             aria-label='shopping cart'
-                            sx={{ color: `${!dark_mode && 'black'}`, mr: 1 }}
+                            sx={{
+                                mr: 1,
+                                color:
+                                    location.pathname === '/shoppingcart'
+                                        ? 'red'
+                                        : dark_mode
+                                        ? 'white'
+                                        : 'black',
+                            }}
                         >
                             <Badge badgeContent={4} color='error'>
                                 <ShoppingCartIcon size='small' />
@@ -205,7 +189,10 @@ const Sidebar = () => {
                                         anchorEl={anchorElUser}
                                         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                                         keepMounted
-                                        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                        transformOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'right',
+                                        }}
                                         open={Boolean(anchorElUser)}
                                         onClose={handleCloseUserMenu}
                                     >
@@ -218,7 +205,7 @@ const Sidebar = () => {
                                                 <ListItemIcon sx={{ pr: 1, pl: 2 }}>
                                                     <setting.icon />
                                                 </ListItemIcon>
-                                                <Link to={setting.url} style={{ width: '100%' }}>
+                                                {/* <Link to={setting.url} style={{ width: '100%' }}>
                                                     <Typography
                                                         sx={{
                                                             py: 1,
@@ -228,7 +215,12 @@ const Sidebar = () => {
                                                     >
                                                         {setting.name}
                                                     </Typography>
-                                                </Link>
+                                                </Link> */}
+                                                <UserSetting
+                                                    url={setting.url}
+                                                    dark_mode={dark_mode}
+                                                    name={setting.name}
+                                                />
                                             </MenuItem>
                                         ))}
                                     </Menu>
@@ -248,7 +240,7 @@ const Sidebar = () => {
                 </Container>
             </AppBar>
             <Toolbar />
-        </>
+        </Box>
     )
 }
 export default Sidebar

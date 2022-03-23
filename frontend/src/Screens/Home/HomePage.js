@@ -5,8 +5,10 @@ import Brends from './../../Components/Brends/Brends'
 const HomePage = () => {
     return (
         <div>
-            <Slider />
-            <Brends />
+            <div id='home'>
+                <Slider />
+                <Brends />
+            </div>
             <Pcs />
         </div>
     )

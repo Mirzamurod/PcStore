@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import {
     Box,
     createTheme,
@@ -10,7 +11,6 @@ import {
     useScrollTrigger,
     Zoom,
 } from '@mui/material'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import HomePage from './Screens/Home/HomePage'
 import Login from './Screens/Login/Login'
@@ -19,14 +19,13 @@ import Footer from './Components/Footer/Footer'
 import UserProfile from './Screens/UserProfile/UserProfile'
 import Pc from './Screens/Pc/Pc'
 import ShoppingCart from './Screens/ShoppingCart.js/ShoppingCart'
-import './App.scss'
 import Error from './Components/Error'
+import 'swiper/css'
+import 'swiper/css/bundle'
+import './App.scss'
 
 function ScrollTop(props) {
     const { children, window } = props
-    // Note that you normally won't need to set the window ref as useScrollTrigger
-    // will default to window.
-    // This is only being set here because the demo is in an iframe.
     const trigger = useScrollTrigger({
         target: window ? window() : undefined,
         disableHysteresis: true,
@@ -36,12 +35,7 @@ function ScrollTop(props) {
     const handleClick = event => {
         const anchor = (event.target.ownerDocument || document).querySelector('#back-to-top-anchor')
 
-        if (anchor) {
-            anchor.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-            })
-        }
+        if (anchor) anchor.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }
 
     return (
@@ -57,22 +51,11 @@ function ScrollTop(props) {
     )
 }
 
-ScrollTop.propTypes = {
-    children: PropTypes.element.isRequired,
-    /**
-     * Injected by the documentation to work in an iframe.
-     * You won't need it on your project.
-     */
-    window: PropTypes.func,
-}
+ScrollTop.propTypes = { children: PropTypes.element.isRequired, window: PropTypes.func }
 
 function App(props) {
     const { dark_mode } = useSelector(state => state.login)
-    const theme = createTheme({
-        palette: {
-            mode: dark_mode ? 'dark' : 'light',
-        },
-    })
+    const theme = createTheme({ palette: { mode: dark_mode ? 'dark' : 'light' } })
 
     return (
         <ThemeProvider theme={theme}>

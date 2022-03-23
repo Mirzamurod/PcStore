@@ -4,6 +4,7 @@ import './brends.scss'
 
 const Brends = () => {
     const brends = ['msi', 'asus', 'gigabyte', 'rog']
+
     return (
         <Container id='brends' sx={{ my: 4 }}>
             <div className='line' />

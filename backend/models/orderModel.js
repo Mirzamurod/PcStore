@@ -40,9 +40,7 @@ const orderSchema = mongoose.Schema(
         subtotal: { type: String, required: true },
         delivery: { type: String, required: true },
         total: { type: String, required: true },
-        delivered: { type: Boolean, required: true, default: false },
-        check_point: { type: Boolean, required: true, default: false },
-        accepted: { type: Boolean, required: true, default: false },
+        status: { type: Number, required: true, default: 1 }, // code 1 => qabul qilindi
     },
     {
         timestamps: true,

@@ -5,7 +5,7 @@ import expressAsyncHandler from 'express-async-handler'
 
 const user = {
     // @desc Register new User
-    // @route POST /api/users
+    // @route POST /api/users/add
     // @access Public
     register: expressAsyncHandler(async (req, res) => {
         const { username, fullname, email, password } = req.body
@@ -53,7 +53,7 @@ const user = {
         // check for user email
         const user = await User.findOne({ username })
         if (user && (await bcryptjs.compare(password, user.password)))
-            res.status(201).json({ data: { token: generateToken(user._id) }, code: 0 })
+            res.status(200).json({ data: { token: generateToken(user._id) }, code: 0 })
         else {
             res.status(400).json({ message: 'User not found' })
             // throw new Error('User not found')
