@@ -26,12 +26,12 @@ const Pcs = () => {
 
     return (
         <Container id='pcs' sx={{ py: 6 }}>
-            <Grid container spacing={8}>
+            <Grid container spacing={{ xl: 8, lg: 6, md: 4, sm: 2, xs: 0 }}>
                 {isLoading && <Loading />}
                 {!isLoading &&
                     pcs?.length > 0 &&
                     pcs?.map((item, ind) => (
-                        <Grid item md={3} key={ind} position='relative'>
+                        <Grid item lg={3} md={4} sm={6} xs={12} key={ind} position='relative'>
                             <Card
                                 sx={{
                                     boxShadow: 0,

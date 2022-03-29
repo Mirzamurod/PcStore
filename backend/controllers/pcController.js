@@ -12,7 +12,7 @@ const pc = {
     }),
 
     // @desc    Fetch single pc
-    // @route   GET /api/pcs/:id
+    // @route   GET /api/pcs/:pcId
     // @access  Public
     getPcById: expressAsyncHandler(async (req, res) => {
         let rating = 0
@@ -32,7 +32,7 @@ const pc = {
     }),
 
     // @desc Add review
-    // @route POST /api/pcs/addreview/:id
+    // @route POST /api/pcs/addreview/:pcId
     // @access Private
     addReview: expressAsyncHandler(async (req, res) => {
         const { rating, comment } = req.body
@@ -52,8 +52,8 @@ const pc = {
         }
     }),
 
-    // @desc Get review
-    // @route GET /api/pcs/reviews/:id
+    // @desc Get reviews
+    // @route GET /api/pcs/reviews/:pcId
     // @access Public
     reviews: expressAsyncHandler(async (req, res) => {
         const review = await Review.find({ pcId: req.params.id })

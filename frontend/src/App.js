@@ -67,10 +67,10 @@ function App(props) {
                     <Routes>
                         <Route path='/' element={<HomePage />} exact />
                         <Route path='/login' element={<Login />} exact />
-                        <Route path='/user/:keyword' element={<UserProfile />} />
-                        <Route path='/pc/:id' element={<Pc />} />
-                        <Route path='/shoppingcart' element={<ShoppingCart />} />
-                        <Route path='*' element={<Error />} />
+                        <Route path='/user/:keyword' element={<UserProfile />} exact />
+                        <Route path='/pc/:id' element={<Pc />} exact />
+                        <Route path='/shoppingcart' element={<ShoppingCart />} exact />
+                        <Route path='*' element={<Error />} exact />
                     </Routes>
                     <Footer />
                     <ScrollTop {...props}>

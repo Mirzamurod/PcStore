@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Title from '../Title'
 import {
     Box,
@@ -15,8 +15,10 @@ import {
 } from '@mui/material'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import Visibility from '@mui/icons-material/Visibility'
+import { userProfile, userUpdate } from '../../redux/user/login'
 
 const AccountInfo = memo(() => {
+    const dispatch = useDispatch()
     const [user1, setUser] = useState({ username: '', fullname: '', email: '' })
     const [usernameE, setUsernameE] = useState(false) // empty
     const [usernameC, setUsernameC] = useState(false) // check
@@ -25,7 +27,7 @@ const AccountInfo = memo(() => {
     const [emailE, setEmailE] = useState(false)
     const [emailC, setEmailC] = useState(false)
     const [oldP, setOldP] = useState({ current: false, new: false, confirm: false })
-    const [newP, setNewP] = useState({ current: '', new: '', confirm: '' })
+    const [newP, setNewP] = useState({ currentPassword: '', newPassword: '', confirmPassword: '' })
     const [currentE, setCurrentE] = useState(false)
     const [newE, setNewE] = useState(false)
     const [newC, setNewC] = useState(false)
@@ -35,21 +37,28 @@ const AccountInfo = memo(() => {
     const [currentPassword, setCurrentPassword] = useState(false)
     const [confirmNewPassword, setConfirmNewPassword] = useState(false)
 
-    const { dark_mode, user } = useSelector(state => state.login)
+    const { dark_mode, user, code } = useSelector(state => state.login)
 
+    // get User
     useEffect(() => {
-        if (user)
-            setUser({ username: user?.username, fullname: user?.fullname, email: user?.email })
-    }, [user])
+        if (code === 0) dispatch(userProfile())
+    }, [code, dispatch, user])
 
+    // fill in the input with user info
+    useEffect(() => {
+        if (user || code === 0)
+            setUser({ username: user?.username, fullname: user?.fullname, email: user?.email })
+    }, [user, code])
+
+    // "save changes" button
     useEffect(() => {
         if (
             user1.username !== user?.username ||
             user1.fullname !== user?.fullname ||
             user1.email !== user?.email ||
-            newP.current.length !== 0 ||
-            newP.new.length !== 0 ||
-            newP.confirm.length !== 0
+            newP.currentPassword ||
+            newP.newPassword ||
+            newP.confirmPassword
         )
             setSave(false)
         else setSave(true)
@@ -78,11 +87,11 @@ const AccountInfo = memo(() => {
             { name: !emailCheck.test(user1.email), change: setEmailC },
             {
                 name:
-                    newP.new.length !== 0 &&
-                    (!/\W/.test(newP.new) ||
-                        !/[A-Z]/.test(newP.new) ||
-                        !/[a-z]/.test(newP.new) ||
-                        !/[0-9]/.test(newP.new)),
+                    newP.newPassword &&
+                    (!/\W/.test(newP.newPassword) ||
+                        !/[A-Z]/.test(newP.newPassword) ||
+                        !/[a-z]/.test(newP.newPassword) ||
+                        !/[0-9]/.test(newP.newPassword)),
                 change: setNewC,
             },
         ].forEach(check => {
@@ -91,20 +100,20 @@ const AccountInfo = memo(() => {
         })
 
         const checkShow =
-            user1.username.length !== 0 && // true
+            user1.username && // true
             !symbol.test(user1.username) && // true
             !usernameCheck.test(user1.username) && // true
-            user1.fullname.length !== 0 && // true
+            user1.fullname && // true
             fullnameCheck.test(user1.fullname) && // true
             user1.fullname.match(/\s/g).length === 1 && // true
             user1.fullname.match(symbol).length === 1 && // true
             !/[0-9]/.test(user1.fullname) && // true
-            user1.email.length !== 0 // true
+            user1.email // true
 
         const check = [
-            { name: user1.username.length === 0, change: setUsernameE },
-            { name: user1.fullname.length === 0, change: setFullnameE },
-            { name: user1.email.length === 0, change: setEmailE },
+            { name: !user1.username, change: setUsernameE },
+            { name: !user1.fullname, change: setFullnameE },
+            { name: !user1.email, change: setEmailE },
         ]
 
         if (!show) {
@@ -116,6 +125,15 @@ const AccountInfo = memo(() => {
                         soz => soz.charAt(0).toUpperCase() + soz.slice(1)
                     ),
                 })
+                dispatch(
+                    userUpdate({
+                        ...user1,
+                        fullname: user1.fullname.replace(
+                            /[A-z]+/g,
+                            soz => soz.charAt(0).toUpperCase() + soz.slice(1)
+                        ),
+                    })
+                )
             }
 
             check.forEach(check => {
@@ -125,24 +143,24 @@ const AccountInfo = memo(() => {
         } else {
             if (
                 checkShow &&
-                user1.username.length !== 0 &&
-                user1.fullname.length !== 0 &&
-                user1.email.length !== 0 &&
-                newP.current.length !== 0 &&
-                newP.new.length !== 0 &&
-                newP.confirm.length !== 0 &&
-                newP.new === newP.confirm
+                user1.username &&
+                user1.fullname &&
+                user1.email &&
+                newP.currentPassword &&
+                newP.newPassword &&
+                newP.confirmPassword &&
+                newP.newPassword === newP.confirmPassword
             ) {
                 console.log({ ...user1, ...newP })
             }
 
             ;[
                 ...check,
-                { name: newP.current.length === 0, change: setCurrentE },
-                { name: newP.new.length === 0, change: setNewE },
-                { name: newP.confirm.length === 0, change: setConfirmE },
-                { name: newP.new !== newP.confirm, change: setConfirmNewPassword },
-                { name: newP.current !== '123', change: setCurrentPassword },
+                { name: !newP.currentPassword, change: setCurrentE },
+                { name: !newP.newPassword, change: setNewE },
+                { name: !newP.confirmPassword, change: setConfirmE },
+                { name: newP.newPassword !== newP.confirmPassword, change: setConfirmNewPassword },
+                { name: newP.currentPassword !== '123', change: setCurrentPassword },
             ].forEach(check => {
                 if (check.name) check.change(true)
                 else check.change(false)
@@ -237,8 +255,10 @@ const AccountInfo = memo(() => {
                                     placeholder='Current Password'
                                     autoComplete='false'
                                     type={oldP.current ? 'text' : 'password'}
-                                    value={newP.current}
-                                    onChange={e => setNewP({ ...newP, current: e.target.value })}
+                                    value={newP.currentPassword}
+                                    onChange={e =>
+                                        setNewP({ ...newP, currentPassword: e.target.value })
+                                    }
                                     endAdornment={
                                         <InputAdornment position='end'>
                                             <IconButton
@@ -268,8 +288,10 @@ const AccountInfo = memo(() => {
                                     autoComplete='false'
                                     placeholder='RXrv8dJ_'
                                     type={oldP.new ? 'text' : 'password'}
-                                    value={newP.new}
-                                    onChange={e => setNewP({ ...newP, new: e.target.value })}
+                                    value={newP.newPassword}
+                                    onChange={e =>
+                                        setNewP({ ...newP, newPassword: e.target.value })
+                                    }
                                     endAdornment={
                                         <InputAdornment position='end'>
                                             <IconButton
@@ -297,8 +319,10 @@ const AccountInfo = memo(() => {
                                 <Input
                                     id='confirmNewPassword'
                                     type={oldP.confirm ? 'text' : 'password'}
-                                    value={newP.confirm}
-                                    onChange={e => setNewP({ ...newP, confirm: e.target.value })}
+                                    value={newP.confirmPassword}
+                                    onChange={e =>
+                                        setNewP({ ...newP, confirmPassword: e.target.value })
+                                    }
                                     autoComplete='false'
                                     endAdornment={
                                         <InputAdornment position='end'>

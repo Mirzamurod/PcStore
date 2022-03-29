@@ -30,7 +30,7 @@ const middleware =
         })
             .then(res => {
                 if (res.status === 200 || res.status === 201) {
-                    console.log(res)
+                    // console.log(res)
                     dispatch({
                         type: onSuccess,
                         payload: res.data,

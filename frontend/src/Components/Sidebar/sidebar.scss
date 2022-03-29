@@ -41,6 +41,21 @@
                     left: 0;
                 }
             }
+
+            &.disactivew {
+                color: #fff !important;
+
+                &::before {
+                    background-color: #00000000 !important;
+                }
+            }
+
+            &.disactiveb {
+                color: #000 !important;
+                &::before {
+                    background-color: #00000000 !important;
+                }
+            }
         }
     }
 }

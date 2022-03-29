@@ -24,26 +24,26 @@ const SignIn = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(false)
-    const [signIn, setSignIn] = useState({ username: '', password: '', check: false })
-    const [nameError, setNameError] = useState(false)
+    const [signIn, setSignIn] = useState({ email: '', password: '', check: false })
+    const [emailError, setEmailError] = useState(false)
     const [passwordError, setPasswordError] = useState(false)
 
     const { dark_mode, code } = useSelector(state => state.login)
+    const token = localStorage.getItem('token')
 
     useEffect(() => {
-        if (code === 0) {
-            setSignIn({ username: '', password: '', check: false })
+        if (code === 0 && token) {
+            setSignIn({ email: '', password: '', check: false })
             navigate('/')
         }
-    }, [code, navigate])
+    }, [code, navigate, token])
 
     const signin = value => {
         value.preventDefault()
-        if (signIn.username.length !== 0 && signIn.password.length !== 0)
-            dispatch(userLogin(signIn))
+        if (signIn.email.length !== 0 && signIn.password.length !== 0) dispatch(userLogin(signIn))
 
-        if (signIn.username.length === 0) setNameError(true)
-        else setNameError(false)
+        if (signIn.email.length === 0) setEmailError(true)
+        else setEmailError(false)
 
         if (signIn.password.length === 0) setPasswordError(true)
         else setPasswordError(false)
@@ -62,17 +62,18 @@ const SignIn = () => {
             >
                 <Box border={`1px solid ${dark_mode ? '#e2e4e5' : 'gray'}`} borderRadius={2} p={4}>
                     <FormControl variant='standard' color='error' sx={{ display: 'block', mb: 2 }}>
-                        <InputLabel htmlFor='usernamein'>Username or Email</InputLabel>
+                        <InputLabel htmlFor='emailin'>Email</InputLabel>
                         <Input
+                            type='email'
                             id='usernamein'
                             name='username'
-                            placeholder='Username or Email'
-                            value={signIn.username}
-                            onChange={e => setSignIn({ ...signIn, username: e.target.value })}
+                            placeholder='Email'
+                            value={signIn.email}
+                            onChange={e => setSignIn({ ...signIn, email: e.target.value })}
                         />
-                        {nameError && (
+                        {emailError && (
                             <FormHelperText sx={{ color: 'red', my: 1 }}>
-                                Name is empty
+                                Email is empty
                             </FormHelperText>
                         )}
                     </FormControl>

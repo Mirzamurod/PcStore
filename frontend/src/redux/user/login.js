@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { apiPcStore, loginUser, userprofile } from '../api'
 import { encode } from 'js-base64'
+import { apiPcStore, loginUser, userdelete, userprofile, userupdate } from '../api'
 
 const login = createSlice({
     name: 'user',
@@ -11,7 +11,7 @@ const login = createSlice({
         code: '',
         err_msg: '',
         dark_mode: true,
-        status: 0,
+        deleteCode: '',
     },
     reducers: {
         onStart: state => {
@@ -22,7 +22,6 @@ const login = createSlice({
             localStorage.setItem('token', encode(payload.data.token))
             state.isLoading = false
             state.isError = false
-            state.status = payload.status
             state.code = payload.code
         },
         userProfile: (state, { payload }) => {
@@ -32,11 +31,20 @@ const login = createSlice({
             state.dark_mode = payload.data.dark_mode
             state.err_msg = payload.message
         },
+        userUpdate: (state, { payload }) => {
+            state.isLoading = false
+            state.isError = false
+            state.code = payload.message.code
+        },
+        userDelete: (state, { payload }) => {
+            state.isLoading = false
+            state.isError = false
+            state.deleteCode = payload.code
+        },
         onFail: (state, { payload }) => {
             state.isLoading = false
             state.err_msg = payload.data
             state.isError = true
-            state.status = payload.status
         },
         changeMode: state => {
             state.dark_mode = !state.dark_mode
@@ -60,6 +68,26 @@ export const userProfile = () =>
         method: 'get',
         onStart: login.actions.onStart.type,
         onSuccess: login.actions.userProfile.type,
+        onFail: login.actions.onFail.type,
+    })
+
+export const userUpdate = data =>
+    apiPcStore({
+        url: userupdate,
+        method: 'put',
+        data,
+        onStart: login.actions.onStart.type,
+        onSuccess: login.actions.userUpdate.type,
+        onFail: login.actions.onFail.type,
+    })
+
+export const userDelete = data =>
+    apiPcStore({
+        url: userdelete,
+        method: 'post',
+        data,
+        onStart: login.actions.onStart.type,
+        onSuccess: login.actions.userUpdate.type,
         onFail: login.actions.onFail.type,
     })
 

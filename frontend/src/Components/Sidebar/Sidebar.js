@@ -35,7 +35,7 @@ const pages = [
 
 const settings = [
     { name: 'Profile', url: '/user/account', icon: PermIdentityIcon },
-    { name: 'Logout', url: '', icon: Logout },
+    { name: 'Logout', url: '/', icon: Logout },
 ]
 
 const Sidebar = () => {
@@ -47,6 +47,7 @@ const Sidebar = () => {
     const [userCheck, setUserCheck] = useState(false)
 
     const { dark_mode, user } = useSelector(state => state.login)
+    const token = localStorage.getItem('token')
 
     const handleCloseNavMenu = url => {
         setAnchorElNav(null)
@@ -54,8 +55,6 @@ const Sidebar = () => {
     }
 
     const handleCloseUserMenu = () => setAnchorElUser(null)
-
-    const token = localStorage.getItem('token')
 
     useEffect(() => {
         if (token) dispatch(userProfile())
@@ -99,18 +98,6 @@ const Sidebar = () => {
                             >
                                 {/* small */}
                                 {pages.map(page => (
-                                    // <MenuItem key={page.name}>
-                                    //     <Link to={page.url}>
-                                    //         <Typography
-                                    //             onClick={handleCloseNavMenu}
-                                    //             textAlign='center'
-                                    //             textTransform='capitalize'
-                                    //             sx={{ color: dark_mode ? 'white' : 'black' }}
-                                    //         >
-                                    //             {page.name}
-                                    //         </Typography>
-                                    //     </Link>
-                                    // </MenuItem>
                                     <Link
                                         key={page.name}
                                         to={page.id}
@@ -143,6 +130,13 @@ const Sidebar = () => {
                                     offset={page.offset}
                                     duration={500}
                                     style={{ color: dark_mode ? 'white' : 'black' }}
+                                    className={
+                                        location.pathname !== '/' && dark_mode
+                                            ? 'disactivew'
+                                            : location.pathname !== '/' && !dark_mode
+                                            ? 'disactiveb'
+                                            : ''
+                                    }
                                 >
                                     {page.name}
                                 </Link>
@@ -171,70 +165,47 @@ const Sidebar = () => {
                             </Badge>
                         </IconButton>
                         <Box sx={{ flexGrow: 0 }}>
-                            {userCheck ? (
-                                <>
-                                    <Button
-                                        variant='outlined'
-                                        onClick={event => setAnchorElUser(event.currentTarget)}
-                                        color={dark_mode ? 'inherit' : 'error'}
-                                        sx={{ ml: 1 }}
+                            <Button
+                                variant='outlined'
+                                onClick={event =>
+                                    userCheck
+                                        ? setAnchorElUser(event.currentTarget)
+                                        : navigate('/login')
+                                }
+                                color={dark_mode ? 'inherit' : 'error'}
+                                sx={{ ml: 1 }}
+                            >
+                                <Typography textTransform={userCheck ? 'lowercase' : 'capitalize'}>
+                                    {userCheck ? user && `@${user.username}` : 'sign in'}
+                                </Typography>
+                            </Button>
+                            <Menu
+                                sx={{ mt: '45px' }}
+                                id='menu-appbar'
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                keepMounted
+                                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                open={Boolean(anchorElUser)}
+                                onClose={handleCloseUserMenu}
+                            >
+                                {settings.map(setting => (
+                                    <MenuItem
+                                        key={setting.name}
+                                        onClick={handleCloseUserMenu}
+                                        sx={{ p: 0 }}
                                     >
-                                        <Typography textTransform='lowercase'>
-                                            {user && `@${user.username}`}
-                                        </Typography>
-                                    </Button>
-                                    <Menu
-                                        sx={{ mt: '45px' }}
-                                        id='menu-appbar'
-                                        anchorEl={anchorElUser}
-                                        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                                        keepMounted
-                                        transformOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'right',
-                                        }}
-                                        open={Boolean(anchorElUser)}
-                                        onClose={handleCloseUserMenu}
-                                    >
-                                        {settings.map(setting => (
-                                            <MenuItem
-                                                key={setting.name}
-                                                onClick={handleCloseUserMenu}
-                                                sx={{ p: 0 }}
-                                            >
-                                                <ListItemIcon sx={{ pr: 1, pl: 2 }}>
-                                                    <setting.icon />
-                                                </ListItemIcon>
-                                                {/* <Link to={setting.url} style={{ width: '100%' }}>
-                                                    <Typography
-                                                        sx={{
-                                                            py: 1,
-                                                            pr: 2,
-                                                            color: dark_mode ? 'white' : 'black',
-                                                        }}
-                                                    >
-                                                        {setting.name}
-                                                    </Typography>
-                                                </Link> */}
-                                                <UserSetting
-                                                    url={setting.url}
-                                                    dark_mode={dark_mode}
-                                                    name={setting.name}
-                                                />
-                                            </MenuItem>
-                                        ))}
-                                    </Menu>
-                                </>
-                            ) : (
-                                <Button
-                                    variant='outlined'
-                                    sx={{ ml: 1, textTransform: 'capitalize' }}
-                                    onClick={() => navigate('/login')}
-                                    color={dark_mode ? 'inherit' : 'error'}
-                                >
-                                    sign in
-                                </Button>
-                            )}
+                                        <ListItemIcon sx={{ pr: 1, pl: 2 }}>
+                                            <setting.icon />
+                                        </ListItemIcon>
+                                        <UserSetting
+                                            url={setting.url}
+                                            dark_mode={dark_mode}
+                                            name={setting.name}
+                                        />
+                                    </MenuItem>
+                                ))}
+                            </Menu>
                         </Box>
                     </Toolbar>
                 </Container>

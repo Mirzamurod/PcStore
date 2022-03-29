@@ -6,6 +6,8 @@ export const apiPcStore = createAction('apiPcStore')
 export const registerUser = 'users/add'
 export const loginUser = 'users/login'
 export const userprofile = 'users/profile'
+export const userupdate = 'users/update'
+export const userdelete = 'users/delete'
 
 // pcs
 export const getPcsList = 'pcs'

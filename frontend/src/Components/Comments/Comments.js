@@ -15,7 +15,6 @@ const Comments = () => {
         if (codeReviews === 0) dispatch(getReviews(decode(decode(id))))
         else dispatch(getReviews(decode(decode(id))))
     }, [dispatch, id, codeReviews])
-    console.log('codeReviews', codeReviews)
 
     const StyledRating = styled(Rating)({
         '& .MuiRating-iconFilled': { color: '#e90021' },

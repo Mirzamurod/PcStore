@@ -5,7 +5,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "mocha --timeout 10000 --recursive --exit",
+    "test": "mocha --timeout 20000 --recursive --exit",
     "start": "node backend/app",
     "server": "nodemon backend/app",
     "client": "npm start --prefix frontend",
