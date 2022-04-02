@@ -1,13 +1,14 @@
 import express from 'express'
 import pc from './../controllers/pcController.js'
-import { protect } from './../middleware/authMiddleware.js'
+import { protect, admin } from './../middleware/authMiddleware.js'
 
 const router = express.Router()
 
 // /api/pc
 router.get('/', pc.getPc)
 router.get('/:id', pc.getPcById)
-router.post('/addreview/:id', protect, pc.addReview)
-router.get('/reviews/:id', pc.reviews)
+router.post('/pcs/add', protect, admin, pc.addPc)
+router.put('/pcs/update', protect, admin, pc.updatePc)
+router.delete('/pcs/delete/:id', protect, admin, pc.deletePc)
 
 export default router

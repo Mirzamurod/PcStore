@@ -23,6 +23,4 @@ const pcSchema = mongoose.Schema(
     { timestamps: true }
 )
 
-const Pc = mongoose.model('Pc', pcSchema)
-
-export default Pc
+export default mongoose.model('Pc', pcSchema)

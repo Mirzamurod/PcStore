@@ -6,6 +6,8 @@ import cookieParser from 'cookie-parser'
 import connectDB from './config/db.js'
 import userRoutes from './routes/userRoutes.js'
 import pcRoutes from './routes/pcRoutes.js'
+import addressRoutes from './routes/addressRoutes.js'
+import reviewRoutes from './routes/reviewRoutes.js'
 
 const app = express()
 dotenv.config()
@@ -22,6 +24,8 @@ app.get('/', (req, res) => {
 
 app.use('/api/users', userRoutes)
 app.use('/api/pcs', pcRoutes)
+app.use('/api/address', addressRoutes)
+app.use('/api/reviews', reviewRoutes)
 
 const port = process.env.PORT || 5000
 

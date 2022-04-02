@@ -109,11 +109,11 @@ const user = {
                         { ...req.body, password: hashedPassword },
                         { new: true }
                     )
-                    res.status(200).json({ message: { code: 0, message: 'success' } })
+                    res.status(200).json({ message: { code: 0, message: 'User Updated' } })
                 } else res.json({ code: 1 })
             } else {
                 await User.findByIdAndUpdate(req.user.id, req.body)
-                res.status(200).json({ message: { code: 0, message: 'success' } })
+                res.status(200).json({ message: { code: 0, message: 'User Updated' } })
             }
         }
     }),

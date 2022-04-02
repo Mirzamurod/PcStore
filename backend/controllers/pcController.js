@@ -31,33 +31,25 @@ const pc = {
         else res.status(400).json({ message: 'Pc not found' })
     }),
 
-    // @desc Add review
-    // @route POST /api/pcs/addreview/:pcId
-    // @access Private
-    addReview: expressAsyncHandler(async (req, res) => {
-        const { rating, comment } = req.body
-        const pcId = req.params.id
-
-        if (rating === 0 || rating > 5 || !comment || comment.charAt(0) === ' ')
-            res.status(400).json({ message: 'Please fill all fields' })
-        else {
-            await Review.create({
-                username: req.user.username,
-                rating,
-                comment,
-                pcId,
-            })
-
-            res.status(201).json({ message: { code: 0, message: 'success' } })
-        }
+    // @desc    Add new Pc
+    // @route   POST /api/pcs/add
+    // @access  Private
+    addPc: expressAsyncHandler(async (req, res) => {
+        console.log('Add Pc')
     }),
 
-    // @desc Get reviews
-    // @route GET /api/pcs/reviews/:pcId
-    // @access Public
-    reviews: expressAsyncHandler(async (req, res) => {
-        const review = await Review.find({ pcId: req.params.id })
-        res.status(200).json({ data: review, message: { code: 0, message: 'success' } })
+    // @desc    Update Pc
+    // @route   PUT /api/pcs/update
+    // @access  Private
+    updatePc: expressAsyncHandler(async (req, res) => {
+        console.log('Update Pc')
+    }),
+
+    // @desc    Delete Pc
+    // @route   DELETE /api/pcs/delete/:pcId
+    // @access  Private
+    deletePc: expressAsyncHandler(async (req, res) => {
+        console.log('Delete Pc')
     }),
 }
 
