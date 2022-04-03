@@ -32,13 +32,12 @@ const address = {
     addAddress: expressAsyncHandler(async (req, res) => {
         const user = await User.findById(req.user.id)
         const address = await Address.find({ user: user.id })
-        const { city, district, zipcode } = req.body
 
         if (address.length === 0) {
-            await Address.create({ user: user.id, city, district, zipcode, defaultAddress: true })
+            await Address.create({ user: user.id, ...req.body, defaultAddress: true })
             res.status(201).json({ message: { code: 0, message: 'Created Address' } })
         } else {
-            await Address.create({ user: user.id, city, district, zipcode })
+            await Address.create({ user: user.id, ...req.body })
             res.status(201).json({ message: { code: 0, message: 'Created Address' } })
         }
     }),
@@ -50,7 +49,7 @@ const address = {
         const user = await User.findById(req.user.id)
         const address = await Address.findById(req.body.id)
         const addresses = await Address.find({ user: user.id })
-        const { district, city, zipcode, defaultAddress } = req.body
+        const { district, city, zipcode, neighborhood, defaultAddress } = req.body
 
         // check user
         if (user) {
@@ -60,7 +59,10 @@ const address = {
                 if (address.defaultAddress)
                     res.status(200).json({ message: { code: 0, message: 'Address Updated' } })
                 else {
-                    await Address.updateMany({ user: user.id }, { defaultAddress: false })
+                    await Address.findOneAndUpdate(
+                        { user: user.id, defaultAddress: true },
+                        { defaultAddress: false }
+                    )
                     await Address.findByIdAndUpdate(
                         req.body.id,
                         {
@@ -68,6 +70,7 @@ const address = {
                             district,
                             zipcode,
                             defaultAddress,
+                            neighborhood,
                         },
                         { new: true }
                     )

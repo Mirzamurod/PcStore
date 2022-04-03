@@ -14,38 +14,52 @@ const review = {
     }),
 
     // @desc    Add Review
-    // @route   POST /api/reviews/add/:pcId
+    // @route   POST /api/reviews/add
     // @access  Private
     addReview: expressAsyncHandler(async (req, res) => {
-        const { rating, comment } = req.body
-        const pcId = req.params.id
+        const user = await User.findById(req.user.id)
+        const { rating, comment, pcId } = req.body
 
-        if (rating === 0 || rating > 5 || !comment || comment.charAt(0) === ' ')
-            res.status(400).json({ message: 'Please fill all fields' })
-        else {
-            await Review.create({
-                username: req.user.username,
-                rating,
-                comment,
-                pcId,
-            })
+        if (user) {
+            if (rating === 0 || rating > 5 || !comment || comment.charAt(0) === ' ')
+                res.status(400).json({ message: 'Please fill all fields' })
+            else {
+                await Review.create({
+                    username: user.username,
+                    rating,
+                    comment,
+                    pcId,
+                })
 
-            res.status(201).json({ message: { code: 0, message: 'success' } })
-        }
+                res.status(201).json({ message: { code: 0, message: 'success' } })
+            }
+        } else res.status(400).json({ message: 'User not found' })
     }),
 
     // @desc    Update Review
-    // @route   PUT /api/reviews/update/:pcId
+    // @route   PUT /api/reviews/update
     // @access  Private
     updateReview: expressAsyncHandler(async (req, res) => {
-        console.log('Update Review')
+        const user = await User.findById(req.user.id)
+
+        if (user) {
+            await Review.findByIdAndUpdate(req.body._id, req.body, { new: true })
+            res.status(200).json({ message: { code: 0, message: 'Updated Review' } })
+        } else {
+            res.status(400).json({ message: 'User not found !!!' })
+        }
     }),
 
     // @desc    Delete Review
-    // @route   DELETE /api/reviews/delete/:pcId
+    // @route   DELETE /api/reviews/delete/:reviewId
     // @access  Private
     deleteReview: expressAsyncHandler(async (req, res) => {
-        console.log('Delete Review')
+        const user = await User.findById(req.user.id)
+
+        if (user) {
+            await Review.findByIdAndDelete(req.params.id)
+            res.status(200).json({ message: { code: 0, message: 'Deleted Review' } })
+        } else res.status(400).json({ message: 'User not found !!!' })
     }),
 }
 

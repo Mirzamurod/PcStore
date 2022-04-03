@@ -18,9 +18,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 
-app.get('/', (req, res) => {
-    res.send('Hello World')
-})
+app.get('/', (req, res) => res.send('Hello World'))
 
 app.use('/api/users', userRoutes)
 app.use('/api/pcs', pcRoutes)

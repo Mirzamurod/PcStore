@@ -6,8 +6,8 @@ const router = express.Router()
 
 // /api/reviews
 router.get('/:id', review.getReviews)
-router.post('/add/:id', protect, review.addReview)
-router.post('/update/:id', protect, review.updateReview)
-router.post('/delete/:id', protect, review.deleteReview)
+router.post('/add', protect, review.addReview)
+router.put('/update', protect, review.updateReview)
+router.delete('/delete/:id', protect, review.deleteReview)
 
 export default router
