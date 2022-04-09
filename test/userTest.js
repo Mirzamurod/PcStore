@@ -10,6 +10,7 @@ const account = `obid${Math.random()}@gmail.com`
 
 describe('User Test\n', () => {
     // Add User
+    // POST /api/users/add
     before(done => {
         chai.request(app)
             .post(`${api}add`)
@@ -21,14 +22,14 @@ describe('User Test\n', () => {
             })
             .end((err, res) => {
                 if (err) console.log(`${api}login dan ma'lumot kemayapti`)
-                else {
-                    res.should.have.status(201)
-                }
+                else res.should.have.status(201)
+
                 done()
             })
     })
 
     // Login User
+    // POST /api/users/login
     it(`User Login ${api}login`, done => {
         chai.request(app)
             .post(api + 'login')
@@ -41,6 +42,7 @@ describe('User Test\n', () => {
     })
 
     // Update User
+    // PUT /api/users/update
     it(`Update User ${api}update`, done => {
         chai.request(app)
             .put(api + 'update')
@@ -61,25 +63,27 @@ describe('User Test\n', () => {
     })
 
     // Show Users
+    // GET /api/users
     // describe('', () => {
-        it('Show Users', done => {
-            chai.request(app)
-                .get(api)
-                .set({ Authorization: `Bearer ${token}` })
-                .end((err, res) => {
-                    if (res.body.message === 'Not authorized as an admin')
-                        console.log('Siz Adminmassiz')
-                    else {
-                        res.should.have.status(200)
-                        res.body.should.be.a('array')
-                        console.log(res.body)
-                    }
-                    done()
-                })
-        })
+    it('Show Users', done => {
+        chai.request(app)
+            .get(api)
+            .set({ Authorization: `Bearer ${token}` })
+            .end((err, res) => {
+                if (res.body.message === 'Not authorized as an admin')
+                    console.log('Siz Adminmassiz')
+                else {
+                    res.should.have.status(200)
+                    res.body.should.be.a('array')
+                    console.log(res.body)
+                }
+                done()
+            })
+    })
     // })
 
     // Delete User
+    // DELETE /api/users/delete
     it(`Delete User ${api}delete`, done => {
         chai.request(app)
             .delete(api + 'delete')

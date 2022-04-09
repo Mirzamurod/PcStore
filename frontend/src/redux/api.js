@@ -14,5 +14,5 @@ export const getPcsList = 'pcs'
 export const getPcList = 'pcs/' // + id
 
 // reviews
-export const getreviews = 'pcs/reviews/' // + id
+export const getreviews = 'reviews/' // + id
 export const addreview = 'pcs/addreview/' // + id

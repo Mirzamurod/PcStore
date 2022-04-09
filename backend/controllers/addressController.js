@@ -11,10 +11,17 @@ const address = {
 
         if (!user) res.status(400).json({ message: 'User not Found!!!' })
         else {
+            const address1 = await Address.find({ user: user.id, defaultAddress: true })
+            if (address1.length === 0)
+                await Address.findOneAndUpdate(
+                    { user: user.id, defaultAddress: false },
+                    { defaultAddress: true }
+                )
+
             const addresses = await Address.find({ user: user.id })
-            let nimadir = []
+            let changeAddress = []
             addresses.forEach(address => {
-                nimadir.push({
+                changeAddress.push({
                     id: address.id,
                     city: address.city,
                     district: address.district,
@@ -22,7 +29,7 @@ const address = {
                     defaultAddress: address.defaultAddress,
                 })
             })
-            res.status(200).json({ data: nimadir })
+            res.status(200).json({ data: changeAddress })
         }
     }),
 
@@ -34,11 +41,23 @@ const address = {
         const address = await Address.find({ user: user.id })
 
         if (address.length === 0) {
-            await Address.create({ user: user.id, ...req.body, defaultAddress: true })
-            res.status(201).json({ message: { code: 0, message: 'Created Address' } })
+            // await Address.create({ user: user.id, ...req.body, defaultAddress: true })
+            const address = await Address.create({
+                user: user.id,
+                ...req.body,
+                defaultAddress: true,
+            })
+            res.status(201).json({
+                message: { code: 0, message: 'Created Address' },
+                address: address.id,
+            })
         } else {
-            await Address.create({ user: user.id, ...req.body })
-            res.status(201).json({ message: { code: 0, message: 'Created Address' } })
+            // await Address.create({ user: user.id, ...req.body })
+            const address = await Address.create({ user: user.id, ...req.body })
+            res.status(201).json({
+                message: { code: 0, message: 'Created Address' },
+                address: address.id,
+            })
         }
     }),
 

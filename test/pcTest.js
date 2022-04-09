@@ -22,6 +22,7 @@ describe('Pcs Test', () => {
     })
 
     // Get All Pcs
+    // GET /api/pcs
     it('Get All Pcs', done => {
         chai.request(app)
             .get(api)
@@ -35,6 +36,7 @@ describe('Pcs Test', () => {
     })
 
     // Get Pc
+    // GET /api/pcs/:pcId
     it('Get Pc', done => {
         chai.request(app)
             .get(api + '623abf9d607ee5bdf1353983')
@@ -46,32 +48,6 @@ describe('Pcs Test', () => {
                 res.body.should.have.property('reviewNum')
                 res.body.should.have.property('message')
                 console.log(res.body.data)
-                done()
-            })
-    })
-
-    // Add Review
-    it('Add Review', done => {
-        chai.request(app)
-            .post(api + 'addreview/623abf9d607ee5bdf1353983')
-            .send({ rating: 5, comment: 'nima gap test' })
-            .set({ Authorization: `Bearer ${token}` })
-            .end((err, res) => {
-                res.should.have.status(201)
-                res.body.should.be.a('object')
-                res.body.should.have.property('message')
-                done()
-            })
-    })
-
-    // Get Reviews
-    it('Get Reviews', done => {
-        chai.request(app)
-            .get(api + 'reviews/623abf9d607ee5bdf1353983')
-            .end((err, res) => {
-                res.should.have.status(200)
-                res.body.should.be.a('object')
-                res.body.should.have.property('data')
                 done()
             })
     })
