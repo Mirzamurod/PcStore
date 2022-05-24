@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
 import {
     Box,
     Button,
@@ -12,6 +13,7 @@ import {
     Input,
     InputAdornment,
     InputLabel,
+    TextField,
     Typography,
 } from '@mui/material'
 import Visibility from '@mui/icons-material/Visibility'
@@ -23,30 +25,30 @@ import './signin.scss'
 const SignIn = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        setError,
+    } = useForm()
     const [showPassword, setShowPassword] = useState(false)
-    const [signIn, setSignIn] = useState({ email: '', password: '', check: false })
-    const [emailError, setEmailError] = useState(false)
-    const [passwordError, setPasswordError] = useState(false)
+    const [check, setCheck] = useState(false)
 
-    const { dark_mode, code } = useSelector(state => state.login)
+    const { dark_mode, code, err_msg } = useSelector(state => state.login)
     const token = localStorage.getItem('token')
 
     useEffect(() => {
-        if (code === 0 && token) {
-            setSignIn({ email: '', password: '', check: false })
-            navigate('/')
-        }
+        if (code === 0 && token) navigate('/')
     }, [code, navigate, token])
 
-    const signin = value => {
-        value.preventDefault()
-        if (signIn.email.length !== 0 && signIn.password.length !== 0) dispatch(userLogin(signIn))
+    useEffect(() => {
+        if (Object.keys(err_msg).length > 0)
+            Object.keys(err_msg).map(key => setError(key, { type: 'value', message: err_msg[key] }))
+    }, [err_msg, setError])
 
-        if (signIn.email.length === 0) setEmailError(true)
-        else setEmailError(false)
-
-        if (signIn.password.length === 0) setPasswordError(true)
-        else setPasswordError(false)
+    const onSubmit = value => {
+        dispatch(userLogin(value))
+        console.log(value)
     }
 
     return (
@@ -58,34 +60,34 @@ const SignIn = () => {
                 component='form'
                 sx={{ '& .MuiInput-root': { width: '100%' } }}
                 noValidate
-                onSubmit={signin}
+                onSubmit={handleSubmit(onSubmit)}
             >
                 <Box border={`1px solid ${dark_mode ? '#e2e4e5' : 'gray'}`} borderRadius={2} p={4}>
-                    <FormControl variant='standard' color='error' sx={{ display: 'block', mb: 2 }}>
-                        <InputLabel htmlFor='emailin'>Email</InputLabel>
-                        <Input
-                            type='email'
-                            id='usernamein'
-                            name='username'
-                            placeholder='Email'
-                            value={signIn.email}
-                            onChange={e => setSignIn({ ...signIn, email: e.target.value })}
-                        />
-                        {emailError && (
-                            <FormHelperText sx={{ color: 'red', my: 1 }}>
-                                Email is empty
-                            </FormHelperText>
-                        )}
-                    </FormControl>
-                    <FormControl variant='standard' color='error' sx={{ display: 'block', mb: 2 }}>
+                    <TextField
+                        label='Email'
+                        error={!!errors?.email}
+                        variant='standard'
+                        color='error'
+                        sx={{ display: 'block', mb: 2 }}
+                        type='email'
+                        placeholder='example@gmail.com'
+                        {...register('email', {
+                            required: 'This field is required!!!',
+                            pattern: { value: /[\w.]+@\w+\.(com|ru)/, message: `This isn't Email` },
+                        })}
+                        helperText={errors?.email?.message}
+                    />
+                    <FormControl
+                        variant='standard'
+                        error={!!errors?.password}
+                        color='error'
+                        sx={{ display: 'block', mb: 2 }}
+                    >
                         <InputLabel htmlFor='passwordin'>Password</InputLabel>
                         <Input
-                            id='passwordin'
-                            name='password'
                             placeholder='Password'
                             type={showPassword ? 'text' : 'password'}
-                            value={signIn.password}
-                            onChange={e => setSignIn({ ...signIn, password: e.target.value })}
+                            {...register('password', { required: 'This field is required!!!' })}
                             endAdornment={
                                 <InputAdornment position='end'>
                                     <IconButton
@@ -98,26 +100,21 @@ const SignIn = () => {
                                 </InputAdornment>
                             }
                         />
-                        {passwordError && (
-                            <FormHelperText sx={{ color: 'red', my: 1 }}>
-                                Password is empty
-                            </FormHelperText>
-                        )}
+                        <FormHelperText>{errors?.password?.message}</FormHelperText>
                     </FormControl>
                 </Box>
                 <FormControlLabel
                     control={<Checkbox color='error' />}
                     label='Remember my details'
                     sx={{ display: 'block', my: 2 }}
-                    checked={signIn.check}
-                    onChange={e => setSignIn({ ...signIn, check: e.target.checked })}
+                    checked={check}
+                    onChange={e => setCheck(e.target.checked)}
                 />
                 <Button
                     color='error'
                     variant='contained'
                     endIcon={<ArrowRightAltIcon />}
                     sx={{ width: '100%' }}
-                    onClick={signin}
                     size='large'
                     type='submit'
                 >

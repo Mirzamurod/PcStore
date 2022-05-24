@@ -21,15 +21,28 @@ const user = {
         const user = await User.findById(req.user.id)
         if (!user) res.status(400).json({ message: 'User not found !!!' })
         else {
-            res.status(200).json({
-                data: {
-                    username: user.username,
-                    fullname: user.fullname,
-                    email: user.email,
-                    dark_mode: user.dark_mode,
-                },
-                message: { code: 0, message: 'success' },
-            })
+            if (user.isAdmin) {
+                res.status(200).json({
+                    data: {
+                        username: user.username,
+                        fullname: user.fullname,
+                        email: user.email,
+                        dark_mode: user.dark_mode,
+                        isAdmin: user.isAdmin,
+                    },
+                    message: { code: 0, message: 'success' },
+                })
+            } else {
+                res.status(200).json({
+                    data: {
+                        username: user.username,
+                        fullname: user.fullname,
+                        email: user.email,
+                        dark_mode: user.dark_mode,
+                    },
+                    message: { code: 0, message: 'success' },
+                })
+            }
         }
     }),
 
@@ -80,13 +93,12 @@ const user = {
 
         // check for user email
         const user = await User.findOne({ email })
-        if (user && (await bcryptjs.compare(password, user.password)))
-            res.status(200).json({ data: { token: generateToken(user._id) }, code: 0 })
-        else {
-            res.status(400).json({ message: 'User not found' })
-            // throw new Error('User not found')
-        }
-    }),
+        if (user) {
+            if (await bcryptjs.compare(password, user.password))
+                res.status(200).json({ data: { token: generateToken(user._id) }, code: 0 })
+            else res.status(400).json({ password: 'Password is wrong' })
+        } else res.status(400).json({ email: 'User not found' })
+    }), //(await bcryptjs.compare(password, user.password))
 
     // @desc Edit User
     // @route PUT /api/users/update

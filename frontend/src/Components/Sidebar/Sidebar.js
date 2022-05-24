@@ -22,6 +22,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import BrightnessHighIcon from '@mui/icons-material/BrightnessHigh'
 import PermIdentityIcon from '@mui/icons-material/PermIdentity'
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import { changeMode, userProfile } from '../../redux/user/login'
 import { Others, UserSetting } from './Others'
 import './sidebar.scss'
@@ -189,6 +190,14 @@ const Sidebar = () => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
+                                {user.isAdmin && (
+                                    <MenuItem onClick={handleCloseUserMenu} sx={{ p: 0 }}>
+                                        <ListItemIcon sx={{ pr: 1, pl: 2 }}>
+                                            <AdminPanelSettingsIcon />
+                                        </ListItemIcon>
+                                        <UserSetting url='/admin/pcs' dark_mode={dark_mode} name='Admin' />
+                                    </MenuItem>
+                                )}
                                 {settings.map(setting => (
                                     <MenuItem
                                         key={setting.name}

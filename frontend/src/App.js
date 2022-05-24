@@ -20,6 +20,7 @@ import UserProfile from './Screens/UserProfile/UserProfile'
 import Pc from './Screens/Pc/Pc'
 import ShoppingCart from './Screens/ShoppingCart.js/ShoppingCart'
 import Error from './Components/Error'
+import AdminPanel from './Screens/AdminPanel/AdminPanel'
 import 'swiper/css'
 import 'swiper/css/bundle'
 import './App.scss'
@@ -65,12 +66,13 @@ function App(props) {
                     <Sidebar />
                     <Toolbar id='back-to-top-anchor' />
                     <Routes>
-                        <Route path='/' element={<HomePage />} exact />
-                        <Route path='/login' element={<Login />} exact />
-                        <Route path='/user/:keyword' element={<UserProfile />} exact />
-                        <Route path='/pc/:id' element={<Pc />} exact />
-                        <Route path='/shoppingcart' element={<ShoppingCart />} exact />
-                        <Route path='*' element={<Error />} exact />
+                        <Route path='/' element={<HomePage />} />
+                        <Route path='/login' element={<Login />} />
+                        <Route path='/user/:keyword' element={<UserProfile />} />
+                        <Route path='/pc/:id' element={<Pc />} />
+                        <Route path='/shoppingcart' element={<ShoppingCart />} />
+                        <Route path='/admin/:keyword' element={<AdminPanel />} />
+                        <Route path='*' element={<Error />} />
                     </Routes>
                     <Footer />
                     <ScrollTop {...props}>

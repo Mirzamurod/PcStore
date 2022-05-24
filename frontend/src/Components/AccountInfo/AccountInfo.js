@@ -365,6 +365,7 @@ const AccountInfo = memo(() => {
                 sx={{ textTransform: 'capitalize', my: 4 }}
                 disabled={save}
                 onClick={saveChanges}
+                // type='submit'
             >
                 Save Changes
             </Button>

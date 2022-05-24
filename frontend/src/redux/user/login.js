@@ -30,6 +30,7 @@ const login = createSlice({
             state.user = payload.data
             state.dark_mode = payload.data.dark_mode
             state.err_msg = payload.message
+            state.code = ''
         },
         userUpdate: (state, { payload }) => {
             state.isLoading = false
@@ -43,7 +44,7 @@ const login = createSlice({
         },
         onFail: (state, { payload }) => {
             state.isLoading = false
-            state.err_msg = payload.data
+            state.err_msg = { ...payload.response.data }
             state.isError = true
         },
         changeMode: state => {
