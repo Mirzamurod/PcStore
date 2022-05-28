@@ -30,26 +30,25 @@ const SignIn = () => {
         handleSubmit,
         formState: { errors },
         setError,
+        setValue,
     } = useForm()
     const [showPassword, setShowPassword] = useState(false)
-    const [check, setCheck] = useState(false)
 
     const { dark_mode, code, err_msg } = useSelector(state => state.login)
     const token = localStorage.getItem('token')
 
     useEffect(() => {
-        if (code === 0 && token) navigate('/')
-    }, [code, navigate, token])
+        if (code === 0 && token) {
+            setValue('email', '')
+            setValue('password', '')
+            navigate('/')
+        }
+    }, [code, navigate, token, setValue])
 
     useEffect(() => {
         if (Object.keys(err_msg).length > 0)
             Object.keys(err_msg).map(key => setError(key, { type: 'value', message: err_msg[key] }))
     }, [err_msg, setError])
-
-    const onSubmit = value => {
-        dispatch(userLogin(value))
-        console.log(value)
-    }
 
     return (
         <div id='signin'>
@@ -60,7 +59,7 @@ const SignIn = () => {
                 component='form'
                 sx={{ '& .MuiInput-root': { width: '100%' } }}
                 noValidate
-                onSubmit={handleSubmit(onSubmit)}
+                onSubmit={handleSubmit(value => dispatch(userLogin(value)))}
             >
                 <Box border={`1px solid ${dark_mode ? '#e2e4e5' : 'gray'}`} borderRadius={2} p={4}>
                     <TextField
@@ -107,8 +106,7 @@ const SignIn = () => {
                     control={<Checkbox color='error' />}
                     label='Remember my details'
                     sx={{ display: 'block', my: 2 }}
-                    checked={check}
-                    onChange={e => setCheck(e.target.checked)}
+                    {...register('check')}
                 />
                 <Button
                     color='error'
@@ -120,11 +118,11 @@ const SignIn = () => {
                 >
                     sign in
                 </Button>
-                <Box mb={6} my={3}>
-                    <Link to='/' className={`link ${!dark_mode && 'light'}`}>
-                        Forgot password?
-                    </Link>
-                </Box>
+            </Box>
+            <Box mb={6} my={3}>
+                <Link to='/' className={`link ${!dark_mode && 'light'}`}>
+                    Forgot password?
+                </Link>
             </Box>
         </div>
     )
