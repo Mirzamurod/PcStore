@@ -86,7 +86,10 @@ const SignIn = () => {
                         <Input
                             placeholder='Password'
                             type={showPassword ? 'text' : 'password'}
-                            {...register('password', { required: 'This field is required!!!' })}
+                            {...register('password', {
+                                required: 'This field is required!!!',
+                                minLength: { value: 8, message: 'Minimum 8 letters' },
+                            })}
                             endAdornment={
                                 <InputAdornment position='end'>
                                     <IconButton

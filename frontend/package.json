@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
+    "@hookform/resolvers": "^2.8.10",
     "@mui/icons-material": "^5.5.1",
     "@mui/lab": "^5.0.0-alpha.73",
     "@mui/material": "^5.5.1",
@@ -23,9 +24,11 @@
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
     "react-scroll": "^1.8.6",
+    "react-toastify": "^9.0.1",
     "sass": "^1.49.9",
     "swiper": "^8.0.7",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",
