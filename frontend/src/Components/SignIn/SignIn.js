@@ -72,7 +72,7 @@ const SignIn = () => {
                         placeholder='example@gmail.com'
                         {...register('email', {
                             required: 'This field is required!!!',
-                            pattern: { value: /[\w.]+@\w+\.(com|ru)/, message: `This isn't Email` },
+                            pattern: { value: /[\w.]+@\w+\.(com|ru)/, message: `This is not Email` },
                         })}
                         helperText={errors?.email?.message}
                     />

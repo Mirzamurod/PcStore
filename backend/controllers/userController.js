@@ -63,7 +63,6 @@ const user = {
             password.length === 0
         ) {
             res.status(400).json({ message: 'Please add all fields' })
-            // throw new Error('Please add all fields')
         }
 
         // Check if user exists
@@ -72,8 +71,7 @@ const user = {
         const hashedPassword = await bcryptjs.hash(password, salt)
 
         if (userExists) {
-            res.status(400).json({ message: 'User already exists' })
-            // throw new Error('User already exists')
+            res.status(400).json({ email: 'User already exists' })
         }
 
         const user = await User.create({ username, fullname, email, password: hashedPassword })
@@ -81,7 +79,6 @@ const user = {
         if (user) res.status(201).json({ message: { message: 'User added', code: 0 } })
         else {
             res.status(400).json({ message: 'Invalid user data' })
-            // throw new Error('Invalid user data')
         }
     }),
 
@@ -91,14 +88,27 @@ const user = {
     login: expressAsyncHandler(async (req, res) => {
         const { email, password } = req.body
 
-        // check for user email
-        const user = await User.findOne({ email })
-        if (user) {
-            if (await bcryptjs.compare(password, user.password))
-                res.status(200).json({ data: { token: generateToken(user._id) }, code: 0 })
-            else res.status(400).json({ password: 'Password is wrong' })
-        } else res.status(400).json({ email: 'User not found' })
-    }), //(await bcryptjs.compare(password, user.password))
+        if (!!email && !!password) {
+            // check for user email
+            if (email) {
+                const user = await User.findOne({ email })
+                if (/[\w.]+@\w+\.(com|ru)/.test(user)) {
+                    if (await bcryptjs.compare(password, user.password))
+                        res.status(200).json({ data: { token: generateToken(user._id) }, code: 0 })
+                    else res.status(400).json({ message: { password: 'Password is wrong' } })
+                } else res.status(400).json({ message: { email: 'User not found' } })
+            } else res.status(400).json({ message: { email: 'This is not Email' } })
+        } else if (!!!email && !!!password)
+            res.status(400).json({
+                message: {
+                    email: 'This field is required!!!',
+                    password: 'This field is required!!!',
+                },
+            })
+        else if (!!!email) res.status(400).json({ message: { email: 'This field is required!!!' } })
+        else if (!!!password)
+            res.status(400).json({ message: { password: 'This field is required!!!' } })
+    }),
 
     // @desc Edit User
     // @route PUT /api/users/update
