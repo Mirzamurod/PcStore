@@ -52,33 +52,20 @@ const user = {
     register: expressAsyncHandler(async (req, res) => {
         const { username, fullname, email, password } = req.body
 
-        if (
-            !username ||
-            !fullname ||
-            !email ||
-            !password ||
-            username.length === 0 ||
-            fullname.length === 0 ||
-            email.length === 0 ||
-            password.length === 0
-        ) {
-            res.status(400).json({ message: 'Please add all fields' })
-        }
+        if (!!username && !!fullname && !!email && !!password) {
+            // Check if user exists
+            const userExists = await User.findOne({ email })
 
-        // Check if user exists
-        const userExists = await User.findOne({ email })
+            if (userExists) res.status(400).json({ email: 'User already exists' })
+            else {
+                const hashedPassword = await bcryptjs.hash(password, salt)
+                const user = await User.create({ ...req.body, password: hashedPassword })
 
-        const hashedPassword = await bcryptjs.hash(password, salt)
-
-        if (userExists) {
-            res.status(400).json({ email: 'User already exists' })
-        }
-
-        const user = await User.create({ username, fullname, email, password: hashedPassword })
-
-        if (user) res.status(201).json({ message: { message: 'User added', code: 0 } })
-        else {
-            res.status(400).json({ message: 'Invalid user data' })
+                if (user) res.status(201).json({ message: { message: 'User added', code: 0 } })
+                else res.status(400).json({ message: 'Invalid user data' })
+            }
+        } else {
+            // errors
         }
     }),
 
