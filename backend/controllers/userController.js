@@ -52,20 +52,51 @@ const user = {
     register: expressAsyncHandler(async (req, res) => {
         const { username, fullname, email, password } = req.body
 
-        if (!!username && !!fullname && !!email && !!password) {
+        // Check fields
+        if (
+            !!username &&
+            !!fullname &&
+            !!email &&
+            !!password &&
+            !/[^A-Za-z0-9]+/g.test(username) &&
+            /[A-z]+\s[A-z]+/.test(fullname) &&
+            /[\w.]+@\w+\.(com|ru)/.test(email) &&
+            password.length > 7 &&
+            password.length < 17
+        ) {
             // Check if user exists
             const userExists = await User.findOne({ email })
 
-            if (userExists) res.status(400).json({ email: 'User already exists' })
+            if (userExists) res.status(400).json({ message: { email: 'User already exists' } })
             else {
                 const hashedPassword = await bcryptjs.hash(password, salt)
                 const user = await User.create({ ...req.body, password: hashedPassword })
 
                 if (user) res.status(201).json({ message: { message: 'User added', code: 0 } })
-                else res.status(400).json({ message: 'Invalid user data' })
+                else res.status(400).json({ message: { toast: 'Invalid user data' } })
             }
         } else {
-            // errors
+            // Check if empty field
+            let message = {}
+            Object.entries({ username, fullname, email, password }).forEach(([key, value]) => {
+                if (!!!req.body[key]) message[key] = value
+            })
+
+            const keys = Object.keys(message)
+            keys.forEach(key => (message[key] = 'This field is required!!!'))
+
+            if (!!username)
+                if (/[^A-Za-z0-9]+/g.test(username)) message.username = 'This is not Username'
+            if (!!fullname)
+                if (!/[A-z]+\s[A-z]+/.test(fullname)) message.fullname = 'This is not Fullname'
+            if (!!email)
+                if (!/[\w.]+@\w+\.(com|ru)/.test(email)) message.email = 'This is not Email'
+            if (!!password) {
+                if (password.length < 8) message.password = 'Minimum 8 letters'
+                if (password.length > 16) message.password = 'Maximum 16 letters'
+            }
+
+            res.status(400).json({ message })
         }
     }),
 
@@ -75,26 +106,38 @@ const user = {
     login: expressAsyncHandler(async (req, res) => {
         const { email, password } = req.body
 
-        if (!!email && !!password) {
-            // check for user email
-            if (email) {
-                const user = await User.findOne({ email })
-                if (/[\w.]+@\w+\.(com|ru)/.test(user)) {
-                    if (await bcryptjs.compare(password, user.password))
-                        res.status(200).json({ data: { token: generateToken(user._id) }, code: 0 })
-                    else res.status(400).json({ message: { password: 'Password is wrong' } })
-                } else res.status(400).json({ message: { email: 'User not found' } })
-            } else res.status(400).json({ message: { email: 'This is not Email' } })
-        } else if (!!!email && !!!password)
-            res.status(400).json({
-                message: {
-                    email: 'This field is required!!!',
-                    password: 'This field is required!!!',
-                },
+        // Check fields
+        if (
+            !!email &&
+            !!password &&
+            /[\w.]+@\w+\.(com|ru)/.test(email) &&
+            password.length > 7 &&
+            password.length < 17
+        ) {
+            const user = await User.findOne({ email })
+            if (user) {
+                if (await bcryptjs.compare(password, user.password))
+                    res.status(200).json({ data: { token: generateToken(user._id) }, code: 0 })
+                else res.status(400).json({ message: { password: 'Password is wrong' } })
+            } else res.status(400).json({ message: { email: 'User not found' } })
+        } else {
+            let message = {}
+            Object.entries({ email, password }).forEach(([key, value]) => {
+                if (!!!req.body[key]) message[key] = value
             })
-        else if (!!!email) res.status(400).json({ message: { email: 'This field is required!!!' } })
-        else if (!!!password)
-            res.status(400).json({ message: { password: 'This field is required!!!' } })
+
+            const keys = Object.keys(message)
+            keys.forEach(key => (message[key] = 'This field is required!!!'))
+
+            if (!!email)
+                if (!/[\w.]+@\w+\.(com|ru)/.test(email)) message.email = 'This is not Email'
+            if (!!password) {
+                if (password.length < 8) message.password = 'Minimum 8 letters'
+                if (password.length > 16) message.password = 'Maximum 16 letters'
+            }
+
+            res.status(400).json({ message })
+        }
     }),
 
     // @desc Edit User

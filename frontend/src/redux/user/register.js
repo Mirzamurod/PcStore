@@ -3,7 +3,7 @@ import { apiPcStore, registerUser } from './../api'
 
 const register = createSlice({
     name: 'register',
-    initialState: { isLoading: false, isError: false, code: '' },
+    initialState: { isLoading: false, isError: false, code: '', err_msg: '' },
     reducers: {
         onStart: state => {
             state.isLoading = true
@@ -14,9 +14,10 @@ const register = createSlice({
             state.isLoading = false
             state.code = payload.message.code
         },
-        onFail: state => {
+        onFail: (state, { payload }) => {
             state.isLoading = false
             state.isError = true
+            state.err_msg = { ...payload.response.data.message }
         },
     },
 })

@@ -44,8 +44,8 @@ const login = createSlice({
         },
         onFail: (state, { payload }) => {
             state.isLoading = false
-            state.err_msg = { ...payload.response.data }
             state.isError = true
+            state.err_msg = { ...payload.response.data.message }
         },
         changeMode: state => {
             state.dark_mode = !state.dark_mode

@@ -26,7 +26,7 @@ import 'react-toastify/dist/ReactToastify.css'
 const SignUp = () => {
     const dispatch = useDispatch()
     const formSchema = Yup.object().shape({
-        username: Yup.string().required('This field is required!!!').lowercase(),
+        username: Yup.string().required('This field is required!!!').matches(/[A-Za-z0-9]/g),
         fullname: Yup.string()
             .required('This field is required!!!')
             .matches(/[A-z]+\s[A-z]+/, 'This is not Username')
@@ -45,13 +45,14 @@ const SignUp = () => {
         register,
         formState: { errors },
         reset,
-        clearErrors
+        clearErrors,
+        setError,
     } = useForm({ mode: 'onTouched', resolver: yupResolver(formSchema) })
     const [cPasswordI, setCPasswordI] = useState(false)
     const [rPasswordI, setRPasswordI] = useState(false)
 
     const { dark_mode } = useSelector(state => state.login)
-    const { code, isLoading } = useSelector(state => state.register)
+    const { code, isLoading, err_msg } = useSelector(state => state.register)
 
     useEffect(() => {
         if (code === 0) {
@@ -62,6 +63,11 @@ const SignUp = () => {
             clearErrors()
         }
     }, [code, dark_mode, reset, clearErrors])
+
+    useEffect(() => {
+        if (Object.keys(err_msg).length > 0)
+            Object.keys(err_msg).map(key => setError(key, { type: 'value', message: err_msg[key] }))
+    }, [err_msg, setError])
 
     const signup = values => {
         dispatch(
