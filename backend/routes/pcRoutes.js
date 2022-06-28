@@ -7,8 +7,8 @@ const router = express.Router()
 // /api/pc
 router.get('/', pc.getPc)
 router.get('/:id', pc.getPcById)
-router.post('/pcs/add', protect, admin, pc.addPc)
-router.put('/pcs/update', protect, admin, pc.updatePc)
-router.delete('/pcs/delete/:id', protect, admin, pc.deletePc)
+router.post('/add', protect, admin, pc.addPc)
+router.put('/update', protect, admin, pc.updatePc)
+router.delete('/:id', protect, admin, pc.deletePc)
 
 export default router

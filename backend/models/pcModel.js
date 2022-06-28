@@ -4,10 +4,10 @@ const pcSchema = mongoose.Schema(
     {
         name: { type: String, required: true },
         image: { type: Array, required: true },
-        cpu: { type: String, required: true },
+        cpu: { type: String, required: true }, // protsessor
         motherboard: { type: String, required: true },
         cooler: { type: String, required: true },
-        ddr: { type: String, required: true },
+        ddr: { type: String, required: true }, // ozu
         videocard: { type: String, required: true },
         hdd: { type: String, required: false },
         ssd_sata: { type: String, required: false },
@@ -18,7 +18,7 @@ const pcSchema = mongoose.Schema(
         category: { type: String, required: true },
         description: { type: String, required: true },
         warranty: { type: String, required: true },
-        have: { type: Boolean, required: true, default: false },
+        have: { type: Boolean, required: true, default: false }, // bor yoligi
     },
     { timestamps: true }
 )

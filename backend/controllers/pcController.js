@@ -1,3 +1,4 @@
+import { json } from 'express'
 import expressAsyncHandler from 'express-async-handler'
 import Review from '../models/reviewModel.js'
 import Pc from './../models/pcModel.js'
@@ -35,7 +36,24 @@ const pc = {
     // @route   POST /api/pcs/add
     // @access  Private
     addPc: expressAsyncHandler(async (req, res) => {
-        console.log('Add Pc')
+        const {
+            name,
+            image,
+            cpu,
+            motherboard,
+            cooler,
+            ddr,
+            videocard,
+            hdd,
+            ssd_sata,
+            ssd_m2,
+            price,
+            rating,
+            category,
+            description,
+            warranty,
+            have,
+        } = req.body
     }),
 
     // @desc    Update Pc
@@ -46,10 +64,13 @@ const pc = {
     }),
 
     // @desc    Delete Pc
-    // @route   DELETE /api/pcs/delete/:pcId
+    // @route   DELETE /api/pcs/:pcId
     // @access  Private
     deletePc: expressAsyncHandler(async (req, res) => {
-        console.log('Delete Pc')
+        const pc = await Pc.findByIdAndRemove(req.params.id)
+
+        if (!!pc) res.status(200).json({ message: { message: 'Pc deleted', code: 0 } })
+        else res.status(400).json({ message: { message: 'Pc not Found' } })
     }),
 }
 
