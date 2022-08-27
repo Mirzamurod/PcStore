@@ -30,21 +30,18 @@
         }
     }
 
-    .alice-carousel {
-        &__dots {
-            position: absolute;
-            bottom: 10%;
-            right: 30%;
-
-            &-item {
-                width: 25px;
-                height: 4px;
-                border-radius: 2px !important;
-            }
-        }
+    .swiper {
+        width: 100%;
+        height: 100%;
     }
-    .alice-carousel__dots-item:not(.__custom):hover,
-    .alice-carousel__dots-item:not(.__custom).__active {
-        background-color: red;
+
+    .swiper-slide {
+        background-position: center;
+        background-size: cover;
+    }
+
+    .swiper-slide img {
+        display: block;
+        width: 100%;
     }
 }

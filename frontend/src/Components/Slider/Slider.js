@@ -1,37 +1,39 @@
 import { useSelector } from 'react-redux'
 import { Box, Button, Container, Grid, Rating, styled, Typography } from '@mui/material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import AliceCarousel from 'react-alice-carousel'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import { data } from '../data'
+import 'swiper/css/effect-fade'
+import 'swiper/css/pagination'
 import './slider.scss'
+
+import { Autoplay, EffectFade, Pagination } from 'swiper'
 
 const Slider = () => {
     const StyledRating = styled(Rating)({
-        '& .MuiRating-iconFilled': {
-            color: '#e90021',
-        },
-        '& .MuiRating-iconEmpty': {
-            color: '#e90021',
-        },
+        '& .MuiRating-iconFilled': { color: '#e90021' },
+        '& .MuiRating-iconEmpty': { color: '#e90021' },
     })
 
     const { dark_mode } = useSelector(state => state.login)
 
     return (
         <div id='slider'>
-            <AliceCarousel
-                autoPlay
-                mouseTracking
-                infinite
-                animationType='fadeout'
-                autoPlayDirection={'ltr'} // ltr o'ngga, rtl chapga aylantiradi
-                autoPlayInterval={2000}
-                animationDuration={600}
-                controlsStrategy='alternate'
-                disableButtonsControls
+            <Swiper
+                spaceBetween={30}
+                effect={'fade'}
+                loop={true}
+                autoplay={{ delay: 2500, disableOnInteraction: false }}
+                pagination={{ clickable: true }}
+                modules={[Autoplay, EffectFade, Pagination]}
+                className='mySwiper'
             >
                 {data?.map((item, index) => (
-                    <div key={index} className='react-carousel' style={{ position: 'relative' }}>
+                    <SwiperSlide
+                        key={index}
+                        className='react-carousel'
+                        style={{ position: 'relative', width: '100%' }}
+                    >
                         <div
                             style={{ backgroundImage: `url(${item.image})` }}
                             className={`foncolor ${!dark_mode && 'light'}`}
@@ -119,9 +121,9 @@ const Slider = () => {
                                 </Grid>
                             </Grid>
                         </Container>
-                    </div>
+                    </SwiperSlide>
                 ))}
-            </AliceCarousel>
+            </Swiper>
         </div>
     )
 }
