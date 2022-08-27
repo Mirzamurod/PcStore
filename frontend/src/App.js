@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
@@ -12,15 +13,11 @@ import {
     Zoom,
 } from '@mui/material'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import HomePage from './Screens/Home/HomePage'
-import Login from './Screens/Login/Login'
+import { ToastContainer } from 'react-toastify'
 import Sidebar from './Components/Sidebar/Sidebar'
 import Footer from './Components/Footer/Footer'
-import UserProfile from './Screens/UserProfile/UserProfile'
-import Pc from './Screens/Pc/Pc'
-import ShoppingCart from './Screens/ShoppingCart.js/ShoppingCart'
-import Error from './Components/Error'
-import AdminPanel from './Screens/AdminPanel/AdminPanel'
+import links from './Routes'
+import 'react-toastify/dist/ReactToastify.css'
 import 'swiper/css'
 import 'swiper/css/bundle'
 import './App.scss'
@@ -61,26 +58,29 @@ function App(props) {
     return (
         <ThemeProvider theme={theme}>
             <Router>
-                <div className='App'>
-                    <CssBaseline />
-                    <Sidebar />
-                    <Toolbar id='back-to-top-anchor' />
-                    <Routes>
-                        <Route path='/' element={<HomePage />} />
-                        <Route path='/login' element={<Login />} />
-                        <Route path='/user/:keyword' element={<UserProfile />} />
-                        <Route path='/pc/:id' element={<Pc />} />
-                        <Route path='/shoppingcart' element={<ShoppingCart />} />
-                        <Route path='/admin/:keyword' element={<AdminPanel />} />
-                        <Route path='*' element={<Error />} />
-                    </Routes>
-                    <Footer />
-                    <ScrollTop {...props}>
-                        <Fab size='small' sx={{ bgcolor: 'red' }} aria-label='scroll back to top'>
-                            <KeyboardArrowUpIcon />
-                        </Fab>
-                    </ScrollTop>
-                </div>
+                <Suspense fallback={false}>
+                    <div className='App'>
+                        <CssBaseline />
+                        <Sidebar />
+                        <Toolbar id='back-to-top-anchor' />
+                        <Routes>
+                            {links.map((link, index) => (
+                                <Route path={link.path} element={<link.element />} key={index} />
+                            ))}
+                        </Routes>
+                        <Footer />
+                        <ScrollTop {...props}>
+                            <Fab
+                                size='small'
+                                sx={{ bgcolor: 'red' }}
+                                aria-label='scroll back to top'
+                            >
+                                <KeyboardArrowUpIcon />
+                            </Fab>
+                        </ScrollTop>
+                        <ToastContainer />
+                    </div>
+                </Suspense>
             </Router>
         </ThemeProvider>
     )

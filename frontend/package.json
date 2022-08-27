@@ -24,7 +24,7 @@
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
     "react-scroll": "^1.8.6",
-    "react-toastify": "^9.0.1",
+    "react-toastify": "^9.0.8",
     "sass": "^1.49.9",
     "swiper": "^8.0.7",
     "web-vitals": "^2.1.4",

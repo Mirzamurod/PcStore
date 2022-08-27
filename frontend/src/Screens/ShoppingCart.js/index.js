@@ -10,6 +10,8 @@ import {
 } from '@mui/material'
 
 const ShoppingCart = () => {
+    document.title = 'Shopping Cart'
+
     return (
         <Container sx={{ pb: 4 }}>
             <Typography variant='h6' mb={4} fontWeight={700}>

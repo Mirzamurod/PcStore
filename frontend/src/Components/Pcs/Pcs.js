@@ -1,5 +1,5 @@
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Fragment, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Card, CardActions, CardContent, Button, Typography, Container, Grid } from '@mui/material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
@@ -40,7 +40,7 @@ const Pcs = () => {
                                 }}
                             >
                                 {item?.stock_price > 0 && (
-                                    <>
+                                    <Fragment>
                                         <img
                                             src='/images/stock.png'
                                             style={{ width: '70px', position: 'absolute' }}
@@ -53,7 +53,7 @@ const Pcs = () => {
                                         >
                                             10%
                                         </p>
-                                    </>
+                                    </Fragment>
                                 )}
                                 <Swiper
                                     loop={true}
@@ -87,9 +87,17 @@ const Pcs = () => {
                                         gutterBottom
                                         variant='subtitle1'
                                         component='div'
-                                        sx={{ fontWeight: 700 }}
+                                        sx={{
+                                            fontWeight: 700,
+                                            '& .birnima': { color: 'white !important' },
+                                        }}
                                     >
-                                        {item?.name}
+                                        <Link
+                                            to={`/pc/${encode(encode(item?._id))}`}
+                                            className='birnima'
+                                        >
+                                            {item?.name}
+                                        </Link>
                                     </Typography>
                                     <Typography
                                         variant='body2'

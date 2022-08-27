@@ -24,11 +24,10 @@ app.use('/api/users', userRoutes)
 app.use('/api/pcs', pcRoutes)
 app.use('/api/address', addressRoutes)
 app.use('/api/reviews', reviewRoutes)
+app.use('/*', (req, res) => res.status(404).json({ data: 'Url not Found', code: 1 }))
 
 const port = process.env.PORT || 5000
 
-app.listen(port, () => {
-    console.log(`Server ishga tushdi. Port ${port}`.yellow.bold)
-})
+app.listen(port, () => console.log(`Server ishga tushdi. Port ${port}`.yellow.bold))
 
 export default app

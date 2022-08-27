@@ -5,14 +5,16 @@ import HomeIcon from '@mui/icons-material/Home'
 import PersonIcon from '@mui/icons-material/Person'
 import ListAltIcon from '@mui/icons-material/ListAlt'
 import AccountInfo from '../../Components/AccountInfo/AccountInfo'
-import Address from './../../Components/Address/Address'
-import Orders from './../../Components/Order/Orders'
+import Address from '../../Components/Address/Address'
+import Orders from '../../Components/Order/Orders'
 import { useEffect } from 'react'
 
 const UserProfile = () => {
     const location = useLocation()
     const navigate = useNavigate()
-    const { dark_mode } = useSelector(state => state.login)
+    const { dark_mode, user } = useSelector(state => state.login)
+
+    document.title = user.fullname ?? 'Pc Store'
 
     const token = localStorage.getItem('token')
     useEffect(() => {

@@ -1,7 +1,7 @@
 import { Container, Grid } from '@mui/material'
-import Title from './../../Components/Title'
-import SignIn from './../../Components/SignIn/SignIn'
-import SignUp from './../../Components/SignUp/SignUp'
+import Title from '../../Components/Title'
+import SignIn from '../../Components/SignIn/SignIn'
+import SignUp from '../../Components/SignUp/SignUp'
 
 const Login = () => {
     return (
