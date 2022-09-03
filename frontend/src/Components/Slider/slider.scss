@@ -44,4 +44,16 @@
         display: block;
         width: 100%;
     }
+
+    --swiper-theme-color: #ff0000 !important;
+
+    .swiper-pagination-bullet {
+        background-color: var(--swiper-theme-color) !important;
+        opacity: 1 !important;
+    }
+
+    .swiper-horizontal > .swiper-pagination-bullets.swiper-pagination-bullets-dynamic,
+    .swiper-pagination-horizontal.swiper-pagination-bullets.swiper-pagination-bullets-dynamic {
+        left: 60% !important;
+    }
 }

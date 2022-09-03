@@ -3,11 +3,10 @@ import { Box, Button, Container, Grid, Rating, styled, Typography } from '@mui/m
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { data } from '../data'
-import 'swiper/css/effect-fade'
 import 'swiper/css/pagination'
 import './slider.scss'
 
-import { Autoplay, EffectFade, Pagination } from 'swiper'
+import { Autoplay, Pagination } from 'swiper'
 
 const Slider = () => {
     const StyledRating = styled(Rating)({
@@ -21,11 +20,10 @@ const Slider = () => {
         <div id='slider'>
             <Swiper
                 spaceBetween={30}
-                effect={'fade'}
                 loop={true}
                 autoplay={{ delay: 2500, disableOnInteraction: false }}
-                pagination={{ clickable: true }}
-                modules={[Autoplay, EffectFade, Pagination]}
+                pagination={{ clickable: true, dynamicBullets: true }}
+                modules={[Autoplay, Pagination]}
                 className='mySwiper'
             >
                 {data?.map((item, index) => (
