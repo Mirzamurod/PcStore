@@ -11,6 +11,7 @@ const AdminPanel = () => {
     const { dark_mode } = useSelector(state => state.login)
 
     const token = localStorage.getItem('token')
+
     useEffect(() => {
         if (!token) navigate('/login')
     }, [token, navigate])
