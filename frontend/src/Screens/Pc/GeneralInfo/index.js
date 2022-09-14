@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { Box, Button } from '@mui/material'
-import Comment from '../AddComment/AddComment'
-import GeneralCharacter from '../GeneralCharacter/GeneralCharacter'
+import Comment from '../AddComment'
+import GeneralCharacter from '../GeneralCharacter'
 
 const GeneralInfo = () => {
-    const [change, setChange] = useState('comment')
+    const [change, setChange] = useState('Comment')
 
     return (
         <Box>
@@ -16,7 +16,7 @@ const GeneralInfo = () => {
                     borderBottom: '1px solid red',
                 }}
             >
-                {['comment', 'characters'].map((item, index) => (
+                {['Comment', 'Characters'].map((item, index) => (
                     <Button
                         onClick={() => setChange(item)}
                         key={index}
@@ -28,7 +28,7 @@ const GeneralInfo = () => {
                     </Button>
                 ))}
             </Box>
-            <Box>{change === 'comment' ? <Comment /> : <GeneralCharacter />}</Box>
+            <Box>{change === 'Comment' ? <Comment /> : <GeneralCharacter />}</Box>
         </Box>
     )
 }

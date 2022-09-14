@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import { Box, Grid } from '@mui/material'
-import Title from './../Title'
+import { Title } from '../../../Components'
 
 const Orders = () => {
     const { dark_mode } = useSelector(state => state.login)

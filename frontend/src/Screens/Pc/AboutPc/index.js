@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
 import { Box, Button, Grid, Rating, styled, Typography } from '@mui/material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+
 import './aboutpc.scss'
 
 const AboutPc = () => {

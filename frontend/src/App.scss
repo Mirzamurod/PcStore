@@ -20,7 +20,6 @@ $c-828282: #828282 !important;
 
 body {
     margin: 0 !important;
-
 }
 
 a {
@@ -69,4 +68,8 @@ a {
     font-size: 22px;
     font-weight: bold;
     color: #fff;
+}
+
+.MuiButton-root {
+    text-transform: inherit !important;
 }

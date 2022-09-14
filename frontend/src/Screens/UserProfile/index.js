@@ -1,13 +1,13 @@
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Box, Button, Container, Grid, Typography } from '@mui/material'
 import HomeIcon from '@mui/icons-material/Home'
 import PersonIcon from '@mui/icons-material/Person'
 import ListAltIcon from '@mui/icons-material/ListAlt'
-import AccountInfo from '../../Components/AccountInfo/AccountInfo'
-import Address from '../../Components/Address/Address'
-import Orders from '../../Components/Order/Orders'
-import { useEffect } from 'react'
+import AccountInfo from './AccountInfo'
+import Address from './Address'
+import Orders from './Order'
 
 const UserProfile = () => {
     const location = useLocation()
@@ -53,7 +53,7 @@ const UserProfile = () => {
                                 fullWidth
                                 startIcon={<button.icon />}
                                 sx={{
-                                    textTransform: 'capitalize',
+                                    textTransform: 'capitalize !important',
                                     fontSize: 14,
                                     justifyContent: 'left',
                                     height: 50,

@@ -1,19 +1,17 @@
-import Pcs from './../../Components/Pcs/Pcs'
-import Slider from './../../Components/Slider/Slider'
-import Brends from './../../Components/Brends/Brends'
+import Slider from './Slider'
+import Brends from './Brends'
+import { Pcs } from '../../Components'
 
-const HomePage = () => {
-    document.title = 'Pc Store'
+document.title = 'Pc Store'
 
-    return (
-        <div>
-            <div id='home'>
-                <Slider />
-                <Brends />
-            </div>
-            <Pcs />
+const HomePage = () => (
+    <div>
+        <div id='home'>
+            <Slider />
+            <Brends />
         </div>
-    )
-}
+        <Pcs />
+    </div>
+)
 
 export default HomePage

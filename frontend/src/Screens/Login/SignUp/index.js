@@ -20,7 +20,8 @@ import {
 import { LoadingButton } from '@mui/lab'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import Visibility from '@mui/icons-material/Visibility'
-import { addUser } from '../../redux/user/register'
+import { addUser } from './../../../redux/user/register'
+
 import 'react-toastify/dist/ReactToastify.css'
 
 const SignUp = () => {
@@ -56,7 +57,7 @@ const SignUp = () => {
 
     useEffect(() => {
         if (code === 0) {
-            toast.success("Endi Loginni to'ldirib, ishizi dovom ettirin!", {
+            toast.success("Endi Loginni to'ldirib, ishizi davom ettirin!", {
                 theme: dark_mode ? 'light' : 'dark',
             })
             reset()

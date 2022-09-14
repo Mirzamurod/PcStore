@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import { Box, Typography, Button } from '@mui/material'
-import Title from './../Title'
+import { Title } from '../../../Components'
 
 const Address = () => {
     const { dark_mode } = useSelector(state => state.login)
@@ -18,11 +18,11 @@ const Address = () => {
                 <Typography variant='body2'>Mahmud Nurmuhamedov</Typography>
                 <Typography variant='body2'>+998 99 090-0998</Typography>
                 <Box display='flex' justifyContent='end' mt={2}>
-                    <Button color='inherit' size='large' sx={{ textTransform: 'capitalize' }}>
-                        edit
+                    <Button color='inherit' size='large'>
+                        Edit
                     </Button>
-                    <Button color='error' size='large' sx={{ textTransform: 'capitalize', ml: 2 }}>
-                        delete
+                    <Button color='error' size='large' sx={{ ml: 2 }}>
+                        Delete
                     </Button>
                 </Box>
             </Box>

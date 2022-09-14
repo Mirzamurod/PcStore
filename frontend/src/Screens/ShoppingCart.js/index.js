@@ -9,9 +9,9 @@ import {
     Typography,
 } from '@mui/material'
 
-const ShoppingCart = () => {
-    document.title = 'Shopping Cart'
+document.title = 'Shopping Cart'
 
+const ShoppingCart = () => {
     return (
         <Container sx={{ pb: 4 }}>
             <Typography variant='h6' mb={4} fontWeight={700}>

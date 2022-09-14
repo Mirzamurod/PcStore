@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Title from '../Title'
+import { Title } from '../../../Components'
 import {
     Box,
     Button,
@@ -15,7 +15,7 @@ import {
 } from '@mui/material'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import Visibility from '@mui/icons-material/Visibility'
-import { userProfile, userUpdate } from '../../redux/user/login'
+import { userProfile, userUpdate } from '../../../redux/user/login'
 
 const AccountInfo = memo(() => {
     const dispatch = useDispatch()
@@ -355,7 +355,7 @@ const AccountInfo = memo(() => {
                     onClick={() => setShow(!show)}
                     sx={{ textTransform: 'capitalize', mt: 4 }}
                 >
-                    change password
+                    Change password
                 </Button>
             </Box>
             <Button
@@ -367,7 +367,7 @@ const AccountInfo = memo(() => {
                 onClick={saveChanges}
                 // type='submit'
             >
-                Save Changes
+                Save changes
             </Button>
         </Box>
     )

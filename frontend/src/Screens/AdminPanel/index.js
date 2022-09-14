@@ -47,7 +47,6 @@ const AdminPanel = () => {
                                 fullWidth
                                 // startIcon={<button.icon />}
                                 sx={{
-                                    textTransform: 'capitalize',
                                     fontSize: 14,
                                     justifyContent: 'left',
                                     height: 50,

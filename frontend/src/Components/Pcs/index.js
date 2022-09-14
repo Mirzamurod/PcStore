@@ -9,7 +9,6 @@ import {
     Typography,
     Container,
     Grid,
-    CssBaseline,
     Box,
 } from '@mui/material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
@@ -18,7 +17,8 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCreative, Pagination } from 'swiper'
 import { encode } from 'js-base64'
 import { getPcs } from '../../redux/pcs/pcs'
-import { Loading } from '../Loading'
+import { Loading } from '../'
+
 import 'swiper/css/effect-creative'
 import 'swiper/css/pagination'
 import './pcs.scss'
@@ -161,7 +161,7 @@ const Pcs = () => {
                                             variant='contained'
                                             startIcon={<ShoppingCartIcon />}
                                         >
-                                            order
+                                            ORDER
                                         </Button>
                                     </CardActions>
                                     <CardActions>
@@ -173,7 +173,7 @@ const Pcs = () => {
                                                 navigate(`/pc/${encode(encode(item?._id))}`)
                                             }
                                         >
-                                            details
+                                            DETAILS
                                         </Button>
                                     </CardActions>
                                 </Card>

@@ -1,0 +1,5 @@
+export { default as Footer } from './Footer'
+export { default as Sidebar } from './Sidebar'
+export { default as Pcs } from './Pcs'
+export { default as Title } from './Title'
+export { default as Loading } from './Loading'

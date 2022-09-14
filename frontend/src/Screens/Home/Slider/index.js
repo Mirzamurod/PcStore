@@ -2,11 +2,48 @@ import { useSelector } from 'react-redux'
 import { Box, Button, Container, Grid, Rating, styled, Typography } from '@mui/material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { data } from '../data'
 import 'swiper/css/pagination'
 import './slider.scss'
 
 import { Autoplay, Pagination } from 'swiper'
+
+const data = [
+    {
+        name: 'ASUS TUF GAMING1',
+        rating: 3.5,
+        views: 10001,
+        have: true,
+        performance: 'i7 – 9700 ОЗУ 16 GB 6GB RTX2060 HDD 2TB SSD 500 GB',
+        waranty: 2,
+        price: 16190000,
+        link: '/',
+        image: '/images/fonCarousel.png',
+    },
+    {
+        name: 'ASUS TUF GAMING2',
+        rating: 2.5,
+        views: 22222,
+        have: false,
+        performance: 'i7 – 9700 ОЗУ 16 GB 6GB RTX2060 HDD 2TB SSD 500 GB',
+        waranty: 1,
+        price: 16190000,
+        stock: 17190000,
+        link: '/',
+        image: '/images/fonCarousel.png',
+    },
+    {
+        name: 'ASUS TUF GAMING3',
+        rating: 1.5,
+        views: 33333,
+        have: true,
+        performance: 'i7 – 9700 ОЗУ 16 GB 6GB RTX2060 HDD 2TB SSD 500 GB',
+        waranty: 1,
+        price: 16190000,
+        stock: 17190000,
+        link: '/',
+        image: '/images/fonCarousel.png',
+    },
+]
 
 const Slider = () => {
     const StyledRating = styled(Rating)({

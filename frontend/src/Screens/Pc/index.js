@@ -2,13 +2,13 @@ import { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { decode } from 'js-base64'
-import { getPc } from '../../redux/pcs/pc'
 import { Container, Grid } from '@mui/material'
-import { Loading } from '../../Components/Loading'
-import PcImages from '../../Components/PcImages'
-import AboutPc from '../../Components/AboutPc/AboutPc'
-import Characters from '../../Components/Characters/Characters'
-import GeneralInfo from '../../Components/GeneralInfo/GeneralInfo'
+import { getPc } from '../../redux/pcs/pc'
+import { Loading } from '../../Components'
+import Carousel from './Carousel'
+import AboutPc from './AboutPc'
+import Characters from './Characters'
+import GeneralInfo from './GeneralInfo'
 
 const Pc = () => {
     const dispatch = useDispatch()
@@ -29,7 +29,7 @@ const Pc = () => {
                 <Fragment>
                     <Grid container spacing={4}>
                         <Grid item md={6}>
-                            <PcImages images={pc?.image} />
+                            <Carousel images={pc?.image} />
                         </Grid>
                         <AboutPc />
                     </Grid>

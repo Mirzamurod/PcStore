@@ -14,9 +14,9 @@ import {
 } from '@mui/material'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import { ToastContainer } from 'react-toastify'
-import Sidebar from './Components/Sidebar/Sidebar'
-import Footer from './Components/Footer/Footer'
+import { Footer, Sidebar } from './Components'
 import links from './Routes'
+
 import 'react-toastify/dist/ReactToastify.css'
 import 'swiper/css'
 import 'swiper/css/bundle'
