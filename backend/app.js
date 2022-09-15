@@ -4,10 +4,7 @@ import colors from 'colors'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import connectDB from './config/db.js'
-import userRoutes from './routes/userRoutes.js'
-import pcRoutes from './routes/pcRoutes.js'
-import addressRoutes from './routes/addressRoutes.js'
-import reviewRoutes from './routes/reviewRoutes.js'
+import { userRoutes, pcRoutes, addressRoutes, reviewRoutes } from './routes/index.js'
 
 const app = express()
 dotenv.config()

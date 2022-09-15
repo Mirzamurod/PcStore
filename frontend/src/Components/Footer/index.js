@@ -7,13 +7,14 @@ import YouTubeIcon from '@mui/icons-material/YouTube'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import TelegramIcon from '@mui/icons-material/Telegram'
 import logo from './../../svg/logo.svg'
+
 import './footer.scss'
 
 const Footer = () => {
     const { dark_mode } = useSelector(state => state.login)
 
     return (
-        <div id='footer' className={`${dark_mode ? 'footerfon' : 'footer-fon'}`}>
+        <div id='footer' className={dark_mode ? 'footerfon' : 'footer-fon'}>
             <Container>
                 <Grid container spacing={8}>
                     <Grid item md={3}>

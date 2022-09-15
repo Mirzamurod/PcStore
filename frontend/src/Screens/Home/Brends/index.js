@@ -1,5 +1,6 @@
-import { Container } from '@mui/material'
 import AliceCarousel from 'react-alice-carousel'
+import { Container } from '@mui/material'
+
 import './brends.scss'
 
 const Brends = () => {

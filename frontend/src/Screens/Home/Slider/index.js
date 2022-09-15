@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 import { Box, Button, Container, Grid, Rating, styled, Typography } from '@mui/material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { Swiper, SwiperSlide } from 'swiper/react'
+
 import 'swiper/css/pagination'
 import './slider.scss'
 

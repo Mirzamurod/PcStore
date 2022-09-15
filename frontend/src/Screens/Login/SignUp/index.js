@@ -20,14 +20,16 @@ import {
 import { LoadingButton } from '@mui/lab'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import Visibility from '@mui/icons-material/Visibility'
-import { addUser } from './../../../redux/user/register'
+import { addUser } from '../../../redux'
 
 import 'react-toastify/dist/ReactToastify.css'
 
 const SignUp = () => {
     const dispatch = useDispatch()
     const formSchema = Yup.object().shape({
-        username: Yup.string().required('This field is required!!!').matches(/[A-Za-z0-9]/g),
+        username: Yup.string()
+            .required('This field is required!!!')
+            .matches(/[A-Za-z0-9]/g),
         fullname: Yup.string()
             .required('This field is required!!!')
             .matches(/[A-z]+\s[A-z]+/, 'This is not Username')

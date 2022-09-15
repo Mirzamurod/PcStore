@@ -15,7 +15,7 @@ import {
 } from '@mui/material'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import Visibility from '@mui/icons-material/Visibility'
-import { userProfile, userUpdate } from '../../../redux/user/login'
+import { userProfile, userUpdate } from '../../../redux'
 
 const AccountInfo = memo(() => {
     const dispatch = useDispatch()
@@ -117,14 +117,7 @@ const AccountInfo = memo(() => {
         ]
 
         if (!show) {
-            if (checkShow) {
-                console.log({
-                    ...user1,
-                    fullname: user1.fullname.replace(
-                        /[A-z]+/g,
-                        soz => soz.charAt(0).toUpperCase() + soz.slice(1)
-                    ),
-                })
+            if (checkShow)
                 dispatch(
                     userUpdate({
                         ...user1,
@@ -134,7 +127,6 @@ const AccountInfo = memo(() => {
                         ),
                     })
                 )
-            }
 
             check.forEach(check => {
                 if (check.name) check.change(true)
@@ -150,10 +142,8 @@ const AccountInfo = memo(() => {
                 newP.newPassword &&
                 newP.confirmPassword &&
                 newP.newPassword === newP.confirmPassword
-            ) {
+            )
                 console.log({ ...user1, ...newP })
-            }
-
             ;[
                 ...check,
                 { name: !newP.currentPassword, change: setCurrentE },

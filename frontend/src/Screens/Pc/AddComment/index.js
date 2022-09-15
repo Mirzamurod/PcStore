@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { decode } from 'js-base64'
 import { Box, Button, Grid, Rating, styled, TextField, Typography } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
-import { addReview } from '../../../redux/reviews/reviews'
+import { addReview } from '../../../redux'
 import Comments from './Comments'
 
 const Comment = memo(() => {

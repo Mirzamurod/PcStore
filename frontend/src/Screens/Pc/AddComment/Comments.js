@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { decode } from 'js-base64'
-import { getReviews } from '../../../redux/reviews/reviews'
 import { Box, CircularProgress, Grid, Rating, styled, Typography } from '@mui/material'
+import { getReviews } from '../../../redux'
 
 const Comments = () => {
     const { id } = useParams()

@@ -19,7 +19,7 @@ import {
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
-import { userLogin } from '../../../redux/user/login'
+import { userLogin } from '../../../redux'
 
 import './signin.scss'
 

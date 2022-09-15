@@ -1,9 +1,10 @@
-import User from './../models/userModel.js'
 import bcryptjs from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import expressAsyncHandler from 'express-async-handler'
+import User from './../models/userModel.js'
 
 const salt = await bcryptjs.genSalt(10)
+
 const user = {
     // @desc    Get users
     // @route   GET /api/users
@@ -186,8 +187,6 @@ const user = {
     }),
 }
 
-const generateToken = id => {
-    return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '14d' })
-}
+const generateToken = id => jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '14d' })
 
 export default user

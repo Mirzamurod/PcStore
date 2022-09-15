@@ -1,4 +1,3 @@
-import { json } from 'express'
 import expressAsyncHandler from 'express-async-handler'
 import Review from '../models/reviewModel.js'
 import Pc from './../models/pcModel.js'

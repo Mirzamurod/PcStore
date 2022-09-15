@@ -23,8 +23,9 @@ import Brightness4Icon from '@mui/icons-material/Brightness4'
 import BrightnessHighIcon from '@mui/icons-material/BrightnessHigh'
 import PermIdentityIcon from '@mui/icons-material/PermIdentity'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
-import { changeMode, userProfile } from '../../redux/user/login'
+import { changeMode, userProfile } from '../../redux'
 import { Others, UserSetting } from './Others'
+
 import './sidebar.scss'
 
 const pages = [
@@ -195,7 +196,11 @@ const Sidebar = () => {
                                         <ListItemIcon sx={{ pr: 1, pl: 2 }}>
                                             <AdminPanelSettingsIcon />
                                         </ListItemIcon>
-                                        <UserSetting url='/admin/pcs' dark_mode={dark_mode} name='Admin' />
+                                        <UserSetting
+                                            url='/admin/pcs'
+                                            dark_mode={dark_mode}
+                                            name='Admin'
+                                        />
                                     </MenuItem>
                                 )}
                                 {settings.map(setting => (

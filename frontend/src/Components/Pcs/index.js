@@ -16,7 +16,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { EffectCreative, Pagination } from 'swiper'
 import { encode } from 'js-base64'
-import { getPcs } from '../../redux/pcs/pcs'
+import { getPcs } from '../../redux'
 import { Loading } from '../'
 
 import 'swiper/css/effect-creative'
