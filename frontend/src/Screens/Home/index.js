@@ -1,16 +1,17 @@
+import { Box } from '@mui/material'
 import Slider from './Slider'
 import Brends from './Brends'
-import { Pcs } from '../../Components'
+import Products from './Products'
 
 document.title = 'Pc Store'
 
 const HomePage = () => (
     <div>
-        <div id='home'>
+        <Box id='home' sx={{ mt: '-36px' }}>
             <Slider />
             <Brends />
-        </div>
-        <Pcs />
+        </Box>
+        <Products />
     </div>
 )
 

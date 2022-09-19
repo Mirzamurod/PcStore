@@ -12,9 +12,9 @@ const links = [
     { path: '/', element: HomePage },
     { path: '/login', element: Login },
     { path: '/user/:keyword', element: UserProfile },
-    { path: '/pc/:id', element: Pc },
-    { path: '/shoppingcart', element: ShoppingCart },
-    { path: '/admin/:keyword', element: AdminPanel },
+    { path: '/pc/:id', element: Pc, login: true },
+    { path: '/shoppingcart', element: ShoppingCart, login: true },
+    { path: '/admin/:keyword', element: AdminPanel, login: true, isAdmin: true },
     { path: '*', element: Error },
 ]
 

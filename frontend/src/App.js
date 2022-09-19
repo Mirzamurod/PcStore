@@ -62,7 +62,7 @@ function App(props) {
                     <div className='App'>
                         <CssBaseline />
                         <Sidebar />
-                        <Toolbar id='back-to-top-anchor' />
+                        <Toolbar id='back-to-top-anchor' sx={{ minHeight: '0px !important' }} />
                         <Routes>
                             {links.map((link, index) => (
                                 <Route path={link.path} element={<link.element />} key={index} />

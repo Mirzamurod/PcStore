@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useMatch, useNavigate, useParams, useRoutes } from 'react-router-dom'
 import {
     AppBar,
     Badge,
@@ -25,6 +25,7 @@ import PermIdentityIcon from '@mui/icons-material/PermIdentity'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import { changeMode, userProfile } from '../../redux'
 import { Others, UserSetting } from './Others'
+import links from './../../Routes'
 
 import './sidebar.scss'
 
@@ -40,10 +41,11 @@ const settings = [
     { name: 'Logout', url: '/', icon: Logout },
 ]
 
-const Sidebar = () => {
+const Sidebar = memo(() => {
     const dispatch = useDispatch()
     const location = useLocation()
     const navigate = useNavigate()
+    const { keyword } = useParams()
     const [anchorElNav, setAnchorElNav] = useState(null)
     const [anchorElUser, setAnchorElUser] = useState(null)
     const [userCheck, setUserCheck] = useState(false)
@@ -55,6 +57,24 @@ const Sidebar = () => {
         setAnchorElNav(null)
         navigate(url)
     }
+
+    console.log(user.isAdmin)
+    console.log(location)
+    console.log(keyword)
+
+    useEffect(() => {
+        links.filter(
+            item =>
+                // if (item.path === location.pathname && item.login && !token) return navigate('/login')
+                // else if
+                item.path === location.pathname &&
+                token &&
+                item.login &&
+                item.isAdmin &&
+                user.isAdmin &&
+                navigate('/')
+        )
+    }, [location.pathname, navigate, token, user])
 
     const handleCloseUserMenu = () => setAnchorElUser(null)
 
@@ -227,5 +247,6 @@ const Sidebar = () => {
             <Toolbar />
         </Box>
     )
-}
+})
+
 export default Sidebar
