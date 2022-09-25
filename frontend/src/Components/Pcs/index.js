@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { Card, CardActions, CardContent, Button, Typography, Grid } from '@mui/material'
+import { Link as RouterLink } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { Card, CardActions, CardContent, Button, Typography, Grid, Link } from '@mui/material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -14,9 +14,7 @@ import 'swiper/css/pagination'
 import './pcs.scss'
 
 const Pcs = ({ isLoading, pcs, pc }) => {
-    const navigate = useNavigate()
-
-    const { dark_mode } = useSelector(state => state.login)
+    const { t } = useTranslation()
 
     return (
         <Grid container spacing={{ xl: 8, lg: 6, md: 4, sm: 2, xs: 0 }}>
@@ -25,7 +23,15 @@ const Pcs = ({ isLoading, pcs, pc }) => {
             {!isLoading &&
                 pcs?.length > 0 &&
                 pcs?.map((item, ind) => (
-                    <Grid item pt={{ sm: '16px !important' }} lg={3} md={4} sm={6} xs={12} key={ind}>
+                    <Grid
+                        item
+                        pt={{ sm: '16px !important' }}
+                        lg={3}
+                        md={4}
+                        sm={6}
+                        xs={12}
+                        key={ind}
+                    >
                         <Card
                             sx={{
                                 boxShadow: 0,
@@ -81,14 +87,13 @@ const Pcs = ({ isLoading, pcs, pc }) => {
                                     gutterBottom
                                     variant='subtitle1'
                                     component='div'
-                                    sx={{
-                                        fontWeight: 700,
-                                        '& .birnima': { color: 'white !important' },
-                                    }}
+                                    fontWeight={700}
                                 >
                                     <Link
                                         to={`/pc/${encode(encode(item?._id))}`}
-                                        className='birnima'
+                                        component={RouterLink}
+                                        color='inherit'
+                                        sx={{ textDecoration: 'none' }}
                                     >
                                         {item?.name}
                                     </Link>
@@ -104,8 +109,8 @@ const Pcs = ({ isLoading, pcs, pc }) => {
                                     {item?.hdd} {item?.ssd_data} {item?.ssd_m2}
                                 </Typography>
                                 <Typography variant='body1' gutterBottom sx={{ opacity: '.7' }}>
-                                    Warranty {item?.warranty} year
-                                    {item?.warranty > 1 && 's'}
+                                    {t('warranty')} {item?.warranty} {t('year')}
+                                    {item.waranty > 1 && t('s')}
                                 </Typography>
                                 {item?.stock_price > 0 && (
                                     <Typography variant='h6' component='del' sx={{ opacity: '.7' }}>
@@ -123,17 +128,18 @@ const Pcs = ({ isLoading, pcs, pc }) => {
                                     variant='contained'
                                     startIcon={<ShoppingCartIcon />}
                                 >
-                                    ORDER
+                                    {t('order')}
                                 </Button>
                             </CardActions>
                             <CardActions>
                                 <Button
+                                    component={RouterLink}
                                     fullWidth
                                     endIcon={<ArrowForwardIosIcon />}
-                                    sx={{ color: dark_mode ? 'white' : 'black' }}
-                                    onClick={() => navigate(`/pc/${encode(encode(item?._id))}`)}
+                                    sx={{ color: 'inherit' }}
+                                    to={`/pc/${encode(encode(item?._id))}`}
                                 >
-                                    DETAILS
+                                    {t('details')}
                                 </Button>
                             </CardActions>
                         </Card>

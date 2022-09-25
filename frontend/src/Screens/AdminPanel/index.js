@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { t } from 'i18next'
 import { Box, Button, Container, Grid, Typography } from '@mui/material'
 import ComputerIcon from '@mui/icons-material/Computer'
 import ListAltIcon from '@mui/icons-material/ListAlt'
@@ -27,12 +28,12 @@ const AdminPanel = () => {
                         overflow='hidden'
                     >
                         <Typography variant='body1' fontWeight={700} textAlign='center' my={3}>
-                            ACCOUNT DASHBOARD
+                            {t('admin_panel')}
                         </Typography>
                         {[
-                            { name: 'Psc', link: '/pcs', icon: ComputerIcon },
-                            { name: 'Add Pc', link: '/orders', icon: ListAltIcon },
-                            { name: 'Orders', link: '/users', icon: '' },
+                            { name: 'pcs', link: '/pcs', icon: ComputerIcon },
+                            { name: 'add_pc', link: '/orders', icon: ListAltIcon },
+                            { name: 'orders', link: '/users', icon: '' },
                         ].map((button, index) => (
                             <Button
                                 key={index}
@@ -54,7 +55,7 @@ const AdminPanel = () => {
                                     pl: 3,
                                 }}
                             >
-                                {button.name}
+                                {t(button.name)}
                             </Button>
                         ))}
                     </Box>

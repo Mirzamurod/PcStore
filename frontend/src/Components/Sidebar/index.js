@@ -1,6 +1,7 @@
 import { memo, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useMatch, useNavigate, useParams, useRoutes } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import {
     AppBar,
     Badge,
@@ -30,22 +31,22 @@ import links from './../../Routes'
 import './sidebar.scss'
 
 const pages = [
-    { name: 'Home', url: '/', id: 'home', offset: -128 },
-    { name: 'Products', url: '/nmadir', id: 'pcs', offset: -80 },
-    { name: 'Services', url: '/kimdir', id: 'pcs', offset: 100 },
-    { name: 'Contact', url: '/kimdir1', id: 'pcs', offset: 100 },
+    { name: 'home', url: '/', id: 'home', offset: -128 },
+    { name: 'products', url: '/nmadir', id: 'pcs', offset: -80 },
+    { name: 'services', url: '/kimdir', id: 'pcs', offset: 100 },
+    { name: 'contact', url: '/kimdir1', id: 'pcs', offset: 100 },
 ]
 
 const settings = [
-    { name: 'Profile', url: '/user/account', icon: PermIdentityIcon },
-    { name: 'Logout', url: '/', icon: Logout },
+    { name: 'profile', url: '/user/account', icon: PermIdentityIcon },
+    { name: 'logout', url: '/', icon: Logout },
 ]
 
 const Sidebar = memo(() => {
+    const { t } = useTranslation()
     const dispatch = useDispatch()
     const location = useLocation()
     const navigate = useNavigate()
-    const { keyword } = useParams()
     const [anchorElNav, setAnchorElNav] = useState(null)
     const [anchorElUser, setAnchorElUser] = useState(null)
     const [userCheck, setUserCheck] = useState(false)
@@ -57,10 +58,6 @@ const Sidebar = memo(() => {
         setAnchorElNav(null)
         navigate(url)
     }
-
-    console.log(user.isAdmin)
-    console.log(location)
-    console.log(keyword)
 
     useEffect(() => {
         links.filter(
@@ -129,7 +126,7 @@ const Sidebar = memo(() => {
                                         duration={500}
                                         style={{ color: dark_mode ? 'white' : 'black' }}
                                     >
-                                        {page.name}
+                                        {t(page.name)}
                                     </Link>
                                 ))}
                             </Menu>
@@ -160,7 +157,7 @@ const Sidebar = memo(() => {
                                             : ''
                                     }
                                 >
-                                    {page.name}
+                                    {t(page.name)}
                                 </Link>
                             ))}
                         </Box>
@@ -219,7 +216,7 @@ const Sidebar = memo(() => {
                                         <UserSetting
                                             url='/admin/pcs'
                                             dark_mode={dark_mode}
-                                            name='Admin'
+                                            name='admin'
                                         />
                                     </MenuItem>
                                 )}

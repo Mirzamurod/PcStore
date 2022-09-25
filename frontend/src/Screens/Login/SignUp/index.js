@@ -23,6 +23,7 @@ import Visibility from '@mui/icons-material/Visibility'
 import { addUser } from '../../../redux'
 
 import 'react-toastify/dist/ReactToastify.css'
+import { t } from 'i18next'
 
 const SignUp = () => {
     const dispatch = useDispatch()
@@ -88,7 +89,7 @@ const SignUp = () => {
     return (
         <div id='signup'>
             <Typography variant='h6' my={5}>
-                Create Account
+                {t('create_account')}
             </Typography>
             <Box
                 component='form'
@@ -99,7 +100,7 @@ const SignUp = () => {
                 <Box border={`1px solid ${dark_mode ? '#e2e4e5' : 'gray'}`} borderRadius={2} p={4}>
                     {/* Username */}
                     <TextField
-                        label='Username'
+                        label={t('username')}
                         error={!!errors?.username}
                         variant='standard'
                         color='error'
@@ -112,7 +113,7 @@ const SignUp = () => {
                     />
                     {/* Full Name */}
                     <TextField
-                        label='Fullname'
+                        label={t('full_name')}
                         error={!!errors?.fullname}
                         variant='standard'
                         color='error'
@@ -125,7 +126,7 @@ const SignUp = () => {
                     />
                     {/* Email */}
                     <TextField
-                        label='Email'
+                        label={t('email')}
                         error={!!errors?.email}
                         variant='standard'
                         color='error'
@@ -143,9 +144,9 @@ const SignUp = () => {
                         error={!!errors?.password}
                         sx={{ display: 'block', mb: 2 }}
                     >
-                        <InputLabel htmlFor='passwordup'>Create Password</InputLabel>
+                        <InputLabel htmlFor='passwordup'>{t('create_password')}</InputLabel>
                         <Input
-                            placeholder='Create Password'
+                            placeholder={t('create_password')}
                             type={cPasswordI ? 'text' : 'password'}
                             {...register('password')}
                             disabled={isLoading}
@@ -171,9 +172,9 @@ const SignUp = () => {
                         error={!!errors?.cpassword}
                         sx={{ display: 'block', mb: 2 }}
                     >
-                        <InputLabel>Confirm Password</InputLabel>
+                        <InputLabel>{t('confirm_password')}</InputLabel>
                         <Input
-                            placeholder='Comfirm Password'
+                            placeholder={t('confirm_password')}
                             type={rPasswordI ? 'text' : 'password'}
                             {...register('cpassword')}
                             disabled={isLoading}
@@ -195,7 +196,7 @@ const SignUp = () => {
                 </Box>
                 <FormControlLabel
                     control={<Checkbox color='error' />}
-                    label='Remember my details'
+                    label={t('remember_my_details')}
                     sx={{ display: 'block', my: 2 }}
                     {...register('remember')}
                     disabled={isLoading}
@@ -208,7 +209,7 @@ const SignUp = () => {
                     size='large'
                     loading={isLoading}
                 >
-                    create account
+                    {t('create_account')}
                 </LoadingButton>
             </Box>
             <ToastContainer style={{ width: '100%' }} />

@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Title } from '../../../Components'
+import { t } from 'i18next'
 import {
     Box,
     Button,
@@ -15,6 +15,7 @@ import {
 } from '@mui/material'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import Visibility from '@mui/icons-material/Visibility'
+import { Title } from '../../../Components'
 import { userProfile, userUpdate } from '../../../redux'
 
 const AccountInfo = memo(() => {
@@ -161,7 +162,7 @@ const AccountInfo = memo(() => {
     return (
         <Box id='accountInfo'>
             <Box my={3}>
-                <Title title='User Information' />
+                <Title title={t('user_info')} />
             </Box>
             <Box className={`fon ${dark_mode ? 'dark' : 'light'}`}>
                 <Grid container spacing={4}>
@@ -178,7 +179,7 @@ const AccountInfo = memo(() => {
                             }}
                         >
                             <TextField
-                                label='Username'
+                                label={t('username')}
                                 placeholder='pcstore'
                                 variant='standard'
                                 color='error'
@@ -197,7 +198,7 @@ const AccountInfo = memo(() => {
                                 }
                             />
                             <TextField
-                                label='Fullname'
+                                label={t('full_name')}
                                 placeholder='Xolov Obid'
                                 variant='standard'
                                 color='error'
@@ -214,7 +215,7 @@ const AccountInfo = memo(() => {
                                 }
                             />
                             <TextField
-                                label='Email'
+                                label={t('email')}
                                 placeholder='example@gmail.com'
                                 type='email'
                                 variant='standard'
@@ -239,10 +240,12 @@ const AccountInfo = memo(() => {
                         >
                             {/* Current Password */}
                             <FormControl variant='standard' color='error' sx={{ mb: 2 }}>
-                                <InputLabel htmlFor='currentPassword'>Current Password</InputLabel>
+                                <InputLabel htmlFor='currentPassword'>
+                                    {t('current_password')}
+                                </InputLabel>
                                 <Input
                                     id='currentPassword'
-                                    placeholder='Current Password'
+                                    placeholder={t('current_password')}
                                     autoComplete='false'
                                     type={oldP.current ? 'text' : 'password'}
                                     value={newP.currentPassword}
@@ -272,11 +275,11 @@ const AccountInfo = memo(() => {
                             </FormControl>
                             {/* New Password */}
                             <FormControl variant='standard' color='error' sx={{ mb: 2 }}>
-                                <InputLabel htmlFor='newPassword'>New Password</InputLabel>
+                                <InputLabel htmlFor='newPassword'>{t('new_password')}</InputLabel>
                                 <Input
                                     id='newPassword'
                                     autoComplete='false'
-                                    placeholder='RXrv8dJ_'
+                                    placeholder={t('new_password')}
                                     type={oldP.new ? 'text' : 'password'}
                                     value={newP.newPassword}
                                     onChange={e =>
@@ -304,7 +307,7 @@ const AccountInfo = memo(() => {
                             {/* Confirm New Password */}
                             <FormControl variant='standard' color='error'>
                                 <InputLabel htmlFor='confirmNewPassword'>
-                                    Confirm New Password
+                                    {t('confirm_new_password')}
                                 </InputLabel>
                                 <Input
                                     id='confirmNewPassword'
@@ -345,7 +348,7 @@ const AccountInfo = memo(() => {
                     onClick={() => setShow(!show)}
                     sx={{ textTransform: 'capitalize', mt: 4 }}
                 >
-                    Change password
+                    {t('change_password')}
                 </Button>
             </Box>
             <Button
@@ -357,7 +360,7 @@ const AccountInfo = memo(() => {
                 onClick={saveChanges}
                 // type='submit'
             >
-                Save changes
+                {t('save_changes')}
             </Button>
         </Box>
     )

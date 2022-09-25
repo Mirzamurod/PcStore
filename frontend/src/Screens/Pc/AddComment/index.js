@@ -1,6 +1,7 @@
 import { useState, memo } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { t } from 'i18next'
 import { decode } from 'js-base64'
 import { Box, Button, Grid, Rating, styled, TextField, Typography } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
@@ -30,7 +31,7 @@ const Comment = memo(() => {
     return (
         <Box>
             <Typography variant='h5' fontWeight={700}>
-                Comment
+                {t('comment')}
             </Typography>
             <Box sx={{ py: 2 }}>
                 <StyledRating
@@ -45,8 +46,8 @@ const Comment = memo(() => {
                     <Grid item md={6} sx={{ display: 'flex', alignItems: 'flex-end' }}>
                         <TextField
                             id='feedback'
-                            label='Feedback'
-                            placeholder='Type something...'
+                            label={t('feedback')}
+                            placeholder={t('type_something')}
                             multiline
                             variant='standard'
                             color='error'
@@ -61,7 +62,7 @@ const Comment = memo(() => {
                             sx={{ borderRadius: '500px', px: 3, height: 40, ml: 3 }}
                             onClick={send}
                         >
-                            send
+                            {t('send')}
                         </Button>
                     </Grid>
                 </Grid>

@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { t } from 'i18next'
 import { Box, Button, Container, Grid, Typography } from '@mui/material'
 import HomeIcon from '@mui/icons-material/Home'
 import PersonIcon from '@mui/icons-material/Person'
@@ -32,12 +33,12 @@ const UserProfile = () => {
                         overflow='hidden'
                     >
                         <Typography variant='body1' fontWeight={700} textAlign='center' my={3}>
-                            ACCOUNT DASHBOARD
+                            {t('account_dashboard')}
                         </Typography>
                         {[
-                            { name: 'account information', link: '/account', icon: PersonIcon },
-                            { name: 'address book', link: '/address', icon: HomeIcon },
-                            { name: 'my orders', link: '/orders', icon: ListAltIcon },
+                            { name: 'user_info', link: '/account', icon: PersonIcon },
+                            { name: 'address_book', link: '/address', icon: HomeIcon },
+                            { name: 'my_orders', link: '/orders', icon: ListAltIcon },
                         ].map((button, index) => (
                             <Button
                                 key={index}
@@ -53,14 +54,13 @@ const UserProfile = () => {
                                 fullWidth
                                 startIcon={<button.icon />}
                                 sx={{
-                                    textTransform: 'capitalize !important',
                                     fontSize: 14,
                                     justifyContent: 'left',
                                     height: 50,
                                     pl: 3,
                                 }}
                             >
-                                {button.name}
+                                {t(button.name)}
                             </Button>
                         ))}
                     </Box>
@@ -74,7 +74,7 @@ const UserProfile = () => {
                         <Orders />
                     ) : (
                         <Typography variant='h4' color='red'>
-                            Something went wrong!!!
+                            {t('wrong')}
                         </Typography>
                     )}
                 </Grid>

@@ -2,6 +2,8 @@ import { Suspense } from 'react'
 import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import i18n from 'i18next'
+import { initReactI18next } from 'react-i18next'
 import {
     Box,
     createTheme,
@@ -14,6 +16,7 @@ import {
 } from '@mui/material'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import { ToastContainer } from 'react-toastify'
+import { uz, ru, eng } from './languages'
 import { Footer, Sidebar } from './Components'
 import links from './Routes'
 
@@ -21,6 +24,17 @@ import 'react-toastify/dist/ReactToastify.css'
 import 'swiper/css'
 import 'swiper/css/bundle'
 import './App.scss'
+
+i18n.use(initReactI18next).init({
+    resources: {
+        uz: { translation: uz },
+        ru: { translation: ru },
+        eng: { translation: eng },
+    },
+    lng: 'uz',
+    fallbackLng: 'eng',
+    interpolation: { escapeValue: false },
+})
 
 function ScrollTop(props) {
     const { children, window } = props
@@ -62,7 +76,10 @@ function App(props) {
                     <div className='App'>
                         <CssBaseline />
                         <Sidebar />
-                        <Toolbar id='back-to-top-anchor' sx={{ minHeight: '0px !important' }} />
+                        <Toolbar
+                            id='back-to-top-anchor'
+                            sx={{ minHeight: '0px !important' }}
+                        />
                         <Routes>
                             {links.map((link, index) => (
                                 <Route path={link.path} element={<link.element />} key={index} />

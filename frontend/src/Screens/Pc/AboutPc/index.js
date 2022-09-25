@@ -1,17 +1,16 @@
 import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import { Box, Button, Grid, Rating, styled, Typography } from '@mui/material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 
 import './aboutpc.scss'
 
 const AboutPc = () => {
+    const { t } = useTranslation()
+
     const StyledRating = styled(Rating)({
-        '& .MuiRating-iconFilled': {
-            color: '#e90021',
-        },
-        '& .MuiRating-iconEmpty': {
-            color: '#e90021',
-        },
+        '& .MuiRating-iconFilled': { color: '#e90021' },
+        '& .MuiRating-iconEmpty': { color: '#e90021' },
     })
 
     const { pc, reviewNum, ratingNum } = useSelector(state => state.pc)
@@ -31,7 +30,8 @@ const AboutPc = () => {
                         opacity: 0.7,
                     }}
                 >
-                    ({reviewNum?.toLocaleString()} review{reviewNum > 1 && 's'})
+                    ( {t('reviewru')} {reviewNum?.toLocaleString()} {t('review')}
+                    {reviewNum > 1 && t('reviews')} )
                 </Typography>
                 <Typography
                     variant='body1'
@@ -60,7 +60,7 @@ const AboutPc = () => {
             )}
             <Box>
                 <Typography textTransform='uppercase' fontWeight={700} fontSize='19px'>
-                    Description
+                    {t('description')}
                 </Typography>
                 <Typography variant='h6' fontWeight={400}>
                     {pc?.description}
@@ -74,10 +74,11 @@ const AboutPc = () => {
                     size='large'
                     sx={{ mr: 2 }}
                 >
-                    order
+                    {t('order')}
                 </Button>
                 <Typography color='red'>
-                    Warranty {pc?.warranty} year{pc?.warranty > 1 && 's'}
+                    {t('warranty')} {pc?.warranty} {t('year')}
+                    {pc?.warranty > 1 && t('s')}
                 </Typography>
             </Box>
         </Grid>

@@ -1,10 +1,11 @@
 import { useState } from 'react'
+import { t } from 'i18next'
 import { Box, Button } from '@mui/material'
 import Comment from '../AddComment'
 import GeneralCharacter from '../GeneralCharacter'
 
 const GeneralInfo = () => {
-    const [change, setChange] = useState('Comment')
+    const [change, setChange] = useState('comment')
 
     return (
         <Box>
@@ -16,7 +17,7 @@ const GeneralInfo = () => {
                     borderBottom: '1px solid red',
                 }}
             >
-                {['Comment', 'Characters'].map((item, index) => (
+                {['comment', 'characters'].map((item, index) => (
                     <Button
                         onClick={() => setChange(item)}
                         key={index}
@@ -24,11 +25,11 @@ const GeneralInfo = () => {
                         variant={change === item ? 'outlined' : ''}
                         color='error'
                     >
-                        {item}
+                        {t(item)}
                     </Button>
                 ))}
             </Box>
-            <Box>{change === 'Comment' ? <Comment /> : <GeneralCharacter />}</Box>
+            <Box>{change === 'comment' ? <Comment /> : <GeneralCharacter />}</Box>
         </Box>
     )
 }

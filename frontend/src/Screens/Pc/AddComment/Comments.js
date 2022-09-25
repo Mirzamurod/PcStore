@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { t } from 'i18next'
 import { decode } from 'js-base64'
 import { Box, CircularProgress, Grid, Rating, styled, Typography } from '@mui/material'
 import { getReviews } from '../../../redux'
@@ -60,7 +61,7 @@ const Comments = () => {
                     ))}
                 {reviews.length === 0 && isError && (
                     <Typography color='red' mt={4} variant='h5'>
-                        Something went wrong!!!
+                        {t('wrong')}
                     </Typography>
                 )}
             </Grid>

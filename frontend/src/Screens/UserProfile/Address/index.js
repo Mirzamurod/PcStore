@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+import { t } from 'i18next'
 import { Box, Typography, Button } from '@mui/material'
 import { Title } from '../../../Components'
 
@@ -8,10 +9,10 @@ const Address = () => {
     return (
         <div id='address'>
             <Box my={3}>
-                <Title title='User Information' />
+                <Title title={t('address_book')} />
             </Box>
             <Box className={`fon ${dark_mode ? 'dark' : 'light'}`}>
-                <Typography variant='h6'>Default Shipping Address</Typography>
+                <Typography variant='h6'>{t('default_shipping_address')}</Typography>
                 <Typography variant='body2'>100114</Typography>
                 <Typography variant='body2'>Uzbekistan, Tashkent,</Typography>
                 <Typography variant='body2'>Yunusobod, Nurmakon 110</Typography>
@@ -19,10 +20,10 @@ const Address = () => {
                 <Typography variant='body2'>+998 99 090-0998</Typography>
                 <Box display='flex' justifyContent='end' mt={2}>
                     <Button color='inherit' size='large'>
-                        Edit
+                        {t('edit')}
                     </Button>
                     <Button color='error' size='large' sx={{ ml: 2 }}>
-                        Delete
+                        {t('delete')}
                     </Button>
                 </Box>
             </Box>
@@ -32,7 +33,7 @@ const Address = () => {
                 size='large'
                 sx={{ textTransform: 'capitalize', my: 4 }}
             >
-                Add new address
+                {t('add_new_address')}
             </Button>
         </div>
     )

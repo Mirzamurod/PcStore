@@ -22,6 +22,7 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
 import { userLogin } from '../../../redux'
 
 import './signin.scss'
+import { t } from 'i18next'
 
 const SignIn = () => {
     const dispatch = useDispatch()
@@ -54,7 +55,7 @@ const SignIn = () => {
     return (
         <div id='signin'>
             <Typography variant='h6' my={5}>
-                Sign In
+                {t('sign_in')}
             </Typography>
             <Box
                 component='form'
@@ -64,7 +65,7 @@ const SignIn = () => {
             >
                 <Box border={`1px solid ${dark_mode ? '#e2e4e5' : 'gray'}`} borderRadius={2} p={4}>
                     <TextField
-                        label='Email'
+                        label={t('email')}
                         error={!!errors?.email}
                         variant='standard'
                         color='error'
@@ -86,9 +87,9 @@ const SignIn = () => {
                         color='error'
                         sx={{ display: 'block', mb: 2 }}
                     >
-                        <InputLabel htmlFor='passwordin'>Password</InputLabel>
+                        <InputLabel htmlFor='passwordin'>{t('password')}</InputLabel>
                         <Input
-                            placeholder='Password'
+                            placeholder={t('password')}
                             type={showPassword ? 'text' : 'password'}
                             {...register('password', {
                                 required: 'This field is required!!!',
@@ -111,7 +112,7 @@ const SignIn = () => {
                 </Box>
                 <FormControlLabel
                     control={<Checkbox color='error' />}
-                    label='Remember my details'
+                    label={t('remember_my_details')}
                     sx={{ display: 'block', my: 2 }}
                     {...register('check')}
                 />
@@ -123,12 +124,12 @@ const SignIn = () => {
                     size='large'
                     type='submit'
                 >
-                    sign in
+                    {t('sign_in')}
                 </Button>
             </Box>
             <Box mb={6} my={3}>
                 <Link to='/' className={`link ${!dark_mode && 'light'}`}>
-                    Forgot password?
+                    {t('forgot_password')}
                 </Link>
             </Box>
         </div>

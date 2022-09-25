@@ -2,11 +2,11 @@ import { useSelector } from 'react-redux'
 import { Box, Button, Container, Grid, Rating, styled, Typography } from '@mui/material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { Autoplay, Pagination } from 'swiper'
+import { useTranslation } from 'react-i18next'
 
 import 'swiper/css/pagination'
 import './slider.scss'
-
-import { Autoplay, Pagination } from 'swiper'
 
 const data = [
     {
@@ -47,6 +47,8 @@ const data = [
 ]
 
 const Slider = () => {
+    const { t } = useTranslation()
+
     const StyledRating = styled(Rating)({
         '& .MuiRating-iconFilled': { color: '#e90021' },
         '& .MuiRating-iconEmpty': { color: '#e90021' },
@@ -114,7 +116,8 @@ const Slider = () => {
                                     </Box>
                                     <Typography variant='body1'>{item.performance}</Typography>
                                     <Typography color='red' sx={{ mb: 2 }}>
-                                        Warranty {item.waranty} year{item.waranty > 1 && 's'}
+                                        {t('warranty')} {item.waranty} {t('year')}
+                                        {item.waranty > 1 && t('s')}
                                     </Typography>
                                     <Box display='flex' color='red' mb={!item.stock && 7}>
                                         <Typography variant='h3' fontWeight={700}>
@@ -137,10 +140,10 @@ const Slider = () => {
                                             size='large'
                                             sx={{ mr: 2 }}
                                         >
-                                            order
+                                            {t('order')}
                                         </Button>
                                         <Button size='large' color='error'>
-                                            details
+                                            {t('details')}
                                         </Button>
                                     </Box>
                                 </Grid>

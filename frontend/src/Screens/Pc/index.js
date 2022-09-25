@@ -10,7 +10,7 @@ import AboutPc from './AboutPc'
 import Characters from './Characters'
 import GeneralInfo from './GeneralInfo'
 
-const Pc = props => {
+const Pc = () => {
     const dispatch = useDispatch()
     const { id } = useParams()
 

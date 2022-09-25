@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+import { t } from 'i18next'
 import { Grid, Typography } from '@mui/material'
 
 const Characters = () => {
@@ -6,16 +7,8 @@ const Characters = () => {
 
     return (
         <Grid container spacing={3} sx={{ pt: 4, justifyContent: 'space-between' }}>
-            {[
-                { name: 'cpu', part: 'Processor' },
-                { name: 'ddr', part: 'Memory' },
-                { name: 'motherboard', part: 'Motherboard' },
-                { name: 'hdd', part: 'HDD' },
-                { name: 'ssd_sata', part: 'SSD' },
-                { name: 'ssd_m2', part: 'M.2' },
-                { name: 'videocard', part: 'Videocard' },
-            ].map(
-                ({ name, part }, index) =>
+            {['cpu', 'ram', 'motherboard', 'hdd', 'ssd_sata', 'ssd_m2', 'videocard'].map(
+                (name, index) =>
                     pc?.[name] && (
                         <Grid
                             item
@@ -27,7 +20,7 @@ const Characters = () => {
                                 {pc?.[name]}
                             </Typography>
                             <Typography variant='h6' sx={{ opacity: 0.5, mt: 'auto' }}>
-                                {part}
+                                {t(name)}
                             </Typography>
                         </Grid>
                     )

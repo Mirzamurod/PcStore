@@ -1,59 +1,51 @@
-import { useEffect, useState } from 'react'
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import { useState } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { FreeMode, Navigation, Thumbs } from 'swiper'
 
+import 'swiper/css/free-mode'
+import 'swiper/css/navigation'
+import 'swiper/css/thumbs'
 import './carousel.scss'
 
 const Carousel = ({ images }) => {
-    let [current, setCurrent] = useState(0)
-    const [hover, setHover] = useState(true)
-
-    useEffect(() => {
-        if (hover) {
-            const interval = setInterval(() => {
-                setCurrent(current === images.length - 1 ? 0 : ++current)
-            }, 3000)
-            return () => clearInterval(interval)
-        }
-    }, [current, images, hover])
+    const [thumbsSwiper, setThumbsSwiper] = useState(null)
 
     return (
-        <div
-            id='carousel'
-            className='carousel'
-            onMouseEnter={() => setHover(false)}
-            onMouseLeave={() => setHover(true)}
-        >
-            <div className='dot'>
-                <KeyboardArrowUpIcon
-                    className='up-arow'
-                    onClick={() => setCurrent(current === 0 ? images.length - 1 : --current)}
-                />
+        <div id='carousel'>
+            <Swiper
+                style={{
+                    '--swiper-navigation-color': '#fff',
+                    '--swiper-pagination-color': '#fff',
+                }}
+                loop={true}
+                spaceBetween={10}
+                navigation={true}
+                thumbs={{ swiper: thumbsSwiper }}
+                modules={[FreeMode, Navigation, Thumbs]}
+                className='mySwiper2'
+            >
                 {images.map((image, index) => (
-                    <div
-                        key={index}
-                        onClick={() => setCurrent(index)}
-                        className={`thumb ${current === index && 'active'}`}
-                    >
+                    <SwiperSlide key={index}>
                         <img src={image} alt={image} />
-                    </div>
+                    </SwiperSlide>
                 ))}
-                <KeyboardArrowDownIcon
-                    className='down-arrow'
-                    onClick={() => setCurrent(current === images.length - 1 ? 0 : ++current)}
-                />
-            </div>
-            <div className='image'>
+            </Swiper>
+            <Swiper
+                onSwiper={setThumbsSwiper}
+                loop={true}
+                spaceBetween={10}
+                slidesPerView={4}
+                freeMode={true}
+                watchSlidesProgress={true}
+                modules={[FreeMode, Navigation, Thumbs]}
+                className='mySwiper'
+            >
                 {images.map((image, index) => (
-                    <div
-                        key={index}
-                        onClick={() => setCurrent(index)}
-                        className={`slide ${current === index && 'active'}`}
-                    >
-                        {current === index && <img src={image} alt={image} />}
-                    </div>
+                    <SwiperSlide key={index}>
+                        <img src={image} alt={image} />
+                    </SwiperSlide>
                 ))}
-            </div>
+            </Swiper>
         </div>
     )
 }

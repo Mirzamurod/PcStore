@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+import { t } from 'i18next'
 import { Box, Grid } from '@mui/material'
 import { Title } from '../../../Components'
 
@@ -8,7 +9,7 @@ const Orders = () => {
     return (
         <div id='orders'>
             <Box my={3}>
-                <Title title='My Orders' />
+                <Title title={t('my_orders')} />
             </Box>
             <Box className={`fon ${dark_mode ? 'dark' : 'light'}`}>
                 <Grid container spacing={4}>

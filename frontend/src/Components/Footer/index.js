@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import { Box, Container, Grid, Typography } from '@mui/material'
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined'
@@ -11,6 +12,8 @@ import logo from './../../svg/logo.svg'
 import './footer.scss'
 
 const Footer = () => {
+    const { t } = useTranslation()
+
     const { dark_mode } = useSelector(state => state.login)
 
     return (
@@ -22,29 +25,29 @@ const Footer = () => {
                             <img src={logo} alt='rasm' />
                         </Box>
                         <Typography variant='body2' gutterBottom>
-                            Online store of computer equipment and components
+                            {t('online_store')}
                         </Typography>
                     </Grid>
                     <Grid item md={3}>
                         <Typography variant='h6' gutterBottom sx={{ fontWeight: 700, mb: 3 }}>
-                            Information
+                            {t('information')}
                         </Typography>
                         <Typography variant='body2' sx={{ mb: 2 }}>
-                            Home
+                            {t('home')}
                         </Typography>
                         <Typography variant='body2' sx={{ mb: 2 }}>
-                            Products
+                            {t('products')}
                         </Typography>
                         <Typography variant='body2' sx={{ mb: 2 }}>
-                            Services
+                            {t('services')}
                         </Typography>
                         <Typography variant='body2' sx={{ mb: 2 }}>
-                            Contact
+                            {t('contact')}
                         </Typography>
                     </Grid>
                     <Grid item md={3}>
                         <Typography variant='h6' gutterBottom sx={{ fontWeight: 700, mb: 3 }}>
-                            Contact
+                            {t('contact')}
                         </Typography>
                         <Box sx={{ display: 'flex', mb: 2.5 }}>
                             <LocationOnOutlinedIcon />
@@ -67,7 +70,7 @@ const Footer = () => {
                     </Grid>
                     <Grid item md={3}>
                         <Typography variant='h6' gutterBottom sx={{ fontWeight: 700, mb: 3 }}>
-                            Social media
+                            {t('social_media')}
                         </Typography>
                         <Box sx={{ display: 'flex' }}>
                             <InstagramIcon sx={{ mr: 1 }} />
@@ -79,11 +82,11 @@ const Footer = () => {
             </Container>
             <Typography
                 sx={{ py: 5, mt: 3, borderTop: `1px solid ${dark_mode ? '#ffffff1a' : 'gray'}` }}
-                textAlign={'center'}
+                textAlign='center'
                 width='100%'
-                className={`${dark_mode && 'c-footer'}`}
+                className={dark_mode && 'c-footer'}
             >
-                &#169; 2021 pcstore.uz All rights reserved.
+                &#169; 2021 pcstore.uz {t('reserved')}
             </Typography>
         </div>
     )
