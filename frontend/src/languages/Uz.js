@@ -108,6 +108,21 @@ const uz = {
     shopping_cart: 'Xarid savati',
     forgot_password: 'Parolni unutdingizmi?',
     not_found: '404 sahifa topilmadi',
+    email_required: 'Elektron pochta kerak!',
+    password_required: 'Parol kerak!',
+    username_required: 'Foydalanuvchi nomi shart!',
+    full_name_required: "To'liq ism talab qilinadi!",
+    current_password_required: 'Joriy parol talab qilinadi!',
+    new_password_required: 'Yangi parol talab qilinadi!',
+    confirm_password_required: 'Parolni tasdiqlash talab qilinadi!',
+    confirm_new_password_required: 'Yangi parol talab qilinishini tasdiqlang!',
+    not_username: 'Bu Foydalanuvchi nomi emas',
+    not_full_name: "Bu To'liq ism emas",
+    not_email: 'Bu Email emas',
+    minimum_8_letters: 'Kamida 8 ta harf',
+    not_same_confirm_password: 'Bu Parol yaratish bilan bir xil emas',
+    not_found_email: 'Email topilmadi',
+    user_already_exits: 'Foydalanuvchi allaqachon mavjud',
 }
 
 export default uz

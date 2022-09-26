@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+import { t } from 'i18next'
 import { useForm } from 'react-hook-form'
 import {
     Box,
@@ -22,7 +23,6 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
 import { userLogin } from '../../../redux'
 
 import './signin.scss'
-import { t } from 'i18next'
 
 const SignIn = () => {
     const dispatch = useDispatch()
@@ -73,10 +73,10 @@ const SignIn = () => {
                         type='email'
                         placeholder='example@gmail.com'
                         {...register('email', {
-                            required: 'This field is required!!!',
+                            required: t('email_required'),
                             pattern: {
                                 value: /[\w.]+@\w+\.(com|ru)/,
-                                message: 'This is not Email',
+                                message: t('not_email'),
                             },
                         })}
                         helperText={errors?.email?.message}
@@ -92,8 +92,8 @@ const SignIn = () => {
                             placeholder={t('password')}
                             type={showPassword ? 'text' : 'password'}
                             {...register('password', {
-                                required: 'This field is required!!!',
-                                minLength: { value: 8, message: 'Minimum 8 letters' },
+                                required: t('password_required'),
+                                minLength: { value: 8, message: t('minimum_8_letters') },
                             })}
                             endAdornment={
                                 <InputAdornment position='end'>

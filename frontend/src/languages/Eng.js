@@ -108,6 +108,22 @@ const eng = {
     shopping_cart: 'Shopping cart',
     forgot_password: 'Forgot password?',
     not_found: '404 Page not Found',
+    email_required: 'Email is required!',
+    password_required: 'Password is required!',
+    username_required: 'Username is required!',
+    full_name_required: 'Fullname is required!',
+    create_password_required: 'Create password is required!',
+    current_password_required: 'Current password is required!',
+    new_password_required: 'New password is required!',
+    confirm_password_required: 'Confirm password is required!',
+    confirm_new_password_required: 'Confirm new password is required!',
+    not_username: 'This is not Username',
+    not_full_name: 'This is not Full name',
+    not_email: 'This is not Email',
+    minimum_8_letters: 'Minimum 8 letters',
+    not_same_confirm_password: 'This is not same as Create password',
+    not_found_email: 'Email not found',
+    user_already_exists: 'User already exists',
 }
 
 export default eng

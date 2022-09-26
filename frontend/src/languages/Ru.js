@@ -108,6 +108,22 @@ const ru = {
     shopping_cart: 'Корзина покупателя',
     forgot_password: 'Забыл пароль?',
     not_found: '404 Страница не найдена',
+    email_required: 'Электронная почта обязательна!',
+    password_required: 'Требуется пароль!',
+    username_required: 'Имя пользователя требуется!',
+    full_name_required: 'Полное имя обязательно!',
+    create_password_required: 'Требуется создать пароль!',
+    current_password_required: 'Требуется текущий пароль!',
+    new_password_required: 'Требуется новый пароль!',
+    confirm_password_required: 'Требуется подтверждение пароля!',
+    confirm_new_password_required: 'Требуется подтверждение нового пароля!',
+    not_username: 'Это не имя пользователя',
+    not_full_name: 'Это не полное имя',
+    not_email: 'Это не электронная почта',
+    minimum_8_letters: 'Минимум 8 букв',
+    not_same_confirm_password: 'Это не то же самое, что Создать пароль',
+    not_found_email: 'Электронная почта не найдена',
+    user_already_exits: 'Пользователь уже существует',
 }
 
 export default ru

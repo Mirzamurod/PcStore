@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
+import { t } from 'i18next'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { ToastContainer, toast } from 'react-toastify'
@@ -23,26 +24,25 @@ import Visibility from '@mui/icons-material/Visibility'
 import { addUser } from '../../../redux'
 
 import 'react-toastify/dist/ReactToastify.css'
-import { t } from 'i18next'
 
 const SignUp = () => {
     const dispatch = useDispatch()
     const formSchema = Yup.object().shape({
         username: Yup.string()
-            .required('This field is required!!!')
+            .required(t('username_required'))
             .matches(/[A-Za-z0-9]/g),
         fullname: Yup.string()
-            .required('This field is required!!!')
-            .matches(/[A-z]+\s[A-z]+/, 'This is not Username')
+            .required(t('full_name_required'))
+            .matches(/[A-z]+\s[A-z]+/, t('not_full_name'))
             .trim(),
         email: Yup.string()
-            .required('This field is required!!!')
-            .matches(/[\w.]+@\w+\.(com|ru)/, 'This is not Email'),
-        password: Yup.string().required('This field is required!!!').min(8, 'Minimum 8 letters'),
+            .required(t('email_required'))
+            .matches(/[\w.]+@\w+\.(com|ru)/, t('This is not Email')),
+        password: Yup.string().required(t('Password is required!')).min(8, t('minimum_8_letters')),
         cpassword: Yup.string()
-            .required('This field is required!!!')
-            .min(8, 'Minimum 8 letters')
-            .oneOf([Yup.ref('password')], `This is not the same as Create Password`),
+            .required(t('confirm_password_required'))
+            .min(8, t('minimum_8_letters'))
+            .oneOf([Yup.ref('password')], t('not_same_confirm_password')),
     })
     const {
         handleSubmit,
