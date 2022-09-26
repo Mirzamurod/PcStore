@@ -31,7 +31,7 @@ i18n.use(initReactI18next).init({
         ru: { translation: ru },
         eng: { translation: eng },
     },
-    lng: 'eng',
+    lng: JSON.parse(localStorage.getItem('lang'))?.lang ?? 'eng',
     fallbackLng: 'eng',
     interpolation: { escapeValue: false },
 })
@@ -76,10 +76,7 @@ function App(props) {
                     <div className='App'>
                         <CssBaseline />
                         <Sidebar />
-                        <Toolbar
-                            id='back-to-top-anchor'
-                            sx={{ minHeight: '0px !important' }}
-                        />
+                        <Toolbar id='back-to-top-anchor' sx={{ minHeight: '0px !important' }} />
                         <Routes>
                             {links.map((link, index) => (
                                 <Route path={link.path} element={<link.element />} key={index} />

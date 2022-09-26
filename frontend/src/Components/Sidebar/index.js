@@ -29,6 +29,7 @@ import { Others, UserSetting } from './Others'
 import links from './../../Routes'
 
 import './sidebar.scss'
+import i18next from 'i18next'
 
 const pages = [
     { name: 'home', url: '/', id: 'home', offset: -128 },
@@ -50,6 +51,26 @@ const Sidebar = memo(() => {
     const [anchorElNav, setAnchorElNav] = useState(null)
     const [anchorElUser, setAnchorElUser] = useState(null)
     const [userCheck, setUserCheck] = useState(false)
+    const [anchorEl, setAnchorEl] = useState(null)
+    const lang = JSON.parse(localStorage.getItem('lang')) ?? { lang: 'us', name: 'Eng' }
+    const [changeLang, setChangeLang] = useState(lang)
+
+    const open = Boolean(anchorEl)
+    const handleClose = () => setAnchorEl(null)
+
+    const changelang = (lang, name) => {
+        i18next.changeLanguage(lang)
+        setChangeLang({ lang, name })
+    }
+
+    const nimadir = (lang, name) => {
+        handleClose()
+        changelang(lang, name)
+    }
+
+    useEffect(() => {
+        localStorage.setItem('lang', JSON.stringify(changeLang))
+    }, [changeLang])
 
     const { dark_mode, user } = useSelector(state => state.login)
     const token = localStorage.getItem('token')
@@ -183,6 +204,42 @@ const Sidebar = memo(() => {
                                 <ShoppingCartIcon size='small' />
                             </Badge>
                         </IconButton>
+                        <Box>
+                            <Button
+                                id='demo-positioned-button'
+                                aria-controls={open ? 'demo-positioned-menu' : undefined}
+                                aria-haspopup='true'
+                                aria-expanded={open ? 'true' : undefined}
+                                onClick={event => setAnchorEl(event.currentTarget)}
+                                // variant='outlined'
+                                color='inherit'
+                                startIcon={<span className={`fi fi-${changeLang.lang}`} />}
+                            >
+                                {changeLang.name}
+                            </Button>
+                            <Menu
+                                id='demo-positioned-menu'
+                                aria-labelledby='demo-positioned-button'
+                                anchorEl={anchorEl}
+                                open={open}
+                                onClose={handleClose}
+                                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                            >
+                                {[
+                                    { lang: 'uz', name: 'Uz' },
+                                    { lang: 'ru', name: 'Ru' },
+                                    { lang: 'us', name: 'Eng' },
+                                ].map(({ lang, name }, index) => (
+                                    <MenuItem onClick={() => nimadir(lang, name)} key={index}>
+                                        <ListItemIcon>
+                                            <span className={`fi fi-${lang}`} />
+                                        </ListItemIcon>
+                                        {name}
+                                    </MenuItem>
+                                ))}
+                            </Menu>
+                        </Box>
                         <Box sx={{ flexGrow: 0 }}>
                             <Button
                                 variant='outlined'
@@ -195,7 +252,7 @@ const Sidebar = memo(() => {
                                 sx={{ ml: 1 }}
                             >
                                 <Typography textTransform={userCheck ? 'lowercase' : 'capitalize'}>
-                                    {userCheck ? user && `@${user.username}` : 'sign in'}
+                                    {userCheck ? user && `@${user.username}` : t('sign_in')}
                                 </Typography>
                             </Button>
                             <Menu
