@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 import { Box, Button } from '@mui/material'
 import Comment from '../AddComment'
-import GeneralCharacter from '../GeneralCharacter'
+import GeneralCharacter from '../Specification'
 
 const GeneralInfo = () => {
+    const { t } = useTranslation()
     const [change, setChange] = useState('comment')
 
     return (
@@ -17,7 +18,7 @@ const GeneralInfo = () => {
                     borderBottom: '1px solid red',
                 }}
             >
-                {['comment', 'characters'].map((item, index) => (
+                {['comment', 'specification'].map((item, index) => (
                     <Button
                         onClick={() => setChange(item)}
                         key={index}

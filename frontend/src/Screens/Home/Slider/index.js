@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import { Box, Button, Container, Grid, Rating, styled, Typography } from '@mui/material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Pagination } from 'swiper'
-import { useTranslation } from 'react-i18next'
 
 import 'swiper/css/pagination'
 import './slider.scss'

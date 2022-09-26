@@ -1,7 +1,7 @@
 import { useState, memo } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 import { decode } from 'js-base64'
 import { Box, Button, Grid, Rating, styled, TextField, Typography } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
@@ -9,6 +9,7 @@ import { addReview } from '../../../redux'
 import Comments from './Comments'
 
 const Comment = memo(() => {
+    const { t } = useTranslation()
     const dispatch = useDispatch()
     const { id } = useParams()
     const [rating, setRating] = useState(0)

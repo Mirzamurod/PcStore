@@ -1,4 +1,4 @@
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 import {
     Container,
     Paper,
@@ -13,6 +13,8 @@ import {
 document.title = 'Shopping Cart'
 
 const ShoppingCart = () => {
+    const { t } = useTranslation()
+
     return (
         <Container sx={{ pb: 4 }}>
             <Typography variant='h6' mb={4} fontWeight={700}>
@@ -25,7 +27,7 @@ const ShoppingCart = () => {
                             <TableCell>{t('item_desc')}</TableCell>
                             <TableCell>{t('quantity')}</TableCell>
                             <TableCell>{t('unit_price')}</TableCell>
-                            <TableCell>{t('sub_total')}</TableCell>
+                            <TableCell>{t('price')}</TableCell>
                         </TableRow>
                     </TableHead>
                 </Table>

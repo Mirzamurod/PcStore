@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
 import {
     Box,
@@ -25,6 +25,7 @@ import { userLogin } from '../../../redux'
 import './signin.scss'
 
 const SignIn = () => {
+    const { t } = useTranslation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const {

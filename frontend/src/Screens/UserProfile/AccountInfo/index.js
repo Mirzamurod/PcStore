@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 import {
     Box,
     Button,
@@ -19,6 +19,7 @@ import { Title } from '../../../Components'
 import { userProfile, userUpdate } from '../../../redux'
 
 const AccountInfo = memo(() => {
+    const { t } = useTranslation()
     const dispatch = useDispatch()
     const [user1, setUser] = useState({ username: '', fullname: '', email: '' })
     const [usernameE, setUsernameE] = useState(false) // empty

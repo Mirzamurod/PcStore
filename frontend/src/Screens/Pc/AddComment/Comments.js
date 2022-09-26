@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 import { decode } from 'js-base64'
 import { Box, CircularProgress, Grid, Rating, styled, Typography } from '@mui/material'
 import { getReviews } from '../../../redux'
@@ -9,6 +9,8 @@ import { getReviews } from '../../../redux'
 const Comments = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
+    const { t } = useTranslation()
+
     const { dark_mode } = useSelector(state => state.login)
     const { isLoading, reviews, isError, codeReviews } = useSelector(state => state.reviews)
 

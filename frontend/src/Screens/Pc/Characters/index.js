@@ -1,8 +1,10 @@
 import { useSelector } from 'react-redux'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 import { Grid, Typography } from '@mui/material'
 
 const Characters = () => {
+    const { t } = useTranslation()
+
     const { pc } = useSelector(state => state.pc)
 
     return (

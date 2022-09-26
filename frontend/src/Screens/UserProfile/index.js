@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 import { Box, Button, Container, Grid, Typography } from '@mui/material'
 import HomeIcon from '@mui/icons-material/Home'
 import PersonIcon from '@mui/icons-material/Person'
@@ -11,6 +11,7 @@ import Address from './Address'
 import Orders from './Order'
 
 const UserProfile = () => {
+    const { t } = useTranslation()
     const location = useLocation()
     const navigate = useNavigate()
     const { dark_mode, user } = useSelector(state => state.login)

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { ToastContainer, toast } from 'react-toastify'
@@ -26,6 +26,7 @@ import { addUser } from '../../../redux'
 import 'react-toastify/dist/ReactToastify.css'
 
 const SignUp = () => {
+    const { t } = useTranslation()
     const dispatch = useDispatch()
     const formSchema = Yup.object().shape({
         username: Yup.string()

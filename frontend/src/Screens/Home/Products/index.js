@@ -63,16 +63,13 @@ const Products = () => {
                                 label={t('sort_by')}
                                 onChange={event => setSort(event.target.value)}
                             >
-                                {[
-                                    'most_popular',
-                                    'best_selling',
-                                    'price_h_to_l',
-                                    'price_l_to_h',
-                                ].map((item, index) => (
-                                    <MenuItem key={index} value={item}>
-                                        {t(item)}
-                                    </MenuItem>
-                                ))}
+                                {['most_popular', 'price_h_to_l', 'price_l_to_h'].map(
+                                    (item, index) => (
+                                        <MenuItem key={index} value={item}>
+                                            {t(item)}
+                                        </MenuItem>
+                                    )
+                                )}
                             </Select>
                         </FormControl>
                     </Grid>

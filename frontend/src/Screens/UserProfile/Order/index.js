@@ -1,9 +1,11 @@
 import { useSelector } from 'react-redux'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 import { Box, Grid } from '@mui/material'
 import { Title } from '../../../Components'
 
 const Orders = () => {
+    const { t } = useTranslation()
+
     const { dark_mode } = useSelector(state => state.login)
 
     return (

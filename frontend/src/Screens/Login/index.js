@@ -1,10 +1,12 @@
 import { Container, Grid } from '@mui/material'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 import { Title } from '../../Components'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
 
 const Login = () => {
+    const { t } = useTranslation()
+
     return (
         <Container sx={{ mb: 10 }}>
             <Title title={t('hello_there')} subtitle={t('continue')} />
