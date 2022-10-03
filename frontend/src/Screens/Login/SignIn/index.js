@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
+import classNames from 'classnames'
 import {
     Box,
     Button,
@@ -129,7 +130,7 @@ const SignIn = () => {
                 </Button>
             </Box>
             <Box mb={6} my={3}>
-                <Link to='/' className={`link ${!dark_mode && 'light'}`}>
+                <Link to='/' className={classNames('link', { light: !dark_mode })}>
                     {t('forgot_password')}
                 </Link>
             </Box>

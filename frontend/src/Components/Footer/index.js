@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import classNames from 'classnames'
 import { Box, Container, Grid, Typography } from '@mui/material'
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined'
@@ -32,18 +34,24 @@ const Footer = () => {
                         <Typography variant='h6' gutterBottom sx={{ fontWeight: 700, mb: 3 }}>
                             {t('information')}
                         </Typography>
-                        <Typography variant='body2' sx={{ mb: 2 }}>
-                            {t('home')}
-                        </Typography>
-                        <Typography variant='body2' sx={{ mb: 2 }}>
-                            {t('products')}
-                        </Typography>
-                        <Typography variant='body2' sx={{ mb: 2 }}>
-                            {t('services')}
-                        </Typography>
-                        <Typography variant='body2' sx={{ mb: 2 }}>
-                            {t('contact')}
-                        </Typography>
+                        {[
+                            { name: 'home', url: '/' },
+                            { name: 'products', url: '/products' },
+                            { name: 'services', url: '/services' },
+                            { name: 'contact', url: '/contact' },
+                        ].map(({ name, url }, index) => (
+                            <Typography
+                                key={index}
+                                component={Link}
+                                to={url}
+                                display='block'
+                                color='inherit'
+                                variant='body2'
+                                sx={{ mb: 2 }}
+                            >
+                                {t(name)}
+                            </Typography>
+                        ))}
                     </Grid>
                     <Grid item md={3}>
                         <Typography variant='h6' gutterBottom sx={{ fontWeight: 700, mb: 3 }}>
@@ -84,7 +92,7 @@ const Footer = () => {
                 sx={{ py: 5, mt: 3, borderTop: `1px solid ${dark_mode ? '#ffffff1a' : 'gray'}` }}
                 textAlign='center'
                 width='100%'
-                className={dark_mode && 'c-footer'}
+                className={classNames({ 'c-footer': dark_mode })}
             >
                 &#169; 2021 pcstore.uz {t('reserved')}
             </Typography>

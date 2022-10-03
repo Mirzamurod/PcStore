@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+import classNames from 'classnames'
 import { Box, Typography, Button } from '@mui/material'
 import { Title } from '../../../Components'
 
@@ -13,7 +14,10 @@ const Address = () => {
             <Box my={3}>
                 <Title title={t('address_book')} />
             </Box>
-            <Box className={`fon ${dark_mode ? 'dark' : 'light'}`}>
+            <Box
+                // className={`fon ${dark_mode ? 'dark' : 'light'}`}
+                className={classNames('fon', dark_mode ? 'dark' : 'light')}
+            >
                 <Typography variant='h6'>{t('default_shipping_address')}</Typography>
                 <Typography variant='body2'>100114</Typography>
                 <Typography variant='body2'>Uzbekistan, Tashkent,</Typography>

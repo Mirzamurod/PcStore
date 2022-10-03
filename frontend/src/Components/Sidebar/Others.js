@@ -21,8 +21,9 @@ export const UserSetting = memo(({ dark_mode, url, name }) => {
                 sx={{
                     py: 1,
                     pr: 2,
-                    color: dark_mode ? 'white' : 'black',
+                    // color: dark_mode ? 'white' : 'black',
                 }}
+                color='inherit'
                 onClick={() => url === '/' && localStorage.removeItem('token')}
             >
                 {t(name)}

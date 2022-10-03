@@ -19,7 +19,7 @@ const login = createSlice({
             state.isError = false
         },
         onSuccess: (state, { payload }) => {
-            localStorage.setItem('token', encode(payload.data.token))
+            localStorage.setItem('token', encode(payload?.data?.token))
             state.isLoading = false
             state.isError = false
             state.code = payload.code
@@ -45,7 +45,7 @@ const login = createSlice({
         onFail: (state, { payload }) => {
             state.isLoading = false
             state.isError = true
-            state.err_msg = { ...payload.response.data.message }
+            state.err_msg = { ...payload?.response?.data?.message }
         },
         changeMode: state => {
             state.dark_mode = !state.dark_mode

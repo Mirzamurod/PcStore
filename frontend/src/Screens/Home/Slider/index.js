@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+import classNames from 'classnames'
 import { Box, Button, Container, Grid, Rating, styled, Typography } from '@mui/material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -74,7 +75,7 @@ const Slider = () => {
                     >
                         <div
                             style={{ backgroundImage: `url(${item.image})` }}
-                            className={`foncolor ${!dark_mode && 'light'}`}
+                            className={classNames('foncolor', { light: !dark_mode })}
                         />
                         <Container>
                             <Grid container>

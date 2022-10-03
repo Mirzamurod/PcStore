@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { t } from 'i18next'
+import classNames from 'classnames'
 import { Box, Button, Container, Grid, Typography } from '@mui/material'
 import ComputerIcon from '@mui/icons-material/Computer'
 import ListAltIcon from '@mui/icons-material/ListAlt'
@@ -31,8 +32,8 @@ const AdminPanel = () => {
                             {t('admin_panel')}
                         </Typography>
                         {[
-                            { name: 'pcs', link: '/pcs', icon: ComputerIcon },
-                            { name: 'add_pc', link: '/orders', icon: ListAltIcon },
+                            { name: 'pcs', link: '/pcs', icon: <ComputerIcon /> },
+                            { name: 'add_pc', link: '/orders', icon: <ListAltIcon /> },
                             { name: 'orders', link: '/users', icon: '' },
                         ].map((button, index) => (
                             <Button
@@ -42,9 +43,9 @@ const AdminPanel = () => {
                                         ? 'error'
                                         : 'inherit'
                                 }
-                                variant={
-                                    location.pathname === '/admin' + button.link ? 'contained' : ''
-                                }
+                                variant={classNames({
+                                    contained: location.pathname === '/admin' + button.link,
+                                })}
                                 onClick={() => navigate('/admin' + button.link)}
                                 fullWidth
                                 // startIcon={<button.icon />}

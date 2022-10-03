@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import classNames from 'classnames'
 import { Box, Button } from '@mui/material'
 import Comment from '../AddComment'
 import GeneralCharacter from '../Specification'
@@ -23,7 +24,7 @@ const GeneralInfo = () => {
                         onClick={() => setChange(item)}
                         key={index}
                         sx={{ borderRadius: 0 }}
-                        variant={change === item ? 'outlined' : ''}
+                        variant={classNames({ outlined: change === item })}
                         color='error'
                     >
                         {t(item)}

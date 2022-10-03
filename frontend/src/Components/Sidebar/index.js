@@ -1,7 +1,8 @@
 import { memo, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import i18next from 'i18next'
 import {
     AppBar,
     Badge,
@@ -9,33 +10,38 @@ import {
     Button,
     Container,
     CssBaseline,
+    Drawer,
     IconButton,
+    Link,
     ListItemIcon,
+    ListItemText,
     Menu,
     MenuItem,
+    MenuList,
     Toolbar,
     Typography,
 } from '@mui/material'
-import { Link } from 'react-scroll'
+// import { Link } from 'react-scroll'
 import MenuIcon from '@mui/icons-material/Menu'
 import Logout from '@mui/icons-material/Logout'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import Brightness4Icon from '@mui/icons-material/Brightness4'
-import BrightnessHighIcon from '@mui/icons-material/BrightnessHigh'
 import PermIdentityIcon from '@mui/icons-material/PermIdentity'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
+import LightModeIcon from '@mui/icons-material/LightMode'
+import ModeNightIcon from '@mui/icons-material/ModeNight'
 import { changeMode, userProfile } from '../../redux'
 import { Others, UserSetting } from './Others'
+import DrawerSidebar from './DrawerSidebar'
 import links from './../../Routes'
 
 import './sidebar.scss'
-import i18next from 'i18next'
+import classNames from 'classnames'
 
 const pages = [
-    { name: 'home', url: '/', id: 'home', offset: -128 },
-    { name: 'products', url: '/nmadir', id: 'pcs', offset: -80 },
-    { name: 'services', url: '/kimdir', id: 'pcs', offset: 100 },
-    { name: 'contact', url: '/kimdir1', id: 'pcs', offset: 100 },
+    { name: 'home', url: '/' },
+    { name: 'products', url: '/products' },
+    { name: 'services', url: '/services' },
+    { name: 'contact', url: '/contact' },
 ]
 
 const settings = [
@@ -48,7 +54,7 @@ const Sidebar = memo(() => {
     const dispatch = useDispatch()
     const location = useLocation()
     const navigate = useNavigate()
-    const [anchorElNav, setAnchorElNav] = useState(null)
+    const [anchorElNav, setAnchorElNav] = useState(false)
     const [anchorElUser, setAnchorElUser] = useState(null)
     const [userCheck, setUserCheck] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null)
@@ -74,11 +80,6 @@ const Sidebar = memo(() => {
 
     const { dark_mode, user } = useSelector(state => state.login)
     const token = localStorage.getItem('token')
-
-    const handleCloseNavMenu = url => {
-        setAnchorElNav(null)
-        navigate(url)
-    }
 
     useEffect(() => {
         links.filter(
@@ -114,186 +115,173 @@ const Sidebar = memo(() => {
                 className={dark_mode ? 'sidebarfon' : 'sidebar-fon'}
             >
                 <Container maxWidth='xl'>
-                    <Toolbar disableGutters>
-                        <Others sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }} />
-                        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                            <IconButton
-                                size='large'
-                                aria-label='account of current user'
-                                aria-controls='menu-appbar'
-                                aria-haspopup='true'
-                                onClick={event => setAnchorElNav(event.currentTarget)}
+                    <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
+                        <Box>
+                            <Others sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }} />
+                            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                                <IconButton
+                                    size='large'
+                                    aria-label='account of current user'
+                                    aria-controls='menu-appbar'
+                                    aria-haspopup='true'
+                                    onClick={() => setAnchorElNav(true)}
+                                >
+                                    <MenuIcon />
+                                </IconButton>
+                                <Drawer open={anchorElNav} onClose={() => setAnchorElNav(false)}>
+                                    <DrawerSidebar setAnchorElNav={setAnchorElNav} />
+                                </Drawer>
+                            </Box>
+                        </Box>
+                        <Others sx={{ display: { xs: 'flex', md: 'none' } }} />
+                        {/* big */}
+                        <Box display='flex' alignItems='center'>
+                            <Box
+                                sx={{
+                                    flexGrow: 1,
+                                    display: { xs: 'none', md: 'flex' },
+                                    justifyContent: 'end',
+                                }}
                             >
-                                <MenuIcon />
-                            </IconButton>
-                            <Menu
-                                id='menu-appbar'
-                                anchorEl={anchorElNav}
-                                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-                                keepMounted
-                                transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-                                open={Boolean(anchorElNav)}
-                                onClose={handleCloseNavMenu}
-                                sx={{ display: { xs: 'block', md: 'none' } }}
-                            >
-                                {/* small */}
                                 {pages.map(page => (
                                     <Link
+                                        component={RouterLink}
                                         key={page.name}
-                                        to={page.id}
-                                        spy={true}
-                                        smooth={true}
-                                        offset={page.offset}
-                                        duration={500}
-                                        style={{ color: dark_mode ? 'white' : 'black' }}
+                                        to={page.url}
+                                        px={1}
+                                        mx={1}
+                                        sx={{
+                                            color:
+                                                location.pathname !== page.url &&
+                                                (dark_mode ? 'white' : 'black'),
+                                        }}
+                                        color={location.pathname === page.url ? 'error' : 'inherit'}
                                     >
                                         {t(page.name)}
                                     </Link>
                                 ))}
-                            </Menu>
-                        </Box>
-                        <Others sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }} />
-                        <Box
-                            sx={{
-                                flexGrow: 1,
-                                display: { xs: 'none', md: 'flex' },
-                                justifyContent: 'end',
-                            }}
-                        >
-                            {/* big */}
-                            {pages.map(page => (
-                                <Link
-                                    key={page.name}
-                                    to={page.id}
-                                    spy={true}
-                                    smooth={true}
-                                    offset={page.offset}
-                                    duration={500}
-                                    style={{ color: dark_mode ? 'white' : 'black' }}
-                                    className={
-                                        location.pathname !== '/' && dark_mode
-                                            ? 'disactivew'
-                                            : location.pathname !== '/' && !dark_mode
-                                            ? 'disactiveb'
-                                            : ''
-                                    }
-                                >
-                                    {t(page.name)}
-                                </Link>
-                            ))}
-                        </Box>
-                        <IconButton
-                            onClick={() => dispatch(changeMode())}
-                            sx={{ color: !dark_mode && 'black' }}
-                        >
-                            {dark_mode ? <BrightnessHighIcon /> : <Brightness4Icon />}
-                        </IconButton>
-                        <IconButton
-                            aria-label='shopping cart'
-                            sx={{
-                                mr: 1,
-                                color:
-                                    location.pathname === '/shoppingcart'
-                                        ? 'red'
-                                        : dark_mode
-                                        ? 'white'
-                                        : 'black',
-                            }}
-                        >
-                            <Badge badgeContent={4} color='error'>
-                                <ShoppingCartIcon size='small' />
-                            </Badge>
-                        </IconButton>
-                        <Box>
-                            <Button
-                                id='demo-positioned-button'
-                                aria-controls={open ? 'demo-positioned-menu' : undefined}
-                                aria-haspopup='true'
-                                aria-expanded={open ? 'true' : undefined}
-                                onClick={event => setAnchorEl(event.currentTarget)}
-                                // variant='outlined'
+                            </Box>
+                            <IconButton
+                                onClick={() => dispatch(changeMode())}
+                                sx={{ color: classNames({ black: !dark_mode }) }}
                                 color='inherit'
-                                startIcon={<span className={`fi fi-${changeLang.lang}`} />}
                             >
-                                {changeLang.name}
-                            </Button>
-                            <Menu
-                                id='demo-positioned-menu'
-                                aria-labelledby='demo-positioned-button'
-                                anchorEl={anchorEl}
-                                open={open}
-                                onClose={handleClose}
-                                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                {dark_mode ? <LightModeIcon /> : <ModeNightIcon />}
+                            </IconButton>
+                            <IconButton
+                                aria-label='shopping cart'
+                                sx={{
+                                    mr: 1,
+                                    color:
+                                        location.pathname === '/shoppingcart'
+                                            ? 'red'
+                                            : dark_mode
+                                            ? 'white'
+                                            : 'black',
+                                }}
                             >
-                                {[
-                                    { lang: 'uz', name: 'Uz' },
-                                    { lang: 'ru', name: 'Ru' },
-                                    { lang: 'us', name: 'Eng' },
-                                ].map(({ lang, name }, index) => (
-                                    <MenuItem onClick={() => nimadir(lang, name)} key={index}>
-                                        <ListItemIcon>
-                                            <span className={`fi fi-${lang}`} />
-                                        </ListItemIcon>
-                                        {name}
-                                    </MenuItem>
-                                ))}
-                            </Menu>
-                        </Box>
-                        <Box sx={{ flexGrow: 0 }}>
-                            <Button
-                                variant='outlined'
-                                onClick={event =>
-                                    userCheck
-                                        ? setAnchorElUser(event.currentTarget)
-                                        : navigate('/login')
-                                }
-                                color={dark_mode ? 'inherit' : 'error'}
-                                sx={{ ml: 1 }}
-                            >
-                                <Typography textTransform={userCheck ? 'lowercase' : 'capitalize'}>
-                                    {userCheck ? user && `@${user.username}` : t('sign_in')}
-                                </Typography>
-                            </Button>
-                            <Menu
-                                sx={{ mt: '45px' }}
-                                id='menu-appbar'
-                                anchorEl={anchorElUser}
-                                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                                keepMounted
-                                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-                                open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
-                            >
-                                {user.isAdmin && (
-                                    <MenuItem onClick={handleCloseUserMenu} sx={{ p: 0 }}>
-                                        <ListItemIcon sx={{ pr: 1, pl: 2 }}>
-                                            <AdminPanelSettingsIcon />
-                                        </ListItemIcon>
-                                        <UserSetting
-                                            url='/admin/pcs'
-                                            dark_mode={dark_mode}
-                                            name='admin'
-                                        />
-                                    </MenuItem>
-                                )}
-                                {settings.map(setting => (
-                                    <MenuItem
-                                        key={setting.name}
-                                        onClick={handleCloseUserMenu}
-                                        sx={{ p: 0 }}
+                                <Badge badgeContent={4} color='error'>
+                                    <ShoppingCartIcon size='small' />
+                                </Badge>
+                            </IconButton>
+                            <Box>
+                                <Button
+                                    id='demo-positioned-button'
+                                    aria-controls={open ? 'demo-positioned-menu' : undefined}
+                                    aria-haspopup='true'
+                                    aria-expanded={open ? 'true' : undefined}
+                                    onClick={event => setAnchorEl(event.currentTarget)}
+                                    // variant='outlined'
+                                    startIcon={<span className={`fi fi-${changeLang.lang}`} />}
+                                    sx={{ color: dark_mode ? 'white' : 'black' }}
+                                >
+                                    {changeLang.name}
+                                </Button>
+                                <Menu
+                                    id='demo-positioned-menu'
+                                    aria-labelledby='demo-positioned-button'
+                                    anchorEl={anchorEl}
+                                    open={open}
+                                    onClose={handleClose}
+                                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                    transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                >
+                                    <MenuList sx={{ color: classNames({ black: !dark_mode }) }}>
+                                        {[
+                                            { lang: 'uz', name: 'Uz' },
+                                            { lang: 'ru', name: 'Ru' },
+                                            { lang: 'us', name: 'Eng' },
+                                        ].map(({ lang, name }, index) => (
+                                            <MenuItem
+                                                onClick={() => nimadir(lang, name)}
+                                                key={index}
+                                            >
+                                                <ListItemIcon>
+                                                    <span className={`fi fi-${lang}`} />
+                                                </ListItemIcon>
+                                                <ListItemText color=''>{name}</ListItemText>
+                                            </MenuItem>
+                                        ))}
+                                    </MenuList>
+                                </Menu>
+                            </Box>
+                            <Box sx={{ flexGrow: 0 }}>
+                                <Button
+                                    variant='outlined'
+                                    onClick={event =>
+                                        userCheck
+                                            ? setAnchorElUser(event.currentTarget)
+                                            : navigate('/login')
+                                    }
+                                    color={dark_mode ? 'inherit' : 'error'}
+                                    sx={{ ml: 1 }}
+                                >
+                                    <Typography
+                                        textTransform={userCheck ? 'lowercase' : 'capitalize'}
                                     >
-                                        <ListItemIcon sx={{ pr: 1, pl: 2 }}>
-                                            <setting.icon />
-                                        </ListItemIcon>
-                                        <UserSetting
-                                            url={setting.url}
-                                            dark_mode={dark_mode}
-                                            name={setting.name}
-                                        />
-                                    </MenuItem>
-                                ))}
-                            </Menu>
+                                        {userCheck ? user && `@${user.username}` : t('sign_in')}
+                                    </Typography>
+                                </Button>
+                                <Menu
+                                    sx={{ mt: '45px' }}
+                                    id='menu-appbar'
+                                    anchorEl={anchorElUser}
+                                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                    keepMounted
+                                    transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                    open={Boolean(anchorElUser)}
+                                    onClose={handleCloseUserMenu}
+                                >
+                                    {user.isAdmin && (
+                                        <MenuItem onClick={handleCloseUserMenu} sx={{ p: 0 }}>
+                                            <ListItemIcon sx={{ pr: 1, pl: 2 }}>
+                                                <AdminPanelSettingsIcon />
+                                            </ListItemIcon>
+                                            <UserSetting
+                                                url='/admin/pcs'
+                                                dark_mode={dark_mode}
+                                                name='admin'
+                                            />
+                                        </MenuItem>
+                                    )}
+                                    {settings.map(setting => (
+                                        <MenuItem
+                                            key={setting.name}
+                                            onClick={handleCloseUserMenu}
+                                            sx={{ p: 0 }}
+                                        >
+                                            <ListItemIcon sx={{ pr: 1, pl: 2 }}>
+                                                <setting.icon />
+                                            </ListItemIcon>
+                                            <UserSetting
+                                                url={setting.url}
+                                                dark_mode={dark_mode}
+                                                name={setting.name}
+                                            />
+                                        </MenuItem>
+                                    ))}
+                                </Menu>
+                            </Box>
                         </Box>
                     </Toolbar>
                 </Container>

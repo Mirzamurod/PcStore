@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+import classNames from 'classnames'
 import {
     Box,
     Button,
@@ -44,7 +45,7 @@ const Products = () => {
                             <Button
                                 color='inherit'
                                 size='large'
-                                sx={{ color: item !== button && 'gray', mr: 2 }}
+                                sx={{ color: classNames({ gray: item !== button }), mr: 2 }}
                                 key={index}
                                 onClick={() => setButton(item)}
                             >

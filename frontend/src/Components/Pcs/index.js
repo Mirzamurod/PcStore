@@ -12,6 +12,7 @@ import { Loading } from '../'
 import 'swiper/css/effect-creative'
 import 'swiper/css/pagination'
 import './pcs.scss'
+import classNames from 'classnames'
 
 const Pcs = ({ isLoading, pcs, pc }) => {
     const { t } = useTranslation()
@@ -47,9 +48,10 @@ const Pcs = ({ isLoading, pcs, pc }) => {
                                         alt='rasm'
                                     />
                                     <p
-                                        className={`stock ${
+                                        className={classNames(
+                                            'stock',
                                             item?.stock_price > 10 ? 'left-78' : 'left-88'
-                                        }`}
+                                        )}
                                     >
                                         10%
                                     </p>
