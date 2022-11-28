@@ -51,8 +51,8 @@ const Slider = () => {
     const { t } = useTranslation()
 
     const StyledRating = styled(Rating)({
-        '& .MuiRating-iconFilled': { color: '#e90021' },
-        '& .MuiRating-iconEmpty': { color: '#e90021' },
+            '& .MuiRating-iconFilled': { color: '#f44336' },
+            '& .MuiRating-iconEmpty': { color: '#f44336' },
     })
 
     const { dark_mode } = useSelector(state => state.login)
@@ -62,7 +62,7 @@ const Slider = () => {
             <Swiper
                 spaceBetween={30}
                 loop={true}
-                autoplay={{ delay: 2500, disableOnInteraction: false }}
+                // autoplay={{ delay: 2500, disableOnInteraction: false }}
                 pagination={{ clickable: true, dynamicBullets: true }}
                 modules={[Autoplay, Pagination]}
                 className='mySwiper'
@@ -116,11 +116,11 @@ const Slider = () => {
                                         </Typography>
                                     </Box>
                                     <Typography variant='body1'>{item.performance}</Typography>
-                                    <Typography color='red' sx={{ mb: 2 }}>
+                                    <Typography color='#f44336' sx={{ mb: 2 }}>
                                         {t('warranty')} {item.waranty} {t('year')}
                                         {item.waranty > 1 && t('s')}
                                     </Typography>
-                                    <Box display='flex' color='red' mb={!item.stock && 7}>
+                                    <Box display='flex' color='#f44336' mb={!item.stock && 7}>
                                         <Typography variant='h3' fontWeight={700}>
                                             {item.price.toLocaleString()}
                                         </Typography>

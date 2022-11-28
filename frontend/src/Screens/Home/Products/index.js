@@ -1,10 +1,15 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link as RouterLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+import { encode } from 'js-base64'
 import {
     Box,
     Button,
+    CardActions,
     Container,
     FormControl,
     Grid,
@@ -27,6 +32,32 @@ const Products = () => {
     useEffect(() => {
         dispatch(getPcs())
     }, [dispatch])
+
+    const buttons = item => (
+        <Fragment>
+            <CardActions>
+                <Button
+                    fullWidth
+                    color='error'
+                    variant='contained'
+                    startIcon={<ShoppingCartIcon />}
+                >
+                    {t('order')}
+                </Button>
+            </CardActions>
+            <CardActions>
+                <Button
+                    component={RouterLink}
+                    fullWidth
+                    endIcon={<ArrowForwardIosIcon />}
+                    sx={{ color: 'inherit' }}
+                    to={`/pc/${encode(encode(item?._id))}`}
+                >
+                    {t('details')}
+                </Button>
+            </CardActions>
+        </Fragment>
+    )
 
     return (
         <Box id='pcs'>
@@ -75,7 +106,7 @@ const Products = () => {
                         </FormControl>
                     </Grid>
                 </Grid>
-                <Pcs isLoading={isLoading} pcs={pcs} />
+                <Pcs isLoading={isLoading} pcs={pcs} buttons={buttons} />
             </Container>
         </Box>
     )

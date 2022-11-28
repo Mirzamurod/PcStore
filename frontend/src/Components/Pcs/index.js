@@ -1,34 +1,33 @@
 import { Fragment } from 'react'
+import PropTypes from 'prop-types'
 import { Link as RouterLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Card, CardActions, CardContent, Button, Typography, Grid, Link } from '@mui/material'
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { EffectCreative, Pagination } from 'swiper'
-import { encode } from 'js-base64'
-import { Loading } from '../'
-
-import 'swiper/css/effect-creative'
-import 'swiper/css/pagination'
-import './pcs.scss'
 import classNames from 'classnames'
+import { Card, CardContent, Typography, Grid, Link } from '@mui/material'
+import { encode } from 'js-base64'
+import { Loading, ImageCarouselCard } from '../'
 
-const Pcs = ({ isLoading, pcs, pc }) => {
+import './pcs.scss'
+
+const Pcs = ({ isLoading, pcs, pc, buttons, lg, md }) => {
     const { t } = useTranslation()
 
     return (
         <Grid container spacing={{ xl: 8, lg: 6, md: 4, sm: 2, xs: 0 }}>
-            {isLoading && <Loading mt={5} />}
-            {pc && pc}
+            {isLoading && <Loading mt={5} pl={6} />}
+            {!isLoading && pc && (
+                <Grid item pt={{ sm: '16px !important' }} lg={lg ?? 3} md={md ?? 4} sm={6} xs={12}>
+                    {pc}
+                </Grid>
+            )}
             {!isLoading &&
                 pcs?.length > 0 &&
                 pcs?.map((item, ind) => (
                     <Grid
                         item
                         pt={{ sm: '16px !important' }}
-                        lg={3}
-                        md={4}
+                        lg={lg ?? 3}
+                        md={md ?? 4}
                         sm={6}
                         xs={12}
                         key={ind}
@@ -57,33 +56,7 @@ const Pcs = ({ isLoading, pcs, pc }) => {
                                     </p>
                                 </Fragment>
                             )}
-                            <Swiper
-                                loop={true}
-                                pagination={true}
-                                grabCursor={true}
-                                effect={'creative'}
-                                creativeEffect={{
-                                    prev: {
-                                        shadow: true,
-                                        origin: 'left center',
-                                        translate: ['-5%', 0, -200],
-                                        rotate: [0, 100, 0],
-                                    },
-                                    next: {
-                                        origin: 'right center',
-                                        translate: ['5%', 0, -200],
-                                        rotate: [0, -100, 0],
-                                    },
-                                }}
-                                modules={[EffectCreative, Pagination]}
-                                className='mySwiper6'
-                            >
-                                {item?.image.map((img, index) => (
-                                    <SwiperSlide key={index}>
-                                        <img src={img} alt='rasm' width='100%' />
-                                    </SwiperSlide>
-                                ))}
-                            </Swiper>
+                            <ImageCarouselCard images={item?.image} />
                             <CardContent>
                                 <Typography
                                     gutterBottom
@@ -123,32 +96,21 @@ const Pcs = ({ isLoading, pcs, pc }) => {
                                     {item?.price.toLocaleString()} UZS
                                 </Typography>
                             </CardContent>
-                            <CardActions>
-                                <Button
-                                    fullWidth
-                                    color='error'
-                                    variant='contained'
-                                    startIcon={<ShoppingCartIcon />}
-                                >
-                                    {t('order')}
-                                </Button>
-                            </CardActions>
-                            <CardActions>
-                                <Button
-                                    component={RouterLink}
-                                    fullWidth
-                                    endIcon={<ArrowForwardIosIcon />}
-                                    sx={{ color: 'inherit' }}
-                                    to={`/pc/${encode(encode(item?._id))}`}
-                                >
-                                    {t('details')}
-                                </Button>
-                            </CardActions>
+                            {buttons(item)}
                         </Card>
                     </Grid>
                 ))}
         </Grid>
     )
+}
+
+Pcs.propTypes = {
+    isLoading: PropTypes.bool.isRequired,
+    pcs: PropTypes.array.isRequired,
+    pc: PropTypes.object,
+    buttons: PropTypes.func,
+    lg: PropTypes.number,
+    md: PropTypes.number,
 }
 
 export default Pcs

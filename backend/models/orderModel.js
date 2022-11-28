@@ -9,7 +9,7 @@ const orderSchema = mongoose.Schema(
         },
         shipping_address: {
             email: { type: String, required: true },
-            full_name: { type: String, required: true },
+            fullname: { type: String, required: true },
             address: {
                 country: { type: String, required: true, default: 'Uzbekistan' },
                 city: { type: String, required: true },

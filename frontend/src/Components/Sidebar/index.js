@@ -30,7 +30,7 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import ModeNightIcon from '@mui/icons-material/ModeNight'
 import { changeMode, userProfile } from '../../redux'
-import { Others, UserSetting } from './Others'
+import { Others } from './Others'
 import DrawerSidebar from './DrawerSidebar'
 import links from './../../Routes'
 
@@ -253,31 +253,28 @@ const Sidebar = memo(() => {
                                     onClose={handleCloseUserMenu}
                                 >
                                     {user.isAdmin && (
-                                        <MenuItem onClick={handleCloseUserMenu} sx={{ p: 0 }}>
-                                            <ListItemIcon sx={{ pr: 1, pl: 2 }}>
+                                        <MenuItem
+                                            component={RouterLink}
+                                            to='/admin/pcs'
+                                            onClick={handleCloseUserMenu}
+                                        >
+                                            <ListItemIcon>
                                                 <AdminPanelSettingsIcon />
                                             </ListItemIcon>
-                                            <UserSetting
-                                                url='/admin/pcs'
-                                                dark_mode={dark_mode}
-                                                name='admin'
-                                            />
+                                            {t('admin')}
                                         </MenuItem>
                                     )}
                                     {settings.map(setting => (
                                         <MenuItem
+                                            component={RouterLink}
+                                            to={setting.url}
                                             key={setting.name}
                                             onClick={handleCloseUserMenu}
-                                            sx={{ p: 0 }}
                                         >
-                                            <ListItemIcon sx={{ pr: 1, pl: 2 }}>
+                                            <ListItemIcon>
                                                 <setting.icon />
                                             </ListItemIcon>
-                                            <UserSetting
-                                                url={setting.url}
-                                                dark_mode={dark_mode}
-                                                name={setting.name}
-                                            />
+                                            {t(setting.name)}
                                         </MenuItem>
                                     ))}
                                 </Menu>

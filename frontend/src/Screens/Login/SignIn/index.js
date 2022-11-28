@@ -1,27 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
 import classNames from 'classnames'
-import {
-    Box,
-    Button,
-    Checkbox,
-    FormControl,
-    FormControlLabel,
-    FormHelperText,
-    IconButton,
-    Input,
-    InputAdornment,
-    InputLabel,
-    TextField,
-    Typography,
-} from '@mui/material'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import { Box, Button, Checkbox, FormControlLabel, Typography } from '@mui/material'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
 import { userLogin } from '../../../redux'
+import { InputOptions, PasswordInputOptions } from '../../../Components'
 
 import './signin.scss'
 
@@ -29,14 +17,22 @@ const SignIn = () => {
     const { t } = useTranslation()
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const formSchema = Yup.object().shape({
+        email: Yup.string()
+            .required(t('email_required'))
+            .matches(/[\w.]+@\w+\.(com|ru)/, t('not_email')),
+        password: Yup.string()
+            .required(t('password_required'))
+            .min(8, t('minimum_8_letters'))
+            .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/, t('must')),
+    })
     const {
         register,
         handleSubmit,
         formState: { errors },
         setError,
         setValue,
-    } = useForm()
-    const [showPassword, setShowPassword] = useState(false)
+    } = useForm({ mode: 'onTouched', resolver: yupResolver(formSchema) })
 
     const { dark_mode, code, err_msg } = useSelector(state => state.login)
     const token = localStorage.getItem('token')
@@ -66,51 +62,16 @@ const SignIn = () => {
                 onSubmit={handleSubmit(value => dispatch(userLogin(value)))}
             >
                 <Box border={`1px solid ${dark_mode ? '#e2e4e5' : 'gray'}`} borderRadius={2} p={4}>
-                    <TextField
-                        label={t('email')}
-                        error={!!errors?.email}
-                        variant='standard'
-                        color='error'
-                        sx={{ display: 'block', mb: 2 }}
-                        type='email'
-                        placeholder='example@gmail.com'
-                        {...register('email', {
-                            required: t('email_required'),
-                            pattern: {
-                                value: /[\w.]+@\w+\.(com|ru)/,
-                                message: t('not_email'),
-                            },
-                        })}
-                        helperText={errors?.email?.message}
+                    <InputOptions
+                        options={[{ name: 'email', placeholder: 'example@gmail.com' }]}
+                        register={register}
+                        errors={errors}
                     />
-                    <FormControl
-                        variant='standard'
-                        error={!!errors?.password}
-                        color='error'
-                        sx={{ display: 'block', mb: 2 }}
-                    >
-                        <InputLabel htmlFor='passwordin'>{t('password')}</InputLabel>
-                        <Input
-                            placeholder={t('password')}
-                            type={showPassword ? 'text' : 'password'}
-                            {...register('password', {
-                                required: t('password_required'),
-                                minLength: { value: 8, message: t('minimum_8_letters') },
-                            })}
-                            endAdornment={
-                                <InputAdornment position='end'>
-                                    <IconButton
-                                        aria-label='toggle password visibility'
-                                        onClick={() => setShowPassword(!showPassword)}
-                                        onMouseDown={e => e.preventDefault()}
-                                    >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                        />
-                        <FormHelperText>{errors?.password?.message}</FormHelperText>
-                    </FormControl>
+                    <PasswordInputOptions
+                        options={[{ name: 'password' }]}
+                        register={register}
+                        errors={errors}
+                    />
                 </Box>
                 <FormControlLabel
                     control={<Checkbox color='error' />}

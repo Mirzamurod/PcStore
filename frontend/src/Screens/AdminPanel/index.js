@@ -1,15 +1,20 @@
-import { useEffect } from 'react'
+import { lazy, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { t } from 'i18next'
+import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
 import { Box, Button, Container, Grid, Typography } from '@mui/material'
 import ComputerIcon from '@mui/icons-material/Computer'
 import ListAltIcon from '@mui/icons-material/ListAlt'
 
+const Pcs = lazy(() => import('./Pcs'))
+const Orders = lazy(() => import('./Orders'))
+const Users = lazy(() => import('./Users'))
+
 const AdminPanel = () => {
     const location = useLocation()
     const navigate = useNavigate()
+    const { t } = useTranslation()
     const { dark_mode } = useSelector(state => state.login)
 
     const token = localStorage.getItem('token')
@@ -33,8 +38,8 @@ const AdminPanel = () => {
                         </Typography>
                         {[
                             { name: 'pcs', link: '/pcs', icon: <ComputerIcon /> },
-                            { name: 'add_pc', link: '/orders', icon: <ListAltIcon /> },
-                            { name: 'orders', link: '/users', icon: '' },
+                            { name: 'orders', link: '/orders', icon: <ListAltIcon /> },
+                            { name: 'users', link: '/users', icon: '' },
                         ].map((button, index) => (
                             <Button
                                 key={index}
@@ -61,19 +66,19 @@ const AdminPanel = () => {
                         ))}
                     </Box>
                 </Grid>
-                {/* <Grid item md={9}>
-                    {location.pathname === '/user/account' ? (
-                        <AccountInfo />
-                    ) : location.pathname === '/user/address' ? (
-                        <Address />
-                    ) : location.pathname === '/user/orders' ? (
+                <Grid item md={9}>
+                    {location.pathname === '/admin/pcs' ? (
+                        <Pcs />
+                    ) : location.pathname === '/admin/orders' ? (
                         <Orders />
+                    ) : location.pathname === '/admin/users' ? (
+                        <Users />
                     ) : (
                         <Typography variant='h4' color='red'>
                             Something went wrong!!!
                         </Typography>
                     )}
-                </Grid> */}
+                </Grid>
             </Grid>
         </Container>
     )

@@ -55,10 +55,10 @@ const user = {
 
         // Check fields
         if (
-            !!username &&
-            !!fullname &&
-            !!email &&
-            !!password &&
+            // !!username &&
+            // !!fullname &&
+            // !!email &&
+            // !!password &&
             !/[^A-Za-z0-9]+/g.test(username) &&
             /[A-z]+\s[A-z]+/.test(fullname) &&
             /[\w.]+@\w+\.(com|ru)/.test(email) &&
@@ -83,8 +83,8 @@ const user = {
                 if (!!!req.body[key]) message[key] = value
             })
 
-            const keys = Object.keys(message)
-            keys.forEach(key => (message[key] = 'This field is required!!!'))
+            // const keys = Object.keys(message)
+            // keys.forEach(key => (message[key] = 'This field is required!!!'))
 
             if (!!username)
                 if (/[^A-Za-z0-9]+/g.test(username)) message.username = 'This is not Username'
@@ -109,8 +109,8 @@ const user = {
 
         // Check fields
         if (
-            !!email &&
-            !!password &&
+            // !!email &&
+            // !!password &&
             /[\w.]+@\w+\.(com|ru)/.test(email) &&
             password.length > 7 &&
             password.length < 17

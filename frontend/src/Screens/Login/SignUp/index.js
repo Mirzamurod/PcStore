@@ -1,29 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { ToastContainer, toast } from 'react-toastify'
-import {
-    Box,
-    Checkbox,
-    FormControl,
-    FormControlLabel,
-    FormHelperText,
-    IconButton,
-    Input,
-    InputAdornment,
-    InputLabel,
-    Typography,
-    TextField,
-} from '@mui/material'
+import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import Visibility from '@mui/icons-material/Visibility'
 import { addUser } from '../../../redux'
-
-import 'react-toastify/dist/ReactToastify.css'
+import { InputOptions, PasswordInputOptions } from './../../../Components'
 
 const SignUp = () => {
     const { t } = useTranslation()
@@ -33,13 +18,16 @@ const SignUp = () => {
             .required(t('username_required'))
             .matches(/[A-Za-z0-9]/g),
         fullname: Yup.string()
-            .required(t('full_name_required'))
-            .matches(/[A-z]+\s[A-z]+/, t('not_full_name'))
+            .required(t('fullname_required'))
+            .matches(/[A-z]+\s[A-z]+/, t('not_fullname'))
             .trim(),
         email: Yup.string()
             .required(t('email_required'))
-            .matches(/[\w.]+@\w+\.(com|ru)/, t('This is not Email')),
-        password: Yup.string().required(t('Password is required!')).min(8, t('minimum_8_letters')),
+            .matches(/[\w.]+@\w+\.(com|ru)/, t('not_email')),
+        password: Yup.string()
+            .required(t('password_required'))
+            .min(8, t('minimum_8_letters'))
+            .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/, t('must')),
         cpassword: Yup.string()
             .required(t('confirm_password_required'))
             .min(8, t('minimum_8_letters'))
@@ -53,8 +41,6 @@ const SignUp = () => {
         clearErrors,
         setError,
     } = useForm({ mode: 'onTouched', resolver: yupResolver(formSchema) })
-    const [cPasswordI, setCPasswordI] = useState(false)
-    const [rPasswordI, setRPasswordI] = useState(false)
 
     const { dark_mode } = useSelector(state => state.login)
     const { code, isLoading, err_msg } = useSelector(state => state.register)
@@ -87,6 +73,17 @@ const SignUp = () => {
         )
     }
 
+    const optionsInput = [
+        { name: 'username' },
+        { name: 'fullname', placeholder: 'John Doe' },
+        { name: 'email', type: 'email' },
+    ]
+
+    const optionsPassword = [
+        { name: 'password', label: 'create_password' },
+        { name: 'cpassword', label: 'confirm_password' },
+    ]
+
     return (
         <div id='signup'>
             <Typography variant='h6' my={5}>
@@ -99,101 +96,18 @@ const SignUp = () => {
                 onSubmit={handleSubmit(signup)}
             >
                 <Box border={`1px solid ${dark_mode ? '#e2e4e5' : 'gray'}`} borderRadius={2} p={4}>
-                    {/* Username */}
-                    <TextField
-                        label={t('username')}
-                        error={!!errors?.username}
-                        variant='standard'
-                        color='error'
-                        sx={{ display: 'block', mb: 2 }}
-                        type='email'
-                        placeholder='username'
-                        disabled={isLoading}
-                        {...register('username')}
-                        helperText={errors?.username?.message}
+                    <InputOptions
+                        options={optionsInput}
+                        register={register}
+                        errors={errors}
+                        isLoading={isLoading}
                     />
-                    {/* Full Name */}
-                    <TextField
-                        label={t('full_name')}
-                        error={!!errors?.fullname}
-                        variant='standard'
-                        color='error'
-                        sx={{ display: 'block', mb: 2 }}
-                        type='email'
-                        placeholder='John Doe'
-                        disabled={isLoading}
-                        {...register('fullname')}
-                        helperText={errors?.fullname?.message}
+                    <PasswordInputOptions
+                        options={optionsPassword}
+                        register={register}
+                        errors={errors}
+                        isLoading={isLoading}
                     />
-                    {/* Email */}
-                    <TextField
-                        label={t('email')}
-                        error={!!errors?.email}
-                        variant='standard'
-                        color='error'
-                        sx={{ display: 'block', mb: 2 }}
-                        type='email'
-                        placeholder='example@gmail.com'
-                        disabled={isLoading}
-                        {...register('email')}
-                        helperText={errors?.email?.message}
-                    />
-                    {/* Create Password */}
-                    <FormControl
-                        variant='standard'
-                        color='error'
-                        error={!!errors?.password}
-                        sx={{ display: 'block', mb: 2 }}
-                    >
-                        <InputLabel htmlFor='passwordup'>{t('create_password')}</InputLabel>
-                        <Input
-                            placeholder={t('create_password')}
-                            type={cPasswordI ? 'text' : 'password'}
-                            {...register('password')}
-                            disabled={isLoading}
-                            endAdornment={
-                                <InputAdornment position='end'>
-                                    <IconButton
-                                        aria-label='password'
-                                        onClick={() => setCPasswordI(!cPasswordI)}
-                                        onMouseDown={e => e.preventDefault()}
-                                        disabled={isLoading}
-                                    >
-                                        {cPasswordI ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                        />
-                        <FormHelperText>{errors?.password?.message}</FormHelperText>
-                    </FormControl>
-                    {/* Confirm Password */}
-                    <FormControl
-                        variant='standard'
-                        color='error'
-                        error={!!errors?.cpassword}
-                        sx={{ display: 'block', mb: 2 }}
-                    >
-                        <InputLabel>{t('confirm_password')}</InputLabel>
-                        <Input
-                            placeholder={t('confirm_password')}
-                            type={rPasswordI ? 'text' : 'password'}
-                            {...register('cpassword')}
-                            disabled={isLoading}
-                            endAdornment={
-                                <InputAdornment position='end'>
-                                    <IconButton
-                                        aria-label='cpassword'
-                                        onClick={() => setRPasswordI(!rPasswordI)}
-                                        onMouseDown={e => e.preventDefault()}
-                                        disabled={isLoading}
-                                    >
-                                        {rPasswordI ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                        />
-                        <FormHelperText>{errors?.cpassword?.message}</FormHelperText>
-                    </FormControl>
                 </Box>
                 <FormControlLabel
                     control={<Checkbox color='error' />}
