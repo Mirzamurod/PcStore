@@ -3,13 +3,11 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next'
-import { Box, Card, CardContent, FormControl, InputLabel } from '@mui/material'
+import { Box, Card, CardContent } from '@mui/material'
 import ImageGallery from 'react-image-gallery'
-import { Editor } from 'react-draft-wysiwyg'
-import { ContentState, convertFromHTML, convertToRaw, EditorState } from 'draft-js'
-import draftToHtml from 'draftjs-to-html'
 import { CardBox, InputOptions } from '../../../../Components'
 import Image from './Image'
+import EditorPc from './EditorPc'
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 // import 'draft-js/dist/Draft.css'
@@ -67,25 +65,25 @@ const AddEdit = forwardRef((props, ref) => {
         { end: 'uzs', name: 'discount' },
     ]
 
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 'auto',
-        p: 4,
-    }
+    // const style = {
+    //     position: 'absolute',
+    //     top: '50%',
+    //     left: '50%',
+    //     transform: 'translate(-50%, -50%)',
+    //     width: 'auto',
+    //     p: 4,
+    // }
 
     return (
         <Fragment>
-            <CardBox sx={style} ref={ref}>
+            <CardBox ref={ref}>
                 <Box
                     sx={{ border: '1px solid #fff', borderRadius: 1 }}
                     component='form'
                     encType='multipart/form-data'
                 >
                     <Card sx={{ display: 'flex' }}>
-                        <CardContent>
+                        <CardContent sx={{ minWidth: '352px' }}>
                             <Image
                                 images={images}
                                 setImages={setImages}
@@ -102,34 +100,9 @@ const AddEdit = forwardRef((props, ref) => {
                             />
                         </CardContent>
                         <CardContent sx={{ width: '900px' }}>
-                            <FormControl>
-                                {/* <InputLabel>{t('description')}</InputLabel> */}
-                                {/* <Input component={Editor} /> */}
-                                <Editor
-                                    // editorState={content}
-                                    style={{ color: 'black !important' }}
-                                    onEditorStateChange={e => console.log('hello')}
-                                    wrapperClassName='demo-wrapper'
-                                    editorClassName='demo-editor'
-                                    placeholder={`${t('description')} (uz)`}
-                                />
-                                <Editor
-                                    // editorState={content}
-                                    style={{ color: 'black !important' }}
-                                    onEditorStateChange={e => console.log('hello')}
-                                    wrapperClassName='demo-wrapper'
-                                    editorClassName='demo-editor'
-                                    placeholder={`${t('description')} (ru)`}
-                                />
-                                <Editor
-                                    // editorState={content}
-                                    style={{ color: 'black !important' }}
-                                    onEditorStateChange={e => console.log('hello')}
-                                    wrapperClassName='demo-wrapper'
-                                    editorClassName='demo-editor'
-                                    placeholder={`${t('description')} (eng)`}
-                                />
-                            </FormControl>
+                            <EditorPc lang='uz' />
+                            <EditorPc lang='ru' />
+                            <EditorPc lang='eng' />
                         </CardContent>
                     </Card>
                 </Box>

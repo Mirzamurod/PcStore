@@ -17,7 +17,7 @@ import {
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import { ToastContainer } from 'react-toastify'
 import { uz, ru, eng } from './languages'
-import { Footer, Sidebar } from './Components'
+import { Footer, Navbar } from './Components'
 import links from './Routes'
 
 import 'react-toastify/dist/ReactToastify.css'
@@ -75,7 +75,7 @@ function App(props) {
                 <Suspense fallback={false}>
                     <div className='App'>
                         <CssBaseline />
-                        <Sidebar />
+                        <Navbar />
                         <Toolbar id='back-to-top-anchor' sx={{ minHeight: '0px !important' }} />
                         <Routes>
                             {links.map((link, index) => (

@@ -1,11 +1,11 @@
 @use './../../App.scss';
 
-#sidebar {
-    &.sidebarfon {
+#navbar {
+    &.navbarfon {
         background-image: linear-gradient(#101010, #101010);
     }
 
-    &.sidebar-fon {
+    &.navbar-fon {
         background-color: #efefef;
     }
 }
