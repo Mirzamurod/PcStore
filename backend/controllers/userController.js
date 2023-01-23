@@ -2,25 +2,30 @@ import bcryptjs from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import expressAsyncHandler from 'express-async-handler'
 import User from './../models/userModel.js'
+import { validationResult } from 'express-validator'
 
 const salt = await bcryptjs.genSalt(10)
 
 const user = {
-    // @desc    Get users
-    // @route   GET /api/users
-    // @access  Private
+    /**
+     * @desc    Get users
+     * @route   GET /api/users
+     * @access  Private
+     */
     getUsers: expressAsyncHandler(async (req, res) => {
         const users = await User.find({})
-        if (!users) res.status(400).json({ message: 'Users not found!!!' })
+        if (!users) res.status(400).json({ success: false, message: 'Users not found!!!' })
         else res.status(200).json(users)
     }),
 
-    // @desc    Get user profile
-    // @route   GET /api/users/profile
-    // @access  Private
+    /**
+     * @desc    Get user profile
+     * @route   GET /api/users/profile
+     * @access  Private
+     */
     getUser: expressAsyncHandler(async (req, res) => {
-        const user = await User.findById(req.user.id)
-        if (!user) res.status(400).json({ message: 'User not found !!!' })
+        const user = await User.findById(req.user.id, { password: 0 })
+        if (!user) res.status(400).json({ success: false, message: 'User not found !!!' })
         else {
             if (user.isAdmin) {
                 res.status(200).json({
@@ -31,7 +36,6 @@ const user = {
                         dark_mode: user.dark_mode,
                         isAdmin: user.isAdmin,
                     },
-                    message: { code: 0, message: 'success' },
                 })
             } else {
                 res.status(200).json({
@@ -41,110 +45,80 @@ const user = {
                         email: user.email,
                         dark_mode: user.dark_mode,
                     },
-                    message: { code: 0, message: 'success' },
                 })
             }
         }
     }),
 
-    // @desc Register new User
-    // @route POST /api/users/add
-    // @access Public
+    /**
+     * @desc Register new User
+     * @route POST /api/users/add
+     * @access Public
+     */
     register: expressAsyncHandler(async (req, res) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ message: errors.array() })
+        }
+
         const { username, fullname, email, password } = req.body
 
-        // Check fields
-        if (
-            // !!username &&
-            // !!fullname &&
-            // !!email &&
-            // !!password &&
-            !/[^A-Za-z0-9]+/g.test(username) &&
-            /[A-z]+\s[A-z]+/.test(fullname) &&
-            /[\w.]+@\w+\.(com|ru)/.test(email) &&
-            password.length > 7 &&
-            password.length < 17
-        ) {
-            // Check if user exists
-            const userExists = await User.findOne({ email })
+        const userExists = await User.findOne({ email })
 
-            if (userExists) res.status(400).json({ message: { email: 'User already exists' } })
-            else {
-                const hashedPassword = await bcryptjs.hash(password, salt)
-                const user = await User.create({ ...req.body, password: hashedPassword })
-
-                if (user) res.status(201).json({ message: { message: 'User added', code: 0 } })
-                else res.status(400).json({ message: { toast: 'Invalid user data' } })
-            }
-        } else {
-            // Check if empty field
-            let message = {}
-            Object.entries({ username, fullname, email, password }).forEach(([key, value]) => {
-                if (!!!req.body[key]) message[key] = value
+        if (userExists)
+            res.status(400).json({
+                success: false,
+                message: [{ msg: 'User already exists', param: 'email' }],
             })
+        else {
+            const hashedPassword = await bcryptjs.hash(password, salt)
+            const user = await User.create({ username, fullname, email, password: hashedPassword })
 
-            // const keys = Object.keys(message)
-            // keys.forEach(key => (message[key] = 'This field is required!!!'))
-
-            if (!!username)
-                if (/[^A-Za-z0-9]+/g.test(username)) message.username = 'This is not Username'
-            if (!!fullname)
-                if (!/[A-z]+\s[A-z]+/.test(fullname)) message.fullname = 'This is not Fullname'
-            if (!!email)
-                if (!/[\w.]+@\w+\.(com|ru)/.test(email)) message.email = 'This is not Email'
-            if (!!password) {
-                if (password.length < 8) message.password = 'Minimum 8 letters'
-                if (password.length > 16) message.password = 'Maximum 16 letters'
-            }
-
-            res.status(400).json({ message })
+            if (user) res.status(201).json({ message: 'User added', success: true })
+            else res.status(400).json({ success: false, message: 'Invalid user data' })
         }
     }),
 
-    // @desc Login User
-    // @route POST /api/users/login
-    // @access Public
+    /**
+     * @desc Login User
+     * @route POST /api/users/login
+     * @access Public
+     */
     login: expressAsyncHandler(async (req, res) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ message: errors.array() })
+        }
+
         const { email, password } = req.body
 
-        // Check fields
-        if (
-            // !!email &&
-            // !!password &&
-            /[\w.]+@\w+\.(com|ru)/.test(email) &&
-            password.length > 7 &&
-            password.length < 17
-        ) {
-            const user = await User.findOne({ email })
-            if (user) {
-                if (await bcryptjs.compare(password, user.password))
-                    res.status(200).json({ data: { token: generateToken(user._id) }, code: 0 })
-                else res.status(400).json({ message: { password: 'Password is wrong' } })
-            } else res.status(400).json({ message: { email: 'User not found' } })
-        } else {
-            let message = {}
-            Object.entries({ email, password }).forEach(([key, value]) => {
-                if (!!!req.body[key]) message[key] = value
+        const user = await User.findOne({ email })
+        if (user) {
+            if (await bcryptjs.compare(password, user.password))
+                res.status(200).json({ data: { token: generateToken(user._id) }, code: 0 })
+            else
+                res.status(400).json({
+                    success: false,
+                    message: [{ msg: 'Password is wrong', param: 'password' }],
+                })
+        } else
+            res.status(400).json({
+                success: false,
+                message: [{ msg: 'User not found', param: 'email' }],
             })
-
-            const keys = Object.keys(message)
-            keys.forEach(key => (message[key] = 'This field is required!!!'))
-
-            if (!!email)
-                if (!/[\w.]+@\w+\.(com|ru)/.test(email)) message.email = 'This is not Email'
-            if (!!password) {
-                if (password.length < 8) message.password = 'Minimum 8 letters'
-                if (password.length > 16) message.password = 'Maximum 16 letters'
-            }
-
-            res.status(400).json({ message })
-        }
     }),
 
-    // @desc Edit User
-    // @route PUT /api/users/update
-    // @access Private
+    /**
+     * @desc Edit User
+     * @route PUT /api/users/update
+     * @access Private
+     */
     update: expressAsyncHandler(async (req, res) => {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ message: errors.array() })
+        }
+
         const user = await User.findById(req.user.id)
         const { currentPassword } = req.body
 
@@ -162,28 +136,27 @@ const user = {
                         { ...req.body, password: hashedPassword },
                         { new: true }
                     )
-                    res.status(200).json({ message: { code: 0, message: 'User Updated' } })
+                    res.status(200).json({ success: true, message: 'User Updated' })
                 } else res.json({ code: 1 })
             } else {
                 await User.findByIdAndUpdate(req.user.id, req.body)
-                res.status(200).json({ message: { code: 0, message: 'User Updated' } })
+                res.status(200).json({ success: true, message: 'User Updated' })
             }
         }
     }),
 
-    // @desc Delete User
-    // @route DELETE /api/users/delete
-    // @access Private
+    /**
+     * @desc Delete User
+     * @route DELETE /api/users/delete
+     * @access Private
+     */
     delete: expressAsyncHandler(async (req, res) => {
         const user = await User.findById(req.user.id)
 
         if (user) {
             await User.findByIdAndRemove(req.user.id)
-            res.status(200).json({ message: { code: 0, message: 'success' } })
-        } else {
-            res.status(400)
-            throw new Error('User not found !!!')
-        }
+            res.status(200).json({ success: true, message: 'success' })
+        } else res.status(400).json({ success: false, message: 'User not found !!!' })
     }),
 }
 

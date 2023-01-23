@@ -7,6 +7,7 @@ const Pc = lazy(() => import('./../Screens/Pc'))
 const ShoppingCart = lazy(() => import('./../Screens/ShoppingCart.js'))
 const Error = lazy(() => import('./../Screens/Error'))
 const AdminPanel = lazy(() => import('./../Screens/AdminPanel'))
+const Pcs = lazy(() => import('./../Screens/Pcs'))
 
 const links = [
     { path: '/', element: HomePage },
@@ -15,6 +16,7 @@ const links = [
     { path: '/pc/:id', element: Pc, login: true },
     { path: '/shoppingcart', element: ShoppingCart, login: true },
     { path: '/admin/:keyword', element: AdminPanel, login: true, isAdmin: true },
+    { path: '/products', element: Pcs },
     { path: '*', element: Error },
 ]
 

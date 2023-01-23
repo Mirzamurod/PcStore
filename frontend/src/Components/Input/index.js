@@ -28,7 +28,7 @@ const Input = props => {
             color={color ?? 'error'}
             variant={variant ?? 'standard'}
             type={type ?? 'text'}
-            placeholder={placeholder ?? t(label ?? name)}
+            placeholder={t(placeholder) ?? t(label ?? name)}
             sx={{ display: 'block', '& .MuiInput-root': { width: '100%' }, ...sx }}
             error={!!errors?.[name]}
             disabled={isLoading}
@@ -48,7 +48,7 @@ const Input = props => {
             color={color ?? 'error'}
             variant={variant ?? 'standard'}
             type={type ?? 'text'}
-            placeholder={placeholder ?? t(label ?? name)}
+            placeholder={t(placeholder) ?? t(label ?? name)}
             sx={{ display: 'block', '& .MuiInput-root': { width: '100%' }, ...sx }}
             error={!!errors?.[name]}
             disabled={isLoading}
@@ -65,14 +65,16 @@ Input.propTypes = {
     sx: PropTypes.object,
     register: PropTypes.any.isRequired,
     errors: PropTypes.any.isRequired,
+    /**bu label va placeholder o'rniga o'tishi mumkin ya'ni ula yozilmasa auto o'tib ketadi */
     name: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
-    end: PropTypes.string,
+    end: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     type: PropTypes.string,
     variant: PropTypes.string,
     color: PropTypes.string,
     isLoading: PropTypes.bool,
     endPosition: PropTypes.string,
+    /**agar true berilmasa input oxiridan chiqadi */
     start: PropTypes.bool,
     multiline: PropTypes.bool,
     rows: PropTypes.number,

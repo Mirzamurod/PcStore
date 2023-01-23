@@ -4,7 +4,7 @@ import colors from 'colors'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import connectDB from './config/db.js'
-import { userRoutes, pcRoutes, addressRoutes, reviewRoutes } from './routes/index.js'
+import { userRoutes, pcRoutes, addressRoutes, reviewRoutes, filters } from './routes/index.js'
 
 const app = express()
 dotenv.config()
@@ -21,6 +21,7 @@ app.use('/api/users', userRoutes)
 app.use('/api/pcs', pcRoutes)
 app.use('/api/address', addressRoutes)
 app.use('/api/reviews', reviewRoutes)
+app.use('/api/filters', filters)
 app.use('/*', (req, res) => res.status(404).json({ data: 'Url not Found', code: 1 }))
 
 const port = process.env.PORT || 5000

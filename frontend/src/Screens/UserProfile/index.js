@@ -1,4 +1,5 @@
-import { useEffect } from 'react'
+import { lazy, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import HomeIcon from '@mui/icons-material/Home'
 import PersonIcon from '@mui/icons-material/Person'
@@ -12,6 +13,7 @@ const Orders = lazy(() => import('./Order'))
 const UserProfile = () => {
     const navigate = useNavigate()
 
+    const { user } = useSelector(state => state.login)
     document.title = user.fullname ?? 'Pc Store'
 
     const token = localStorage.getItem('token')

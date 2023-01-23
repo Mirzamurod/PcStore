@@ -28,21 +28,21 @@ const AccountInfo = memo(() => {
             .required(t('fullname_required'))
             .matches(/[A-z]+\s[A-z]+/, t('not_fullname'))
             .trim(),
-        email: Yup.string()
-            .required(t('email_required'))
-            .matches(/[\w.]+@\w+\.(com|ru)/, t('not_email'))
-            .trim(),
+        email: Yup.string().required(t('email_required')).email(t('not_email')).trim(),
         currentPassword: Yup.string()
             .required(show && t('current_password_required'))
             .min(8, t('minimum_8_letters'))
+            .max(16, t('maximum_16_letters'))
             .matches(regex, t('must')),
         newPassword: Yup.string()
             .required(show && t('new_password_required'))
             .min(8, t('minimum_8_letters'))
+            .max(16, t('maximum_16_letters'))
             .matches(regex, t('must')),
         confirmNewPassword: Yup.string()
             .required(show && t('confirm_new_password_required'))
             .min(8, t('minimum_8_letters'))
+            .max(16, t('maximum_16_letters'))
             .oneOf([Yup.ref('newPassword')], t('not_same_confirm_password')),
     })
     const {

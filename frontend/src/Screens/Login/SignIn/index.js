@@ -18,12 +18,11 @@ const SignIn = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const formSchema = Yup.object().shape({
-        email: Yup.string()
-            .required(t('email_required'))
-            .matches(/[\w.]+@\w+\.(com|ru)/, t('not_email')),
+        email: Yup.string().required(t('email_required')).email(t('not_email')),
         password: Yup.string()
             .required(t('password_required'))
             .min(8, t('minimum_8_letters'))
+            .max(16, t('maximum_16_letters'))
             .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/, t('must')),
     })
     const {

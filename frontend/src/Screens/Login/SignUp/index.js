@@ -16,21 +16,21 @@ const SignUp = () => {
     const formSchema = Yup.object().shape({
         username: Yup.string()
             .required(t('username_required'))
-            .matches(/[A-Za-z0-9]/g),
+            .matches(/[A-Za-z0-9]/g, t('not_username')),
         fullname: Yup.string()
             .required(t('fullname_required'))
             .matches(/[A-z]+\s[A-z]+/, t('not_fullname'))
             .trim(),
-        email: Yup.string()
-            .required(t('email_required'))
-            .matches(/[\w.]+@\w+\.(com|ru)/, t('not_email')),
+        email: Yup.string().required(t('email_required')).email(t('not_email')),
         password: Yup.string()
             .required(t('password_required'))
             .min(8, t('minimum_8_letters'))
+            .max(16, t('maximum_16_letters'))
             .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/, t('must')),
         cpassword: Yup.string()
             .required(t('confirm_password_required'))
             .min(8, t('minimum_8_letters'))
+            .max(16, t('maximum_16_letters'))
             .oneOf([Yup.ref('password')], t('not_same_confirm_password')),
     })
     const {

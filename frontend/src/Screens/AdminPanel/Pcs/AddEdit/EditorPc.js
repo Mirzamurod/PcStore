@@ -1,7 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Editor } from 'react-draft-wysiwyg'
-import { ContentState, convertFromHTML, convertToRaw, EditorState } from 'draft-js'
-import draftToHtml from 'draftjs-to-html'
+import { Editor } from 'react-draft-wysiwyg/'
 import { Box } from '@mui/material'
 
 const EditorPc = ({ lang }) => {

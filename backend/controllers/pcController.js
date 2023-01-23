@@ -3,17 +3,21 @@ import Review from '../models/reviewModel.js'
 import Pc from './../models/pcModel.js'
 
 const pc = {
-    // @desc    Fetch all pcs
-    // @route   GET /api/pcs
-    // @access  Public
+    /**
+     * @desc    Fetch all pcs
+     * @route   GET /api/pcs
+     * @access  Public
+     */
     getPc: expressAsyncHandler(async (req, res) => {
         const pcs = await Pc.find({})
-        res.status(200).json({ data: pcs, message: { code: 0, message: 'success' } })
+        res.status(200).json({ data: pcs })
     }),
 
-    // @desc    Fetch single pc
-    // @route   GET /api/pcs/:pcId
-    // @access  Public
+    /**
+     * @desc    Fetch single pc
+     * @route   GET /api/pcs/:pcId
+     * @access  Public
+     */
     getPcById: expressAsyncHandler(async (req, res) => {
         let rating = 0
         const pc = await Pc.findById(req.params.id)
@@ -25,15 +29,15 @@ const pc = {
                 data: pc,
                 ratingNum: rating / reviewNum?.length,
                 reviewNum: reviewNum?.length,
-
-                message: { code: 0, message: 'success' },
             })
-        else res.status(400).json({ message: 'Pc not found' })
+        else res.status(400).json({ success: false, message: 'Pc not found' })
     }),
 
-    // @desc    Add new Pc
-    // @route   POST /api/pcs/add
-    // @access  Private
+    /**
+     * @desc    Add new Pc
+     * @route   POST /api/pcs/add
+     * @access  Private
+     */
     addPc: expressAsyncHandler(async (req, res) => {
         const {
             name,
@@ -55,21 +59,25 @@ const pc = {
         } = req.body
     }),
 
-    // @desc    Update Pc
-    // @route   PUT /api/pcs/update
-    // @access  Private
+    /**
+     * @desc    Update Pc
+     * @route   PUT /api/pcs/update
+     * @access  Private
+     */
     updatePc: expressAsyncHandler(async (req, res) => {
         console.log('Update Pc')
     }),
 
-    // @desc    Delete Pc
-    // @route   DELETE /api/pcs/:pcId
-    // @access  Private
+    /**
+     * @desc    Delete Pc
+     * @route   DELETE /api/pcs/:pcId
+     * @access  Private
+     */
     deletePc: expressAsyncHandler(async (req, res) => {
         const pc = await Pc.findByIdAndRemove(req.params.id)
 
-        if (!!pc) res.status(200).json({ message: { message: 'Pc deleted', code: 0 } })
-        else res.status(400).json({ message: { message: 'Pc not Found' } })
+        if (!!pc) res.status(200).json({ message: 'Pc deleted', success: true })
+        else res.status(400).json({ message: 'Pc not Found', success: false })
     }),
 }
 
