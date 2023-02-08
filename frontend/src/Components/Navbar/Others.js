@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { Link, Typography } from '@mui/material'
-import logo from './../../svg/logo.svg'
+import logo from './../../assets/svg/logo.svg'
 
 export const Others = memo(({ sx }) => (
     <Link component={RouterLink} to='/'>

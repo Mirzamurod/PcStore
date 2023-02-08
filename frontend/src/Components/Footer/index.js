@@ -9,7 +9,7 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
 import YouTubeIcon from '@mui/icons-material/YouTube'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import TelegramIcon from '@mui/icons-material/Telegram'
-import logo from './../../svg/logo.svg'
+import logo from './../../assets/svg/logo.svg'
 
 import './footer.scss'
 
