@@ -58,6 +58,8 @@ const Products = () => {
             </CardActions>
         </Fragment>
     )
+    console.log('pcs', pcs)
+    console.log('isLoading', isLoading)
 
     return (
         <Box id='pcs'>

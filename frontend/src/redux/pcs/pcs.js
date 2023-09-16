@@ -14,10 +14,12 @@ const pcs = createSlice({
         onStart: state => {
             state.isLoading = true
             state.isError = false
+            state.pcs = []
         },
         onSuccess: (state, { payload }) => {
             state.isLoading = false
             state.pcs = payload.data
+            // state.pcs = [{ cpu: 'test1' }, { cpu: 'test2' }]
             state.code = payload.message.code
             state.isError = false
         },
