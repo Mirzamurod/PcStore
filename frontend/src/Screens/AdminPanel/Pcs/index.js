@@ -65,7 +65,7 @@ const Pcs = () => {
 
     useEffect(() => {
         dispatch(getPcs())
-    }, [dispatch])
+    }, [])
 
     useEffect(() => {
         if (isOpen) {

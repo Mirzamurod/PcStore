@@ -22,7 +22,6 @@ const pc = createSlice({
             state.pc = payload.data
             state.reviewNum = payload.reviewNum
             state.ratingNum = payload.ratingNum
-            state.code = payload.message.code
             state.isError = false
         },
         onFail: (state, { payload }) => {

@@ -15,6 +15,7 @@ const Pc = () => {
     const { id } = useParams()
 
     const { isLoading, pc } = useSelector(state => state.pc)
+    console.log(pc)
 
     document.title = pc.name ?? 'Pc Store'
 

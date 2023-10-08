@@ -17,7 +17,7 @@ const pcSchema = mongoose.Schema(
         rating: { type: Number, required: true, default: 0 },
         category: { type: String, required: true },
         description: { type: String, required: true },
-        warranty: { type: String, required: true },
+        warranty: { type: Number, required: true },
         have: { type: Boolean, required: true, default: false }, // bor yoligi
     },
     { timestamps: true }

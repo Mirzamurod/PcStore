@@ -1,14 +1,11 @@
 import Head from 'next/head'
-import { Inter } from 'next/font/google'
-import { useRouter } from 'next/router'
-
-const inter = Inter({ subsets: ['latin'] })
+import { Fragment } from 'react'
+import Carousel from '@/components/Home/Carousel'
+import Brends from '@/components/Home/Brends'
+import { Box } from '@mui/material'
+import Products from '@/components/Home/Products'
 
 export default function Home() {
-  const router = useRouter()
-
-  console.log(router.isReady)
-
   return (
     <>
       <Head>
@@ -17,7 +14,15 @@ export default function Home() {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main>Hello World</main>
+      <Fragment>
+        <Box id='home' sx={{ mt: '-36px' }}>
+          <Carousel />
+          <Brends />
+        </Box>
+        <Products />
+      </Fragment>
     </>
   )
 }
+
+Home.guestGuard = true

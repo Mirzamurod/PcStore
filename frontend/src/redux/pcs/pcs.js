@@ -19,8 +19,6 @@ const pcs = createSlice({
         onSuccess: (state, { payload }) => {
             state.isLoading = false
             state.pcs = payload.data
-            // state.pcs = [{ cpu: 'test1' }, { cpu: 'test2' }]
-            state.code = payload.message.code
             state.isError = false
         },
         onFail: (state, { payload }) => {
