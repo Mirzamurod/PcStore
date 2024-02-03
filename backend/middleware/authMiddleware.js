@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import expressAsyncHandler from 'express-async-handler'
+import { decode } from 'js-base64'
 import User from '../models/userModel.js'
 
 const protect = expressAsyncHandler(async (req, res, next) => {
@@ -8,7 +9,8 @@ const protect = expressAsyncHandler(async (req, res, next) => {
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         try {
             // Get token from header
-            token = req.headers.authorization.split(' ')[1]
+            // token = req.headers.authorization.split(' ')[1]
+            token = decode(req.headers.authorization.split(' ')[1])
 
             // Verify token
             const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)

@@ -11,9 +11,10 @@ import { appWithTranslation } from 'next-i18next'
 
 // Loader Import
 import NProgress from 'nprogress'
+import NextNProgress from 'nextjs-progressbar'
 
 // Third Party Import
-import {} from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 
 // Config Imports
 import themeConfig from '@/configs/themeConfig'
@@ -100,8 +101,10 @@ const App = (props: ExtendedAppProps) => {
         <ThemeComponent>
           <WindowWrapper>
             <Guard authGuard={authGuard} guestGuard={guestGuard}>
+              <NextNProgress color='#CF052D' />
               <Fragment>{getLayout(<Component {...pageProps} />)}</Fragment>
             </Guard>
+            <ToastContainer />
           </WindowWrapper>
         </ThemeComponent>
       </AuthProvider>

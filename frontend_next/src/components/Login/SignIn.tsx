@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
@@ -9,10 +9,10 @@ import * as Yup from 'yup'
 import classNames from 'classnames'
 import { Box, Button, Checkbox, FormControlLabel, Typography } from '@mui/material'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
-import { RootState } from '@/store'
+import { useAppSelector } from '@/store'
 import { userLogin } from '@/store/user/login'
-import InputOptions from '@/components/InputOptions'
-import PasswordInputOptions from '@/components/PasswordInputOptions'
+import InputOptions from '@/components/inputOptions'
+import PasswordInputOptions from '@/components/passwordInputOptions'
 
 const SignIn = () => {
   const { t } = useTranslation()
@@ -35,7 +35,7 @@ const SignIn = () => {
     setValue,
   } = useForm({ mode: 'onTouched', resolver: yupResolver(formSchema) })
 
-  const { dark_mode, code, err_msg } = useSelector((state: RootState) => state.login)
+  const { dark_mode, code, err_msg } = useAppSelector(state => state.login)
   const token = localStorage.getItem('token')
 
   useEffect(() => {

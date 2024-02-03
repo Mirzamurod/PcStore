@@ -9,7 +9,8 @@
     "start": "node backend/app",
     "server": "nodemon backend/app",
     "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "client_next": "npm run dev --prefix frontend_next",
+    "dev": "concurrently \"npm run server\" \"npm run client_next\"",
     "data:import": "node backend/seeder",
     "data:destroy": "node backend/seeder -d"
   },
@@ -34,6 +35,7 @@
     "express-async-handler": "^1.2.0",
     "express-validator": "^6.14.2",
     "joi": "^17.7.0",
+    "js-base64": "^3.7.5",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.12",
     "morgan": "^1.10.0",

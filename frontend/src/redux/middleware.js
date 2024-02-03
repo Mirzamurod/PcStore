@@ -17,7 +17,8 @@ const middleware =
 
         const token = localStorage.getItem('token')
 
-        const headers = token ? { Authorization: `Bearer ${decode(token)}` } : null
+        // const headers = token ? { Authorization: `Bearer ${decode(token)}` } : null
+        const headers = token ? { Authorization: `Bearer ${token}` } : null
 
         dispatch({ type: onStart })
 

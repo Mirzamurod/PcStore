@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import BlankLayout from '@/components/BlankLayout'
 import { Container, Grid } from '@mui/material'
-import Title from '@/components/Title'
+import Title from '@/components/title'
 import { useTranslation } from 'react-i18next'
 import SignIn from '@/components/Login/SignIn'
 import SignUp from '@/components/Login/SignUp'

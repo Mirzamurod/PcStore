@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import Link from 'next/link'
 import classNames from 'classnames'
@@ -18,8 +18,8 @@ import {
   Select,
   Typography,
 } from '@mui/material'
-import { RootState } from '@/store'
-import Pcs from '@/components/Pcs'
+import { useAppSelector } from '@/store'
+import Pcs from '@/components/pcs'
 import { getPcs } from '@/store/pcs/pcs'
 
 const Products = () => {
@@ -28,7 +28,7 @@ const Products = () => {
   const [sort, setSort] = useState('most_popular')
   const [button, setButton] = useState('all')
 
-  const { isLoading, pcs } = useSelector((state: RootState) => state.pcs)
+  const { isLoading, pcs } = useAppSelector(state => state.pcs)
 
   useEffect(() => {
     dispatch(getPcs())
@@ -37,7 +37,7 @@ const Products = () => {
   const buttons = (item: any) => (
     <Fragment>
       <CardActions>
-        <Button fullWidth color='error' variant='contained' startIcon={<ShoppingCartIcon />}>
+        <Button fullWidth variant='contained' startIcon={<ShoppingCartIcon />}>
           {t('order')}
         </Button>
       </CardActions>
@@ -46,7 +46,7 @@ const Products = () => {
           component={Link}
           fullWidth
           endIcon={<ArrowForwardIosIcon />}
-          sx={{ color: 'inherit' }}
+          color='inherit'
           href={`/pc/${encode(encode(item?._id))}`}
         >
           {t('details')}
@@ -80,6 +80,7 @@ const Products = () => {
                 labelId='sort_by'
                 id='sort-by-select'
                 value={sort}
+                color='error'
                 autoWidth
                 label={t('sort_by')}
                 onChange={event => setSort(event.target.value)}

@@ -1,8 +1,7 @@
-import { useSelector } from 'react-redux'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
-import { RootState } from '@/store'
+import { useAppSelector } from '@/store'
 import { Box, Container, Grid, Typography } from '@mui/material'
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined'
@@ -14,7 +13,7 @@ import TelegramIcon from '@mui/icons-material/Telegram'
 const Footer = () => {
   const { t } = useTranslation()
 
-  const { dark_mode } = useSelector((state: RootState) => state.login)
+  const { dark_mode } = useAppSelector(state => state.login)
 
   return (
     <div id='footer' className={dark_mode ? 'footerfon' : 'footer-fon'}>

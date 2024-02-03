@@ -67,7 +67,7 @@ const eng = {
   delivery: 'Delivery',
   place_order: 'Place order',
   description: 'Description',
-  comment: 'Comment',
+  comments: 'Comments',
   feedback: 'Feedback',
   admin_panel: 'Admin panel',
   add_pc: 'Add pc',

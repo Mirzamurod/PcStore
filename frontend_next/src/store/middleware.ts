@@ -1,7 +1,5 @@
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import { decode } from 'js-base64'
-import { createAction } from '@reduxjs/toolkit'
 import { IPcStore } from '@/types/middleware'
 
 const middleware =
@@ -19,14 +17,15 @@ const middleware =
 
     const token = localStorage.getItem('token')
 
-    const headers = token ? { Authorization: `Bearer ${decode(token)}` } : null
+    // const headers = token ? { Authorization: `Bearer ${decode(token)}` } : null
+    const headers = token ? { Authorization: `Bearer ${token}` } : null
 
     dispatch({ type: onStart })
 
     // @ts-ignore
     axios({
-      baseURL: 'http://localhost:5000/api/',
-      // baseURL: 'http://192.168.100.15:5000/api/',
+      // baseURL: 'http://localhost:5000/api/',
+      baseURL: 'http://192.168.100.18:5000/api/',
       method,
       data,
       url,
@@ -40,7 +39,7 @@ const middleware =
       })
       .catch(error => {
         const data = { ...error?.response?.data }
-        toast.error(data?.data, { position: 'top-right', theme: 'dark' })
+        toast.error(data?.message, { position: 'top-right', theme: 'dark' })
         dispatch({ type: onFail, payload: error })
       })
   }

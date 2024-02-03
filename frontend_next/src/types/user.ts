@@ -4,16 +4,20 @@ export type UserDataType = {
   isAdmin?: string
   dark_mode: boolean
   email: string
+  createdAt: string
+  updatedAt: string
+  _id: string
 }
 
 export interface IUserStore {
   isLoading: boolean
-  user: UserDataType | string
+  user: UserDataType | null
   isError: boolean
   code: string | boolean
   err_msg: string
   dark_mode: boolean
   deleteCode: string | boolean
+  token: boolean
 }
 
 export interface IRegister {

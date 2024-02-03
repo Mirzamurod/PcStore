@@ -67,7 +67,7 @@ const uz = {
   delivery: 'Yetkazib berish',
   place_order: 'Buyurtma berish',
   description: "Ta'rif",
-  comment: 'Izoh',
+  comments: 'Izohlar',
   feedback: 'Fikr-mulohaza',
   admin_panel: 'Administrator paneli',
   add_pc: "Kompyuter qo'shish",

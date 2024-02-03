@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 
 // Hooks Import
 import { useAuth } from '@/hooks/useAuth'
+import { useAppSelector } from '@/store'
 
 interface AuthGuardProps {
   children: ReactNode
@@ -17,24 +18,25 @@ const AuthGuard = (props: AuthGuardProps) => {
   const auth = useAuth()
   const router = useRouter()
 
+  const { user } = useAppSelector(state => state.login)
+
   useEffect(() => {
     if (!router.isReady) {
       return
     }
 
-    if (auth.user === null && !window.localStorage.getItem('token')!) {
-      if (router.asPath !== '/') {
-        router.replace({
-          pathname: '/login',
-          query: { returnUrl: router.asPath },
-        })
-      } else {
-        router.replace('/login')
+    if (typeof window !== 'undefined') {
+      if (user === null && !window.localStorage.getItem('token')!) {
+        if (router.asPath !== '/') {
+          router.replace({ pathname: '/login', query: { returnUrl: router.asPath } })
+        } else {
+          router.replace('/login')
+        }
       }
     }
   }, [router.route])
 
-  if (auth.loading || auth.user === null) {
+  if (auth.loading || user === null) {
     return fallback
   }
 

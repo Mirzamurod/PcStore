@@ -7,7 +7,7 @@ const router = express.Router()
 
 // /api/reviews
 router.get('/:id', review.getReviews)
-router.post('/add', protect, reviewAddField, review.addReview)
+router.post('/:id', protect, reviewAddField, review.addReview)
 router.put('/update', reviewEditField, review.updateReview)
 router.delete('/delete/:id', protect, review.deleteReview)
 

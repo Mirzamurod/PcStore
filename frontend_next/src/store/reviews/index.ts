@@ -4,12 +4,19 @@ import { IReview } from '@/types/pc'
 
 interface IReviews {
   isLoading: boolean
+  isLoadingBtn: boolean
+  success: boolean
   reviews: IReview[]
   isError: boolean
-  codeReviews: string | number
 }
 
-const initialState: IReviews = { isLoading: false, reviews: [], isError: false, codeReviews: '' }
+const initialState: IReviews = {
+  isLoading: false,
+  isLoadingBtn: false,
+  success: false,
+  reviews: [],
+  isError: false,
+}
 
 const reviews = createSlice({
   name: 'reviews',
@@ -17,27 +24,35 @@ const reviews = createSlice({
   reducers: {
     onStart: state => {
       state.isLoading = true
+      state.success = false
       state.isError = false
     },
     onSuccess: (state, { payload }) => {
       state.isLoading = false
       state.reviews = payload.data
-      state.codeReviews = ''
+      state.success = false
       state.reviews.sort(
         // @ts-ignore
         (a, b) => Date.parse(new Date(b.createdAt)) - Date.parse(new Date(a.createdAt))
       )
       state.isError = false
     },
-    onFail: (state, { payload }) => {
+    onFail: state => {
       state.isLoading = false
-      state.codeReviews = payload.message.code
+      state.success = false
       state.isError = true
     },
+    addUpdateDeleteStart: state => {
+      state.isLoadingBtn = true
+      state.success = false
+    },
     addUpdateDeleteSuccess: (state, { payload }) => {
-      state.isLoading = false
-      state.codeReviews = payload.message.code
-      state.isError = false
+      state.isLoadingBtn = false
+      state.success = payload.success
+    },
+    addUpdateDeleteFail: state => {
+      state.isLoadingBtn = false
+      state.success = false
     },
   },
 })
@@ -56,9 +71,9 @@ export const addReview = (data: any) =>
     url: addreview + data.id,
     method: 'post',
     data,
-    onStart: reviews.actions.onStart.type,
+    onStart: reviews.actions.addUpdateDeleteStart.type,
     onSuccess: reviews.actions.addUpdateDeleteSuccess.type,
-    onFail: reviews.actions.onFail.type,
+    onFail: reviews.actions.addUpdateDeleteFail.type,
   })
 
 export default reviews.reducer

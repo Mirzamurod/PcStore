@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -7,9 +7,9 @@ import * as Yup from 'yup'
 import { ToastContainer, toast } from 'react-toastify'
 import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
-import InputOptions from '@/components/InputOptions'
-import PasswordInputOptions from '@/components/PasswordInputOptions'
-import { RootState } from '@/store'
+import InputOptions from '@/components/inputOptions'
+import PasswordInputOptions from '@/components/passwordInputOptions'
+import { useAppSelector } from '@/store'
 import { addUser } from '@/store/user/register'
 
 const SignUp = () => {
@@ -45,8 +45,8 @@ const SignUp = () => {
     setError,
   } = useForm({ mode: 'onTouched', resolver: yupResolver(formSchema) })
 
-  const { dark_mode } = useSelector((state: RootState) => state.login)
-  const { code, isLoading, err_msg } = useSelector((state: RootState) => state.register)
+  const { dark_mode } = useAppSelector(state => state.login)
+  const { code, isLoading, err_msg } = useAppSelector(state => state.register)
 
   useEffect(() => {
     if (code === 0) {

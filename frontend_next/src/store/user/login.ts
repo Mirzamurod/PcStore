@@ -5,9 +5,10 @@ import { IUserStore } from '@/types/user'
 
 const initialState: IUserStore = {
   isLoading: false,
-  user: '',
+  user: null,
   isError: false,
   code: '',
+  token: false,
   err_msg: '',
   dark_mode: true,
   deleteCode: '',
@@ -23,9 +24,9 @@ const login = createSlice({
     },
     onSuccess: (state, { payload }) => {
       localStorage.setItem('token', encode(payload?.data?.token))
+      state.token = true
       state.isLoading = false
       state.isError = false
-      state.code = payload.code
     },
     userProfile: (state, { payload }) => {
       state.isLoading = false
@@ -53,6 +54,12 @@ const login = createSlice({
     changeMode: state => {
       state.dark_mode = !state.dark_mode
     },
+    getUserData: (state, { payload }) => {
+      state.user = payload
+    },
+    deleteUser: state => {
+      state.user = null
+    }
   },
 })
 
@@ -95,6 +102,6 @@ export const userDelete = (data: any) =>
     onFail: login.actions.onFail.type,
   })
 
-export const { changeMode } = login.actions
+export const { changeMode, getUserData, deleteUser } = login.actions
 
 export default login.reducer

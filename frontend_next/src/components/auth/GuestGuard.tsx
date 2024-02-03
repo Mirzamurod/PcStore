@@ -4,9 +4,7 @@ import { FC, Fragment, ReactElement, ReactNode, useEffect } from 'react'
 // Next Import
 import { useRouter } from 'next/router'
 import { useAuth } from '@/hooks/useAuth'
-
-// Hooks Import
-// import {} from ''
+import { useAppSelector } from '@/store'
 
 interface GuestGuard {
   children: ReactNode
@@ -18,17 +16,20 @@ const GuestGuard: FC<GuestGuard> = props => {
   const auth = useAuth()
   const router = useRouter()
 
+  const { user } = useAppSelector(state => state.login)
+
   useEffect(() => {
     if (!router.isReady) {
       return
     }
 
-    if (window.localStorage.getItem('token')) {
-      router.replace('/')
-    }
+    // if (window.localStorage.getItem('token')) {
+    //   router.replace('/')
+    // }
   }, [router.route])
 
-  if (auth.loading || (!auth.loading && auth.user !== null)) {
+  // if (auth.loading || (!auth.loading && user !== null)) {
+  if (auth.loading) {
     return fallback
   }
 

@@ -5,9 +5,8 @@ import { FC, ReactNode, createContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { UserDataType } from '@/types/user'
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
-import { AppDistach } from '@/store'
-import { userProfile } from '@/store/user/login'
+import { useAppDispatch, useAppSelector } from '@/store'
+import { getUserData } from '@/store/user/login'
 
 interface IAuthValuesType {
   loading: boolean
@@ -31,7 +30,10 @@ type Props = {
 
 const AuthProvider: FC<Props> = ({ children }) => {
   // Dispatch
-  const dispatch = useDispatch<AppDistach>()
+  const dispatch = useAppDispatch()
+
+  // Selector
+  const { token } = useAppSelector(state => state.login)
 
   // States
   const [user, setUser] = useState<UserDataType | null>(defaultProvider.user)
@@ -42,16 +44,16 @@ const AuthProvider: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     const initAuth = async (): Promise<void> => {
-      const token = window.localStorage.getItem('token')!
-      if (token) {
+      let tokenLocal = window.localStorage.getItem('token')!
+      if (token || tokenLocal) {
         setLoading(true)
         await axios({
           url: 'http://localhost:5000/api/users/profile',
-          headers: { Authorization: 'Bearer ' + token },
+          headers: { Authorization: 'Bearer ' + tokenLocal },
         })
-          .then(async res => {
+          .then(res => {
             setLoading(false)
-            dispatch(userProfile())
+            dispatch(getUserData(res.data.data))
           })
           .catch(() => {
             localStorage.removeItem('token')
@@ -64,7 +66,7 @@ const AuthProvider: FC<Props> = ({ children }) => {
     }
 
     initAuth()
-  }, [])
+  }, [token])
 
   const values = { user, loading, setUser, setLoading }
 

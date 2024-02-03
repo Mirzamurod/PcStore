@@ -1,4 +1,4 @@
-import { FC, ReactNode, memo, useEffect, useState } from 'react'
+import { ReactNode, memo, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -34,24 +34,17 @@ import PermIdentityIcon from '@mui/icons-material/PermIdentity'
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import ModeNightIcon from '@mui/icons-material/ModeNight'
-// import { changeMode, userProfile } from '../../redux'
 import { Others } from '@/components/navbar/Others'
 import DrawerSidebar from '@/components/navbar/DrawerSidebar'
-import { RootState, store } from '@/store'
-import { changeMode } from '@/store/user/login'
+import { RootState } from '@/store'
+import { changeMode, deleteUser } from '@/store/user/login'
 import { useRouter } from 'next/router'
-import { IUserStore } from '@/types/user'
 
 const pages = [
   { name: 'home', url: '/' },
   { name: 'products', url: '/products' },
   { name: 'services', url: '/services' },
   { name: 'contact', url: '/contact' },
-]
-
-const settings = [
-  { name: 'profile', url: '/user/account', icon: PermIdentityIcon },
-  { name: 'logout', url: '/', icon: Logout },
 ]
 
 function ScrollTop(props: { children: ReactNode; window: Function }) {
@@ -96,29 +89,35 @@ const Navbar = memo((props: any) => {
   const open = Boolean(anchorEl)
   const handleClose = () => setAnchorEl(null)
 
+  const handleCloseUserMenu = () => setAnchorElUser(null)
+
+  const { dark_mode, user } = useSelector((state: RootState) => state.login)
+
   const changelang = (lang: string, name: string) => {
     i18next.changeLanguage(lang)
     setChangeLang({ lang, name })
   }
 
-  const nimadir = (lang: string, name: string) => {
+  const selectLang = (lang: string, name: string) => {
     handleClose()
     changelang(lang, name)
+  }
+
+  const logout = () => {
+    localStorage.removeItem('token')
+    dispatch(deleteUser())
+    handleCloseUserMenu()
+    router.reload()
   }
 
   useEffect(() => {
     localStorage.setItem('lang', JSON.stringify(changeLang))
   }, [changeLang])
 
-  const { dark_mode, user } = useSelector((state: RootState) => state.login)
-  const token = localStorage.getItem('token')
-
-  const handleCloseUserMenu = () => setAnchorElUser(null)
-
   useEffect(() => {
-    if (user && token) setUserCheck(true)
+    if (user) setUserCheck(true)
     else setUserCheck(false)
-  }, [user, token])
+  }, [user])
 
   return (
     <Box>
@@ -194,7 +193,7 @@ const Navbar = memo((props: any) => {
                   aria-haspopup='true'
                   aria-expanded={open ? 'true' : undefined}
                   onClick={(event: any) => setAnchorEl(event.currentTarget)}
-                  variant='outlined'
+                  variant='text'
                   startIcon={<span className={`fi fi-${changeLang.lang}`} />}
                   sx={{ color: dark_mode ? 'white' : 'black' }}
                 >
@@ -215,7 +214,7 @@ const Navbar = memo((props: any) => {
                       { lang: 'ru', name: 'Ru' },
                       { lang: 'us', name: 'Eng' },
                     ].map(({ lang, name }, index) => (
-                      <MenuItem onClick={() => nimadir(lang, name)} key={index}>
+                      <MenuItem onClick={() => selectLang(lang, name)} key={index}>
                         <ListItemIcon>
                           <span className={`fi fi-${lang}`} />
                         </ListItemIcon>
@@ -235,8 +234,7 @@ const Navbar = memo((props: any) => {
                   sx={{ ml: 1 }}
                 >
                   <Typography textTransform={userCheck ? 'lowercase' : 'capitalize'}>
-                    {/* @ts-ignore */}
-                    {userCheck ? Object.keys(user).length && `@${user?.username}` : t('sign_in')}
+                    {userCheck ? user && `@${user?.username}` : t('sign_in')}
                   </Typography>
                 </Button>
                 <Menu
@@ -249,28 +247,26 @@ const Navbar = memo((props: any) => {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {/* @ts-ignore */}
-                  {user.isAdmin && (
+                  {user?.isAdmin ? (
                     <MenuItem component={Link} href='/admin/pcs' onClick={handleCloseUserMenu}>
                       <ListItemIcon>
                         <AdminPanelSettingsIcon />
                       </ListItemIcon>
                       {t('admin')}
                     </MenuItem>
-                  )}
-                  {settings.map(setting => (
-                    <MenuItem
-                      component={Link}
-                      href={setting.url}
-                      key={setting.name}
-                      onClick={handleCloseUserMenu}
-                    >
-                      <ListItemIcon>
-                        <setting.icon />
-                      </ListItemIcon>
-                      {t(setting.name)}
-                    </MenuItem>
-                  ))}
+                  ) : null}
+                  <MenuItem component={Link} href='/user/account'>
+                    <ListItemIcon>
+                      <PermIdentityIcon />
+                    </ListItemIcon>
+                    {t('profile')}
+                  </MenuItem>
+                  <MenuItem onClick={logout}>
+                    <ListItemIcon>
+                      <Logout />
+                    </ListItemIcon>
+                    {t('logout')}
+                  </MenuItem>
                 </Menu>
               </Box>
             </Box>

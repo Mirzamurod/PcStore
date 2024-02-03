@@ -1,13 +1,13 @@
-import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
-import { Box, Button, Container, Grid, Rating, styled, Typography } from '@mui/material'
+import { Box, Button, Container, Grid, Rating, Typography } from '@mui/material'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Pagination } from 'swiper/modules'
-import { RootState } from '@/store'
+import { useAppSelector } from '@/store'
 
 import 'swiper/css/pagination'
+import themeConfig from '@/configs/themeConfig'
 
 const data = [
   {
@@ -50,12 +50,12 @@ const data = [
 const Carousel = () => {
   const { t } = useTranslation()
 
-  const StyledRating = styled(Rating)({
-    '& .MuiRating-iconFilled': { color: '#f44336' },
-    '& .MuiRating-iconEmpty': { color: '#f44336' },
-  })
+  // const StyledRating = styled(Rating)({
+  //   '& .MuiRating-iconFilled': { color: '#f44336' },
+  //   '& .MuiRating-iconEmpty': { color: '#f44336' },
+  // })
 
-  const { dark_mode } = useSelector((state: RootState) => state.login)
+  const { dark_mode } = useAppSelector(state => state.login)
 
   return (
     <div id='slider'>
@@ -84,7 +84,7 @@ const Carousel = () => {
                     {item.name}
                   </Typography>
                   <Box display='flex' sx={{ mb: 2 }}>
-                    <StyledRating
+                    <Rating
                       name='half-rating-read'
                       defaultValue={item.rating}
                       precision={0.5}
@@ -112,11 +112,11 @@ const Carousel = () => {
                     </Typography>
                   </Box>
                   <Typography variant='body1'>{item.performance}</Typography>
-                  <Typography color='#f44336' sx={{ mb: 2 }}>
+                  <Typography color={themeConfig.themeColor} sx={{ mb: 2 }}>
                     {t('warranty')} {item.waranty} {t('year')}
                     {item.waranty > 1 && t('s')}
                   </Typography>
-                  <Box display='flex' color='#f44336' mb={!item.stock ? 7 : ''}>
+                  <Box display='flex' color={themeConfig.themeColor} mb={!item.stock ? 7 : ''}>
                     <Typography variant='h3' fontWeight={700}>
                       {item.price.toLocaleString()}
                     </Typography>

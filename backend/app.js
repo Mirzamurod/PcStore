@@ -22,7 +22,7 @@ app.use('/api/pcs', pcRoutes)
 app.use('/api/address', addressRoutes)
 app.use('/api/reviews', reviewRoutes)
 app.use('/api/filters', filters)
-app.use('/*', (req, res) => res.status(404).json({ data: 'Url not Found', code: 1 }))
+app.use('/*', (req, res) => res.status(404).json({ message: 'Url not Found', success: false }))
 
 const port = process.env.PORT || 5000
 

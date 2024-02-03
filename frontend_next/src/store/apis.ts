@@ -9,6 +9,7 @@ export const loginUser = 'users/login'
 export const userprofile = 'users/profile'
 export const userupdate = 'users/update'
 export const userdelete = 'users/delete'
+export const getUsersApi = 'users'
 
 // pcs
 export const getPcsList = 'pcs'
@@ -16,4 +17,4 @@ export const getPcList = 'pcs/' // + id
 
 // reviews
 export const getreviews = 'reviews/' // + id
-export const addreview = 'pcs/addreview/' // + id
+export const addreview = 'reviews/' // + id

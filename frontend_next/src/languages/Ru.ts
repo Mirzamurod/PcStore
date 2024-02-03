@@ -67,7 +67,7 @@ const ru = {
   delivery: 'Доставка',
   place_order: 'Разместить заказ',
   description: 'Описание',
-  comment: 'Комментарий',
+  comments: 'Комментарии',
   feedback: 'Обратная связь',
   admin_panel: 'Панель администратора',
   add_pc: 'Добавить компьютер',
