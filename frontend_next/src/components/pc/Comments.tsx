@@ -5,7 +5,7 @@ import { useAppSelector } from '@/store'
 const Comments = () => {
   const { t } = useTranslation()
 
-  const { dark_mode } = useAppSelector(state => state.login)
+  const { mode } = useAppSelector(state => state.login)
   const { isLoading, reviews } = useAppSelector(state => state.reviews)
 
   return (

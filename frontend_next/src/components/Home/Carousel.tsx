@@ -55,7 +55,7 @@ const Carousel = () => {
   //   '& .MuiRating-iconEmpty': { color: '#f44336' },
   // })
 
-  const { dark_mode } = useAppSelector(state => state.login)
+  const { mode } = useAppSelector(state => state.login)
 
   return (
     <div id='slider'>
@@ -75,7 +75,7 @@ const Carousel = () => {
           >
             <div
               style={{ backgroundImage: `url(${item.image})` }}
-              className={classNames('foncolor', { light: !dark_mode })}
+              className={classNames('foncolor', { light: mode === 'light' })}
             />
             <Container>
               <Grid container>

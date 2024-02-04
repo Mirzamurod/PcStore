@@ -91,7 +91,7 @@ const Navbar = memo((props: any) => {
 
   const handleCloseUserMenu = () => setAnchorElUser(null)
 
-  const { dark_mode, user } = useSelector((state: RootState) => state.login)
+  const { mode, user } = useSelector((state: RootState) => state.login)
 
   const changelang = (lang: string, name: string) => {
     i18next.changeLanguage(lang)
@@ -122,7 +122,11 @@ const Navbar = memo((props: any) => {
   return (
     <Box>
       <CssBaseline />
-      <AppBar id='navbar' sx={{ boxShadow: 0 }} className={dark_mode ? 'navbarfon' : 'navbar-fon'}>
+      <AppBar
+        id='navbar'
+        sx={{ boxShadow: 0 }}
+        className={mode === 'dark' ? 'navbarfon' : 'navbar-fon'}
+      >
         <Container maxWidth='xl'>
           <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
             <Box>
@@ -160,7 +164,7 @@ const Navbar = memo((props: any) => {
                     px={1}
                     mx={1}
                     sx={{
-                      color: pathname !== page.url ? (dark_mode ? 'white' : 'black') : undefined,
+                      color: pathname !== page.url ? (mode ? 'white' : 'black') : undefined,
                     }}
                     color={pathname === page.url ? 'error' : 'inherit'}
                   >
@@ -170,16 +174,16 @@ const Navbar = memo((props: any) => {
               </Box>
               <IconButton
                 onClick={() => dispatch(changeMode())}
-                sx={{ color: classNames({ black: !dark_mode }) }}
+                // sx={{ color: classNames({ black: mode === 'dark' }) }}
                 color='inherit'
               >
-                {dark_mode ? <LightModeIcon /> : <ModeNightIcon />}
+                {mode === 'dark' ? <LightModeIcon /> : <ModeNightIcon />}
               </IconButton>
               <IconButton
                 aria-label='shopping cart'
                 sx={{
                   mr: 1,
-                  color: pathname === '/shoppingcart' ? 'red' : dark_mode ? 'white' : 'black',
+                  color: pathname === '/shoppingcart' ? 'red' : mode === 'dark' ? 'white' : 'black',
                 }}
               >
                 <Badge badgeContent={4} color='error'>
@@ -195,7 +199,7 @@ const Navbar = memo((props: any) => {
                   onClick={(event: any) => setAnchorEl(event.currentTarget)}
                   variant='text'
                   startIcon={<span className={`fi fi-${changeLang.lang}`} />}
-                  sx={{ color: dark_mode ? 'white' : 'black' }}
+                  sx={{ color: mode === 'dark' ? 'white' : 'black' }}
                 >
                   {changeLang.name}
                 </Button>
@@ -208,7 +212,7 @@ const Navbar = memo((props: any) => {
                   anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                   transformOrigin={{ vertical: 'top', horizontal: 'right' }}
                 >
-                  <MenuList sx={{ color: classNames({ black: !dark_mode }) }}>
+                  <MenuList sx={{ color: classNames({ black: mode === 'light' }) }}>
                     {[
                       { lang: 'uz', name: 'Uz' },
                       { lang: 'ru', name: 'Ru' },
@@ -230,7 +234,7 @@ const Navbar = memo((props: any) => {
                   onClick={(event: any) =>
                     userCheck ? setAnchorElUser(event.currentTarget) : router.replace('/login')
                   }
-                  color={dark_mode ? 'inherit' : 'error'}
+                  color={mode === 'dark' ? 'inherit' : 'error'}
                   sx={{ ml: 1 }}
                 >
                   <Typography textTransform={userCheck ? 'lowercase' : 'capitalize'}>

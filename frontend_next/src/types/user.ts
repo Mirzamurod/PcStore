@@ -1,8 +1,10 @@
+import { Mode } from "./themeConfig"
+
 export type UserDataType = {
   fullname: string
   username: string
   isAdmin?: string
-  dark_mode: boolean
+  mode: Mode
   email: string
   createdAt: string
   updatedAt: string
@@ -15,7 +17,7 @@ export interface IUserStore {
   isError: boolean
   code: string | boolean
   err_msg: string
-  dark_mode: boolean
+  mode: Mode
   deleteCode: string | boolean
   token: boolean
 }

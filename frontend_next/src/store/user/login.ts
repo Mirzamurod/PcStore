@@ -10,7 +10,7 @@ const initialState: IUserStore = {
   code: '',
   token: false,
   err_msg: '',
-  dark_mode: true,
+  mode: 'dark',
   deleteCode: '',
 }
 
@@ -32,7 +32,7 @@ const login = createSlice({
       state.isLoading = false
       state.isError = false
       state.user = payload.data
-      state.dark_mode = payload.data.dark_mode
+      state.mode = payload.data.mode
       state.err_msg = payload.message
       state.code = ''
     },
@@ -52,14 +52,14 @@ const login = createSlice({
       state.err_msg = { ...payload?.response?.data?.message }
     },
     changeMode: state => {
-      state.dark_mode = !state.dark_mode
+      state.mode = state.mode === 'dark' ? 'light' : 'dark'
     },
     getUserData: (state, { payload }) => {
       state.user = payload
     },
     deleteUser: state => {
       state.user = null
-    }
+    },
   },
 })
 

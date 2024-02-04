@@ -33,7 +33,7 @@ const PasswordInput: FC<Props> = ({
 }) => {
   const { t } = useTranslation()
   const [showText, setShowText] = useState(false)
-  const { dark_mode } = useAppSelector(state => state.login)
+  const { mode } = useAppSelector(state => state.login)
 
   return (
     <FormControl
@@ -48,7 +48,7 @@ const PasswordInput: FC<Props> = ({
         id={name}
         error={!!errors?.[name]}
         placeholder={placeholder ?? t(label ?? name)}
-        className={dark_mode ? 'autocomplete-dark' : 'autocomplete-light'}
+        className={mode === 'dark' ? 'autocomplete-dark' : 'autocomplete-light'}
         type={showText ? 'text' : 'password'}
         {...register(name)}
         disabled={isLoading}

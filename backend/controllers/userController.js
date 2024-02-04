@@ -27,7 +27,7 @@ const user = {
       const users = await User.find({}, { password: 0 }).sort(
         sortValue ? { [sortName]: sortValue } : sortName
       )
-      res.status(200).json({ data: users    })
+      res.status(200).json({ data: users })
     }
   }),
 
@@ -46,7 +46,7 @@ const user = {
             username: user.username,
             fullname: user.fullname,
             email: user.email,
-            dark_mode: user.dark_mode,
+            mode: user.mode,
             isAdmin: user.isAdmin,
           },
         })
@@ -56,7 +56,7 @@ const user = {
             username: user.username,
             fullname: user.fullname,
             email: user.email,
-            dark_mode: user.dark_mode,
+            mode: user.mode,
           },
         })
       }
@@ -108,17 +108,10 @@ const user = {
     const user = await User.findOne({ email })
     if (user) {
       if (await bcryptjs.compare(password, user.password))
-        res.status(200).json({ data: { token: generateToken(user._id) }, code: 0 })
-      else
-        res.status(400).json({
-          success: false,
-          message: [{ msg: 'Password is wrong', param: 'password' }],
-        })
+        res.status(200).json({ data: { token: generateToken(user._id) }, success: true })
+      else res.status(400).json({ success: false, message: 'Email or pasword wrong' })
     } else
-      res.status(400).json({
-        success: false,
-        message: [{ msg: 'User not found', param: 'email' }],
-      })
+      res.status(400).json({ success: false, message: [{ msg: 'User not found', param: 'email' }] })
   }),
 
   /**

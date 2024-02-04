@@ -10,11 +10,11 @@ const router = express.Router()
 router.get('/', protect, address.getAddress)
 router.post('/add', protect, addressField, address.addAddress)
 router.put(
-    '/update',
-    protect,
-    addressField,
-    check('id').notEmpty().withMessage('This field is required'),
-    address.updateAddress
+  '/update',
+  protect,
+  addressField,
+  check('id').notEmpty().withMessage('This field is required'),
+  address.updateAddress
 )
 router.delete('/delete/:id', protect, address.deleteAddress)
 

@@ -60,7 +60,7 @@ const AdminPcs = () => {
   const descriptionElementRef = useRef<HTMLElement | null>(null)
   const [isOpen, setIsOpen] = useState(false)
 
-  const { dark_mode } = useAppSelector(state => state.login)
+  const { mode } = useAppSelector(state => state.login)
   const { isLoading, pcs } = useAppSelector(state => state.pcs)
 
   useEffect(() => {
@@ -92,7 +92,7 @@ const AdminPcs = () => {
   const Pc = () => {
     return (
       <Box display='flex' justifyContent='center' alignItems='center' height='100%'>
-        <Box borderRadius='14px' className={dark_mode ? 'fon dark' : 'fon light'}>
+        <Box borderRadius='14px' className={mode === 'dark' ? 'fon dark' : 'fon light'}>
           <Stack>
             <IconButton size='large' onClick={() => setIsOpen(true)}>
               <AddCircleIcon fontSize='large' />

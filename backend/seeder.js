@@ -9,33 +9,33 @@ dotenv.config()
 connectDB()
 
 const importData = async () => {
-    try {
-        await Pc.deleteMany()
+  try {
+    await Pc.deleteMany()
 
-        await Pc.insertMany(products)
+    await Pc.insertMany(products)
 
-        console.log('Data Imported!'.green.inverse)
-        process.exit()
-    } catch (error) {
-        console.error(`${error}`.red.inverse)
-        process.exit(1)
-    }
+    console.log('Data Imported!'.green.inverse)
+    process.exit()
+  } catch (error) {
+    console.error(`${error}`.red.inverse)
+    process.exit(1)
+  }
 }
 
 const destroyData = async () => {
-    try {
-        await Pc.deleteMany()
+  try {
+    await Pc.deleteMany()
 
-        console.log('Data Destroyed!'.red.inverse)
-        process.exit()
-    } catch (error) {
-        console.error(`${error}`.red.inverse)
-        process.exit(1)
-    }
+    console.log('Data Destroyed!'.red.inverse)
+    process.exit()
+  } catch (error) {
+    console.error(`${error}`.red.inverse)
+    process.exit(1)
+  }
 }
 
 if (process.argv[2] === '-d') {
-    destroyData()
+  destroyData()
 } else {
-    importData()
+  importData()
 }

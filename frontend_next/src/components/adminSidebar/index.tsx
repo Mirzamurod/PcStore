@@ -14,14 +14,14 @@ const AdminSidebar = ({ children }: { children: ReactNode }) => {
   const { t } = useTranslation()
   const router = useRouter()
 
-  const { dark_mode } = useAppSelector(state => state.login)
+  const { mode } = useAppSelector(state => state.login)
 
   return (
     <Container sx={{ mb: 5 }}>
       <Grid container spacing={4}>
         <Grid item md={3} position='sticky' top={0}>
           <Box
-            border={`1px solid ${dark_mode ? '#e2e4e5' : 'gray'}`}
+            border={`1px solid ${mode === 'dark' ? '#e2e4e5' : 'gray'}`}
             borderRadius={2}
             height='calc(100vh - 100px)'
             position='sticky'

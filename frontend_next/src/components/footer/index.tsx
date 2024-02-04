@@ -13,10 +13,10 @@ import TelegramIcon from '@mui/icons-material/Telegram'
 const Footer = () => {
   const { t } = useTranslation()
 
-  const { dark_mode } = useAppSelector(state => state.login)
+  const { mode } = useAppSelector(state => state.login)
 
   return (
-    <div id='footer' className={dark_mode ? 'footerfon' : 'footer-fon'}>
+    <div id='footer' className={mode === 'dark' ? 'footerfon' : 'footer-fon'}>
       <Container>
         <Grid container spacing={8}>
           <Grid item md={3}>
@@ -86,10 +86,10 @@ const Footer = () => {
         </Grid>
       </Container>
       <Typography
-        sx={{ py: 5, mt: 3, borderTop: `1px solid ${dark_mode ? '#ffffff1a' : 'gray'}` }}
+        sx={{ py: 5, mt: 3, borderTop: `1px solid ${mode === 'dark' ? '#ffffff1a' : 'gray'}` }}
         textAlign='center'
         width='100%'
-        className={classNames({ 'c-footer': dark_mode })}
+        className={classNames({ 'c-footer': mode === 'dark' })}
       >
         &#169; 2021 pcstore.uz {t('reserved')}
       </Typography>

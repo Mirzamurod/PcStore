@@ -29,7 +29,7 @@ const Sidebar = () => {
   const [mbName, setMbName] = useState<{ mb: string; name: string }[]>([])
   const [ssd, setSsd] = useState('ssd')
 
-  const { dark_mode } = useAppSelector(state => state.login)
+  const { mode } = useAppSelector(state => state.login)
 
   const motherboards = [
     { name: t('all_mb'), key: 'all_mb' },
@@ -43,7 +43,7 @@ const Sidebar = () => {
 
   return (
     <Box
-      border={`1px solid ${dark_mode ? '#e2e4e5' : 'gray'}`}
+      border={`1px solid ${mode === 'dark' ? '#e2e4e5' : 'gray'}`}
       borderRadius={2}
       height='calc(100vh - 100px)'
       position='sticky'

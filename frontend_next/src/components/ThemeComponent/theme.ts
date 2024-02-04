@@ -1,9 +1,10 @@
 import themeConfig from '@/configs/themeConfig'
+import { Mode } from '@/types/themeConfig'
 import { createTheme } from '@mui/material'
 
-const theme = (dark_mode: boolean) =>
+const theme = (mode: Mode) =>
   createTheme({
-    palette: { mode: dark_mode ? 'dark' : 'light' },
+    palette: { mode: mode === 'dark' ? 'dark' : 'light' },
     components: {
       MuiButton: {
         defaultProps: { color: 'error' },
@@ -16,6 +17,9 @@ const theme = (dark_mode: boolean) =>
             '& .MuiRating-iconEmpty': { color: '#e90021' },
           }),
         },
+      },
+      MuiTextField: {
+        defaultProps: { color: 'error', size: 'small' },
       },
     },
   })

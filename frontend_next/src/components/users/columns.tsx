@@ -5,7 +5,7 @@ const columns: GridColDef[] = [
   { flex: 0.1, field: 'fullname', headerName: 'Full Name' },
   { flex: 0.1, field: 'username', headerName: 'User Name' },
   { flex: 0.15, field: 'email', headerName: 'Email' },
-  { flex: 0.1, field: 'dark_mode', headerName: 'Theme Mode' },
+  { flex: 0.1, field: 'mode', headerName: 'Theme Mode' },
   {
     flex: 0.1,
     field: 'createdAt',

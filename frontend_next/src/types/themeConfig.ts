@@ -1,5 +1,7 @@
 export type ThemeConfig = {
-  mode: 'light'| 'dark'
+  mode: Mode
   routingLoader: boolean
   themeColor: string
 }
+
+export type Mode = 'light' | 'dark'

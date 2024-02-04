@@ -45,18 +45,18 @@ const SignUp = () => {
     setError,
   } = useForm({ mode: 'onTouched', resolver: yupResolver(formSchema) })
 
-  const { dark_mode } = useAppSelector(state => state.login)
+  const { mode } = useAppSelector(state => state.login)
   const { code, isLoading, err_msg } = useAppSelector(state => state.register)
 
   useEffect(() => {
     if (code === 0) {
       toast.success("Endi Loginni to'ldirib, ishizi davom ettirin!", {
-        theme: dark_mode ? 'light' : 'dark',
+        theme: mode === 'dark' ? 'light' : 'dark',
       })
       reset()
       clearErrors()
     }
-  }, [code, dark_mode, reset, clearErrors])
+  }, [code, mode, reset, clearErrors])
 
   useEffect(() => {
     if (Object.keys(err_msg).length > 0)
@@ -100,7 +100,7 @@ const SignUp = () => {
         noValidate
         onSubmit={handleSubmit(signup)}
       >
-        <Box border={`1px solid ${dark_mode ? '#e2e4e5' : 'gray'}`} borderRadius={2} p={4}>
+        <Box border={`1px solid ${mode === 'dark' ? '#e2e4e5' : 'gray'}`} borderRadius={2} p={4}>
           <InputOptions options={optionsInput} register={register} errors={errors} />
           <PasswordInputOptions options={optionsPassword} register={register} errors={errors} />
         </Box>

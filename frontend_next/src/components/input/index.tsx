@@ -29,17 +29,18 @@ const Input = (props: Props) => {
     rows,
   } = props
   const { t } = useTranslation()
-  const { dark_mode } = useAppSelector(state => state.login)
+  const { mode } = useAppSelector(state => state.login)
 
   return end ? (
     <TextField
       label={t(label ?? name)}
-      color={color ?? 'error'}
+      color={color}
       variant={variant ?? 'standard'}
-      className={dark_mode ? 'autocomplete-dark' : 'autocomplete-light'}
+      autoComplete='off'
+      className={mode === 'dark' ? 'autocomplete-dark' : 'autocomplete-light'}
       type={type ?? 'text'}
       placeholder={t(placeholder ?? label ?? name)}
-      sx={{ display: 'block', '& .MuiInput-root': { width: '100%' }, ...sx }}
+      sx={{ display: 'block', ...sx }}
       error={!!errors?.[name]}
       disabled={isLoading}
       {...register(name)}
@@ -56,12 +57,13 @@ const Input = (props: Props) => {
   ) : (
     <TextField
       label={t(label ?? name)}
-      color={color ?? 'error'}
+      color={color}
       variant={variant ?? 'standard'}
-      className={dark_mode ? 'autocomplete-dark' : 'autocomplete-light'}
+      autoComplete='off'
+      className={mode === 'dark' ? 'autocomplete-dark' : 'autocomplete-light'}
       type={type ?? 'text'}
       placeholder={t(placeholder ?? label ?? name)}
-      sx={{ display: 'block', '& .MuiInput-root': { width: '100%' }, ...sx }}
+      sx={{ display: 'block', ...sx }}
       error={!!errors?.[name]}
       disabled={isLoading}
       {...register(name)}

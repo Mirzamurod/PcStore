@@ -26,10 +26,10 @@ if (typeof window !== 'undefined')
   })
 
 const ThemeComponent = ({ children }: { children: ReactNode }) => {
-  const { dark_mode } = useAppSelector(state => state.login)
-  // const theme = createTheme({ palette: { mode: dark_mode ? 'dark' : 'light' } })
+  const { mode } = useAppSelector(state => state.login)
+  // const theme = createTheme({ palette: { mode: mode ? 'dark' : 'light' } })
 
-  return <ThemeProvider theme={theme(dark_mode)}>{children}</ThemeProvider>
+  return <ThemeProvider theme={theme(mode)}>{children}</ThemeProvider>
 }
 
 export default ThemeComponent

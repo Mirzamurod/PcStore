@@ -35,7 +35,7 @@ const SignIn = () => {
     setValue,
   } = useForm({ mode: 'onTouched', resolver: yupResolver(formSchema) })
 
-  const { dark_mode, code, err_msg } = useAppSelector(state => state.login)
+  const { mode, code, err_msg } = useAppSelector(state => state.login)
   const token = localStorage.getItem('token')
 
   useEffect(() => {
@@ -54,17 +54,16 @@ const SignIn = () => {
   }, [err_msg, setError])
 
   return (
-    <div id='signin'>
+    <Box id='signin'>
       <Typography variant='h6' my={5}>
         {t('sign_in')}
       </Typography>
       <Box
         component='form'
-        sx={{ '& .MuiInput-root': { width: '100%' } }}
         noValidate
         onSubmit={handleSubmit(value => dispatch(userLogin(value)))}
       >
-        <Box border={`1px solid ${dark_mode ? '#e2e4e5' : 'gray'}`} borderRadius={2} p={4}>
+        <Box border={`1px solid ${mode === 'dark' ? '#e2e4e5' : 'gray'}`} borderRadius={2} p={4}>
           <InputOptions
             options={[{ name: 'email', placeholder: 'example@gmail.com' }]}
             register={register}
@@ -100,12 +99,12 @@ const SignIn = () => {
           component={Link}
           color='inherit'
           href='/'
-          className={classNames({ light: !dark_mode })}
+          className={classNames({ light: mode === 'light' })}
         >
           {t('forgot_password')}
         </Box>
       </Box>
-    </div>
+    </Box>
   )
 }
 
