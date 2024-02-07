@@ -5,12 +5,13 @@ import { useTranslation } from 'react-i18next'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import { ToastContainer, toast } from 'react-toastify'
-import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material'
+import { Box, Checkbox, FormControlLabel, TextFieldProps, Typography } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import InputOptions from '@/components/inputOptions'
 import PasswordInputOptions from '@/components/passwordInputOptions'
 import { useAppSelector } from '@/store'
 import { addUser } from '@/store/user/register'
+import { IInput, TInputType, TPasswordInputType } from '@/types/inputs'
 
 const SignUp = () => {
   const { t } = useTranslation()
@@ -78,15 +79,15 @@ const SignUp = () => {
     )
   }
 
-  let optionsInput = [
-    { name: 'username', isLoading },
-    { name: 'fullname', placeholder: 'John Doe', isLoading },
-    { name: 'email', type: 'email', isLoading },
+  const optionsInput: TInputType[] = [
+    { name: 'username', isLoading, fullWidth: true },
+    { name: 'fullname', placeholder: 'John Doe', isLoading, fullWidth: true },
+    { name: 'email', type: 'email', isLoading, fullWidth: true },
   ]
 
-  let optionsPassword = [
-    { name: 'password', label: 'create_password', isLoading },
-    { name: 'cpassword', label: 'confirm_password', isLoading },
+  const optionsPassword: TPasswordInputType[] = [
+    { name: 'password', label: 'create_password', isLoading, fullWidth: true },
+    { name: 'cpassword', label: 'confirm_password', isLoading, fullWidth: true },
   ]
 
   return (
@@ -94,12 +95,7 @@ const SignUp = () => {
       <Typography variant='h6' my={5}>
         {t('create_account')}
       </Typography>
-      <Box
-        component='form'
-        sx={{ '& .MuiInput-root': { width: '100%' } }}
-        noValidate
-        onSubmit={handleSubmit(signup)}
-      >
+      <Box component='form' noValidate onSubmit={handleSubmit(signup)}>
         <Box border={`1px solid ${mode === 'dark' ? '#e2e4e5' : 'gray'}`} borderRadius={2} p={4}>
           <InputOptions options={optionsInput} register={register} errors={errors} />
           <PasswordInputOptions options={optionsPassword} register={register} errors={errors} />

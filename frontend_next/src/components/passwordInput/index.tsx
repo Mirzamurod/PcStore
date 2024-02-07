@@ -10,41 +10,20 @@ import {
 } from '@mui/material'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import Visibility from '@mui/icons-material/Visibility'
-import { IPasswordInput } from '@/types/inputs'
+import { Addinational, TPasswordInputType } from '@/types/inputs'
 import { useAppSelector } from '@/store'
 
-interface Addinational {
-  register: any
-  errors: any
-}
-
-type Props = IPasswordInput & Addinational
-
-const PasswordInput: FC<Props> = ({
-  isLoading,
-  name,
-  label,
-  register,
-  errors,
-  sx,
-  variant,
-  color,
-  placeholder,
-}) => {
+const PasswordInput: FC<TPasswordInputType & Addinational> = props => {
+  const { isLoading, name, label, register, errors, sx, placeholder, fullWidth } = props
   const { t } = useTranslation()
   const [showText, setShowText] = useState(false)
   const { mode } = useAppSelector(state => state.login)
 
   return (
-    <FormControl
-      variant={variant ?? 'standard'}
-      // @ts-ignore
-      color={color ?? 'error'}
-      error={!!errors?.[name]}
-      sx={{ display: 'block', '& .MuiInput-root': { width: '100%' }, ...sx }}
-    >
+    <FormControl {...props} error={!!errors?.[name]} sx={{ display: 'block', mb: 1, ...sx }}>
       <InputLabel htmlFor={name}>{t(label ?? name)}</InputLabel>
       <Input
+        fullWidth={fullWidth}
         id={name}
         error={!!errors?.[name]}
         placeholder={placeholder ?? t(label ?? name)}

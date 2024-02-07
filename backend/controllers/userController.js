@@ -79,10 +79,9 @@ const user = {
     const userExists = await User.findOne({ email })
 
     if (userExists)
-      res.status(400).json({
-        success: false,
-        message: [{ msg: 'User already exists', param: 'email' }],
-      })
+      res
+        .status(400)
+        .json({ success: false, message: [{ msg: 'User already exists', param: 'email' }] })
     else {
       const hashedPassword = await bcryptjs.hash(password, salt)
       const user = await User.create({ username, fullname, email, password: hashedPassword })

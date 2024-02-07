@@ -1,12 +1,10 @@
 import { FC } from 'react'
 import Input from '@/components/input'
-import { IInput } from '@/types/inputs'
+import { Addinational, TInputType } from '@/types/inputs'
 
-interface Props {
-  options: IInput[]
-  register: any
-  errors: any
-}
+type Props = {
+  options: TInputType[]
+} & Addinational
 
 const InputOptions: FC<Props> = ({ options, register, errors }) =>
   options.map((input, index) => (
@@ -15,7 +13,7 @@ const InputOptions: FC<Props> = ({ options, register, errors }) =>
       errors={errors}
       register={register}
       key={index}
-      sx={{ mb: index === options.length - 1 ? 0 : 2, ...input.sx }}
+      // sx={{ mb: index === options.length - 1 ? 0 : 2, ...input.sx }}
     />
   ))
 

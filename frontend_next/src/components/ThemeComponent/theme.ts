@@ -18,9 +18,8 @@ const theme = (mode: Mode) =>
           }),
         },
       },
-      MuiTextField: {
-        defaultProps: { color: 'error', size: 'small' },
-      },
+      MuiTextField: { defaultProps: { color: 'error', size: 'small', variant: 'standard' } },
+      MuiFormControl: { defaultProps: { color: 'error', size: 'small', variant: 'standard' } },
     },
   })
 

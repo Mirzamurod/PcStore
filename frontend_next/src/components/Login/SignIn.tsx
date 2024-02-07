@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
-import classNames from 'classnames'
 import { Box, Button, Checkbox, FormControlLabel, Typography } from '@mui/material'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
 import { useAppSelector } from '@/store'
@@ -61,17 +60,20 @@ const SignIn = () => {
       <Box
         component='form'
         noValidate
+        autoComplete='off'
         onSubmit={handleSubmit(value => dispatch(userLogin(value)))}
       >
         <Box border={`1px solid ${mode === 'dark' ? '#e2e4e5' : 'gray'}`} borderRadius={2} p={4}>
           <InputOptions
-            options={[{ name: 'email', placeholder: 'example@gmail.com' }]}
+            options={[
+              { name: 'email', placeholder: 'example@gmail.com', fullWidth: true, type: 'email' },
+            ]}
             register={register}
             errors={errors}
           />
           <Box mt={2}>
             <PasswordInputOptions
-              options={[{ name: 'password' }]}
+              options={[{ name: 'password', fullWidth: true }]}
               register={register}
               errors={errors}
             />
@@ -84,7 +86,6 @@ const SignIn = () => {
           {...register('check')}
         />
         <Button
-          color='error'
           variant='contained'
           endIcon={<ArrowRightAltIcon />}
           sx={{ width: '100%' }}
@@ -95,12 +96,7 @@ const SignIn = () => {
         </Button>
       </Box>
       <Box mb={6} my={3}>
-        <Box
-          component={Link}
-          color='inherit'
-          href='/'
-          className={classNames({ light: mode === 'light' })}
-        >
+        <Box component={Link} color='inherit' href='/'>
           {t('forgot_password')}
         </Box>
       </Box>

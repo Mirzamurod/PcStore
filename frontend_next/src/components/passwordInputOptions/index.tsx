@@ -1,24 +1,15 @@
-import { IInput } from '@/types/inputs'
+import { Addinational, TPasswordInputType } from '@/types/inputs'
 import PasswordInput from '@/components/passwordInput'
 
-interface Props {
-  options: IInput[]
-  register: any
-  errors: any
-}
+type Props = {
+  options: TPasswordInputType[]
+} & Addinational
 
 const PasswordInputOptions = (props: Props) => {
   const { options, register, errors } = props
 
   return options.map((input, index: number) => (
-    <PasswordInput
-      {...input}
-      {...props}
-      errors={errors}
-      register={register}
-      key={index}
-      sx={{ mb: index === options.length - 1 ? 0 : 2, ...input.sx }}
-    />
+    <PasswordInput {...input} errors={errors} register={register} key={index} />
   ))
 }
 
